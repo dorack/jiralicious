@@ -2,6 +2,8 @@
 
 Description goes here.
 
+TODO: Add something useful here.
+
 == Contributing to jiralicious
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
@@ -14,6 +16,6 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 Jason Stewart. See LICENSE.txt for
+Copyright (c) 2010 Jason Stewart. See LICENSE for
 further details.
 

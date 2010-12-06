@@ -15,14 +15,17 @@ Jeweler::Tasks.new do |gem|
   gem.name = "jiralicious"
   gem.homepage = "http://github.com/jstewart/jiralicious"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{A Ruby library for interacting with JIRA's REST API}
+  gem.description = %Q{A Ruby library for interacting with JIRA's REST API}
   gem.email = "jstewart@fusionary.com"
   gem.authors = ["Jason Stewart"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.add_runtime_dependency 'faraday', '~>0.5.3'
+  gem.add_runtime_dependency 'hashie', '~>0.4.0'
+  gem.add_runtime_dependency 'json', '~>1.4.6'
+  gem.add_development_dependency 'rspec', '~>2.1.0'
+  gem.add_development_dependency 'rcov', '>=0'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
