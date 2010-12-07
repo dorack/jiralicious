@@ -16,9 +16,10 @@ describe Jiralicious::Connection do
 
     @faraday_stubs = Faraday::Adapter::Test::Stubs.new do |stub|
       stub.post('/rest/auth/latest/session') { [200, {}, @fake_session] }
+      stub.delete('/rest/auth/latest/session') { [200, {}, ""] }
     end
 
-    test_adapter = Faraday::Connection.new do |builder|
+    test_adapter = Faraday::Connection.new(:headers => {:foo => "bar"}) do |builder|
       builder.adapter :test, @faraday_stubs
     end
 
@@ -52,10 +53,20 @@ describe Jiralicious::Connection do
       @connection.session.name.should == "JSESSIONID"
     end
 
-    # TODO: Figure out why the hell new stubs aren't working
-    xit "raises an exception when it can't log in" do
+    it "raises an exception when it can't log in" do
       @faraday_stubs.post('/rest/auth/latest/session') { [401, {}, "Unauthorized"] }
+      # FIXME: Not sure why I have to do this twice. something with faraday stubs?
+      @connection.login
       lambda { @connection.login }.should raise_exception(Jiralicious::InvalidLogin)
+    end
+  end
+
+  describe "logging out" do
+    it "can log out" do
+      @connection.login
+      @connection.logged_in?.should be_true
+      @connection.logout
+      @connection.logged_in?.should be_false
     end
   end
 end
