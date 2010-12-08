@@ -17,6 +17,10 @@ describe Jiralicious::Connection do
     @faraday_stubs = Faraday::Adapter::Test::Stubs.new do |stub|
       stub.post('/rest/auth/latest/session') { [200, {}, @fake_session] }
       stub.delete('/rest/auth/latest/session') { [200, {}, ""] }
+      stub.get('/dummy/unauthorized') { [401, {}, "401 Unauthorized"] }
+      stub.get('/dummy/server_error') { [500, {}, "500 Server Error"] }
+      stub.get('/dummy/resource') { [200, {}, ""] }
+      stub.get('/dummy/resource/json') { [200, {}, '{"key": "value"}'] }
     end
 
     test_adapter = Faraday::Connection.new(:headers => {:foo => "bar"}) do |builder|
@@ -67,6 +71,43 @@ describe Jiralicious::Connection do
       @connection.logged_in?.should be_true
       @connection.logout
       @connection.logged_in?.should be_false
+    end
+  end
+
+  describe "making a request" do
+    it "should log in first" do
+      @connection.should_receive(:login)
+      @connection.make_request('/dummy/resource')
+    end
+
+    it "doesn't log in if there's a session" do
+      @connection.stub!(:logged_in?).and_return(true)
+      @connection.should_receive(:login).never
+      @connection.make_request('/dummy/resource')
+    end
+
+    it "defaults to :get if no method supplied in the options" do
+      faraday_connection = @connection.instance_variable_get(:@faraday_connection)
+      faraday_connection.should_receive(:get)
+      @connection.stub!(:handle_response)
+      @connection.make_request('/dummy/resource')
+    end
+
+    it "GETs the resorce and returns the handled response" do
+      json = @connection.make_request('/dummy/resource/json')
+      json.key.should == "value"
+    end
+
+    it "raises an exception when unauthorized" do
+      lambda { @connection.make_request('/dummy/unauthorized') }.should raise_error(
+        Jiralicious::AuthenticationError
+      )
+    end
+
+    it "raises an exception when there's a server error" do
+      lambda { @connection.make_request('/dummy/server_error') }.should raise_error(
+        Jiralicious::JiraError
+      )
     end
   end
 end

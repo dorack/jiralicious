@@ -50,12 +50,24 @@ module Jiralicious
       !@session.nil?
     end
 
+    def make_request(path, options = {})
+      method = options[:method] || :get
+      headers = options[:headers] || {}
+
+      login if !logged_in?
+      response = @faraday_connection.send(method) do |req|
+        req.path = path
+        req.headers = req.headers.merge(headers)
+      end
+      handle_response(response)
+    end
+
     private
 
     def handle_response(response, &block)
+      body = response.body
       case response.status
       when 200 then
-        body = response.body
         if body =~ /\w+/
           body = Hashie::Mash.new(JSON.parse(response.body))
         end
@@ -65,6 +77,7 @@ module Jiralicious
       else
         raise Jiralicious::JiraError
       end
+      return body
     end
 
     def session_cookie
