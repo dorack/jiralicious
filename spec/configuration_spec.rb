@@ -2,6 +2,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Jiralicious::Configuration do
+  before :each do
+    Jiralicious.reset
+  end
+
   it "sets the options to their default value" do
     Jiralicious.username.should be_nil
     Jiralicious.password.should be_nil

@@ -3,8 +3,6 @@
 require 'json'
 require 'hashie'
 require 'jiralicious/client'
-require 'jiralicious/configuration'
-require 'jiralicious/connection'
 require 'jiralicious/errors'
 
 module Jiralicious
