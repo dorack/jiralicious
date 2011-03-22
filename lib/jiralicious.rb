@@ -1,8 +1,7 @@
 # encoding: utf-8
 
-require 'json'
-require 'hashie'
-require 'jiralicious/client'
+require 'httparty'
+require 'jiralicious/session'
 require 'jiralicious/errors'
 
 module Jiralicious

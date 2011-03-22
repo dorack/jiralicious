@@ -14,9 +14,7 @@ Gem::Specification.new do |s|
   s.authors = ["Jason Stewart"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  s.add_runtime_dependency 'faraday', '~>0.5.3'
-  s.add_runtime_dependency 'hashie', '~>0.4.0'
-  s.add_runtime_dependency 'json', '~>1.4.6'
+  s.add_runtime_dependency 'httparty', '~>0.7.4'
   s.add_development_dependency 'rspec', '~>2.5.0'
 
   s.files         = `git ls-files`.split("\n")
