@@ -1,9 +1,10 @@
-coverage
-rdoc
-doc
-.yardoc
+*.gem
 .bundle
-pkg
-.DS_Store
+Gemfile.lock
+pkg/*
 *.swp
 *.swo
+TAGS
+*~
+\#*#
+*.#*
