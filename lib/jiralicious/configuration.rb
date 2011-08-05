@@ -18,7 +18,7 @@ module Jiralicious
     def self.extended(base)
       base.reset
     end
-    
+
     def options
       VALID_OPTIONS.inject({}) do |option, key|
         option.merge!(key => send(key))
