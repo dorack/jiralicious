@@ -12,28 +12,34 @@ module ConfiguationHelper
   end
 end
 
-describe Jiralicious::Session, "logging in" do
+module LoginHelper
+  def register_login
+    response = %Q|
+    {
+      "session": {
+      "name": "JSESSIONID",
+      "value": "12345678901234567890"
+    },
+      "loginInfo": {
+        "failedLoginCount": 10,
+        "loginCount": 127,
+        "lastFailedLoginTime": "2011-07-25T06:31:07.556-0500",
+        "previousLoginTime": "2011-07-25T06:31:07.556-0500"
+      }
+    }|
+    FakeWeb.register_uri(:post,
+                         Jiralicious.uri + '/rest/auth/latest/session',
+                         :body => response)
+  end
+end
+
+describe Jiralicious::Session, "when logging in" do
   include ConfiguationHelper
+  include LoginHelper
 
   context "successfully" do
     before :each do
-      response = %Q|
-      {
-        "session": {
-        "name": "JSESSIONID",
-        "value": "12345678901234567890"
-      },
-        "loginInfo": {
-          "failedLoginCount": 10,
-          "loginCount": 127,
-          "lastFailedLoginTime": "2011-07-25T06:31:07.556-0500",
-          "previousLoginTime": "2011-07-25T06:31:07.556-0500"
-        }
-      }
-      |
-      FakeWeb.register_uri(:post,
-                           Jiralicious.uri + '/rest/auth/latest/session',
-                           :body => response)
+      register_login
       @session = Jiralicious::Session.new
       @session.login
     end
@@ -136,15 +142,62 @@ describe Jiralicious::Session, "logging in" do
   end
 end
 
-describe Jiralicious::Session, "logging out" do
+describe Jiralicious::Session, "when logging out" do
   include ConfiguationHelper
+  include LoginHelper
+
   before :each do
+    register_login
     @session = Jiralicious::Session.new
     @session.login
     @session.should be_alive
+    FakeWeb.register_uri(:delete,
+                         Jiralicious.uri + '/rest/auth/latest/session',
+                         :status => "204")
     @session.logout
   end
 
-  it "is not alive"
-  it "clears the session and login info"
+  it "is not alive" do
+    @session.should_not be_alive
+  end
+
+  it "clears the session and login info" do
+    @session.session.should be_nil
+    @session.login_info.should be_nil
+  end
+
+  context "when not logged in" do
+    before :each do
+      @session = Jiralicious::Session.new
+      FakeWeb.register_uri(:delete,
+                         Jiralicious.uri + '/rest/auth/latest/session',
+                         :status => ["401", "Not Authorized"])
+    end
+
+    it "should raise the correct error" do
+      lambda { @session.logout }.should raise_error(Jiralicious::NotLoggedIn)
+    end
+  end
+
+  context "with any other HTTP error" do
+    before :each do
+      @session = Jiralicious::Session.new
+      FakeWeb.register_uri(:delete,
+                         Jiralicious.uri + '/rest/auth/latest/session',
+                         :status => ["500", "Internal Server Error"])
+    end
+
+    it "raises an exception" do
+      lambda { @session.logout }.
+        should raise_error(Jiralicious::JiraError)
+    end
+
+    it "gives the Net::HTTP reason for failure" do
+      begin
+        @session.logout
+      rescue Jiralicious::JiraError => e
+        e.message.should == "Internal Server Error"
+      end
+    end
+  end
 end

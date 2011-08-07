@@ -39,6 +39,21 @@ module Jiralicious
     end
 
     def logout
+      response = perform_request do
+        self.class.delete('/rest/auth/latest/session')
+      end
+
+      if response.code == 204
+        clear_session
+      else
+        case response.code
+        when 401 then
+          raise Jiralicious::NotLoggedIn.new("Not logged in")
+        else
+          # Give Net::HTTP reason
+          raise Jiralicious::JiraError.new(response.response.message)
+        end
+      end
     end
 
     def perform_request(options = {}, &block)
