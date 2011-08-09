@@ -44,6 +44,8 @@ describe Jiralicious::Session, "when logging in" do
       @session.login
     end
 
+    it "informs the session that it's logging in"
+
     it "is alive" do
       @session.should be_alive
     end
@@ -197,6 +199,45 @@ describe Jiralicious::Session, "when logging out" do
         @session.logout
       rescue Jiralicious::JiraError => e
         e.message.should == "Internal Server Error"
+      end
+    end
+  end
+end
+
+describe Jiralicious::Session, "performing a request" do
+  include ConfiguationHelper
+  include LoginHelper
+
+  before :each do
+    FakeWeb.register_uri(:get,
+                         Jiralicious.uri + '/fake/uri',
+                         :status => "200")
+  end
+
+  context "when login is required" do
+    before :each do
+      @session = Jiralicious::Session.new
+      @session.stub!(:require_login?).and_return(true)
+    end
+
+    it "attempts to log in beforehand" do
+      @session.should_receive(:login)
+      @session.perform_request do
+        Jiralicious::Session.get('/fake/uri')
+      end
+    end
+  end
+
+  context "when login is not required" do
+    before :each do
+      @session = Jiralicious::Session.new
+      @session.stub!(:require_login?).and_return(false)
+    end
+
+    it "doesn't try to log in before making the request" do
+      @session.should_receive(:login).never
+      @session.perform_request do
+        Jiralicious::Session.get('/fake/uri')
       end
     end
   end

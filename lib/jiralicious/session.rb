@@ -13,7 +13,7 @@ module Jiralicious
     end
 
     def login
-      response = perform_request do
+      response = perform_request(:logging_in => true) do
         self.class.post('/rest/auth/latest/session',
                                  :body => {
                                    :username => Jiralicious.username,
@@ -24,6 +24,7 @@ module Jiralicious
       if response.code == 200
         @session = response["session"]
         @login_info = response["loginInfo"]
+        self.class.cookies({self.session["name"] => self.session["value"]})
       else
         clear_session
         case response.code
@@ -57,17 +58,16 @@ module Jiralicious
     end
 
     def perform_request(options = {}, &block)
-      # TODO: check for logging in and login required
-      # if not logged in and login is required, try to log in (alive?)
-      # skip this step if actually logging in (:options => login is true)
       self.class.base_uri Jiralicious.uri
+      self.login if require_login? && !options[:logging_in]
+
       block.call
     end
 
     private
 
     def require_login?
-      Jiralicious.username.empty? && Jiralicious.password.empty?
+      !(Jiralicious.username.empty? && Jiralicious.password.empty?)
     end
 
     def clear_session
