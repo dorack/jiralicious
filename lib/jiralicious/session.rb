@@ -13,7 +13,7 @@ module Jiralicious
     end
 
     def login
-      response = perform_request(:logging_in => true) do
+      response = perform_request(:authenticating => true) do
         self.class.post('/rest/auth/latest/session',
                                  :body => {
                                    :username => Jiralicious.username,
@@ -59,15 +59,39 @@ module Jiralicious
 
     def perform_request(options = {}, &block)
       self.class.base_uri Jiralicious.uri
-      self.login if require_login? && !options[:logging_in]
+      self.login if require_login? && !options[:authenticating]
 
-      block.call
+      response = block.call
+      unless options[:authenticating]
+        if captcha_required(response)
+          raise Jiralicious::CaptchaRequired.
+            new("Captacha is required. Try logging into Jira via the web interface")
+        elsif cookie_invalid(response)
+          # Can usually be fixed by logging in again
+          clear_session
+          self.login
+          response = block.call
+          raise Jiralicious::CookieExpired if cookie_invalid(response)
+        end
+      end
+      response
     end
 
     private
 
+    def captcha_required(response)
+      response.code == 401 &&
+        # Fakeweb lowercases headers automatically. :(
+        (response.headers["X-Seraph-LoginReason"] == "AUTHENTICATION_DENIED" ||
+         response.headers["x-seraph-loginreason"] == "AUTHENTICATION_DENIED")
+    end
+
+    def cookie_invalid(response)
+      response.code == 401 && response.body =~ /cookie/i
+    end
+
     def require_login?
-      !(Jiralicious.username.empty? && Jiralicious.password.empty?)
+      !(Jiralicious.username.empty? && Jiralicious.password.empty?) && !alive?
     end
 
     def clear_session

@@ -1,7 +1,7 @@
 # encoding: utf-8
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-module ConfiguationHelper
+module ConfigurationHelper
   def self.included(base)
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -34,7 +34,7 @@ module LoginHelper
 end
 
 describe Jiralicious::Session, "when logging in" do
-  include ConfiguationHelper
+  include ConfigurationHelper
   include LoginHelper
 
   context "successfully" do
@@ -43,8 +43,6 @@ describe Jiralicious::Session, "when logging in" do
       @session = Jiralicious::Session.new
       @session.login
     end
-
-    it "informs the session that it's logging in"
 
     it "is alive" do
       @session.should be_alive
@@ -145,7 +143,7 @@ describe Jiralicious::Session, "when logging in" do
 end
 
 describe Jiralicious::Session, "when logging out" do
-  include ConfiguationHelper
+  include ConfigurationHelper
   include LoginHelper
 
   before :each do
@@ -205,7 +203,7 @@ describe Jiralicious::Session, "when logging out" do
 end
 
 describe Jiralicious::Session, "performing a request" do
-  include ConfiguationHelper
+  include ConfigurationHelper
   include LoginHelper
 
   before :each do
@@ -240,5 +238,85 @@ describe Jiralicious::Session, "performing a request" do
         Jiralicious::Session.get('/fake/uri')
       end
     end
+  end
+end
+
+describe  "performing a request with a successful response" do
+    include ConfigurationHelper
+    include LoginHelper
+
+    before :each do
+      FakeWeb.register_uri(:get,
+                           Jiralicious.uri + '/ok',
+                           :status => "200")
+      FakeWeb.register_uri(:post,
+                           Jiralicious.uri + '/created',
+                           :status => "201")
+      FakeWeb.register_uri(:delete,
+                           Jiralicious.uri + '/nocontent',
+                           :status => "204")
+
+      register_login
+  end
+
+  let(:session) { Jiralicious::Session.new }
+
+  it "returns the response on ok" do
+    r = session.perform_request { Jiralicious::Session.get('/ok') }
+    r.class.should == HTTParty::Response
+  end
+
+  it "returns the response on created" do
+    r = session.perform_request { Jiralicious::Session.post('/created') }
+    r.class.should == HTTParty::Response
+  end
+
+  it "returns the response on no content" do
+    r = session.perform_request { Jiralicious::Session.delete('/nocontent') }
+    r.class.should == HTTParty::Response
+  end
+end
+
+describe  "performing a request with an unsuccessful response" do
+    include ConfigurationHelper
+    include LoginHelper
+
+    before :each do
+      FakeWeb.register_uri(:get,
+                           Jiralicious.uri + '/cookie_expired',
+                           [
+                            {:status => "401", :body => "Cookie Expired"},
+                            {:status => "200"}
+                           ])
+      FakeWeb.register_uri(:get,
+                           Jiralicious.uri + '/captcha_needed',
+                           :status => "401",
+                           "X-Seraph-LoginReason" => "AUTHENTICATION_DENIED")
+      register_login
+  end
+
+  let(:session) { Jiralicious::Session.new }
+
+  it "retries the login when the cookie expires" do
+    session.should_receive(:login).twice
+    session.perform_request { Jiralicious::Session.get('/cookie_expired') }
+  end
+
+  it "raises an exception when retried and failed" do
+    FakeWeb.register_uri(:get,
+                         Jiralicious.uri + '/cookie_expired',
+                         [
+                          {:status => "401", :body => "Cookie Expired"},
+                          {:status => "401", :body => "Cookie Expired"}
+                         ])
+    lambda {
+      session.perform_request { Jiralicious::Session.get('/cookie_expired') }
+    }.should raise_error(Jiralicious::CookieExpired)
+  end
+
+  it "raises an exception when the captcha is required" do
+    lambda {
+      session.perform_request { Jiralicious::Session.get('/captcha_needed') }
+    }.should raise_error(Jiralicious::CaptchaRequired)
   end
 end
