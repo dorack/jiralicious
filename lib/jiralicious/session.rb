@@ -5,8 +5,7 @@ module Jiralicious
   class Session
     include HTTParty
     attr_accessor :session, :login_info
-
-    format :json
+    headers       'Content-Type' => 'application/json'
 
     def alive?
       @session && @login_info
@@ -15,13 +14,13 @@ module Jiralicious
     def login
       response = perform_request(:authenticating => true) do
         self.class.post('/rest/auth/latest/session',
-                                 :body => {
-                                   :username => Jiralicious.username,
-                                   :password => Jiralicious.password
-                        })
+                        :body => {
+                          :username => Jiralicious.username,
+                          :password => Jiralicious.password}.to_json)
       end
 
       if response.code == 200
+        response = JSON.parse(response.body)
         @session = response["session"]
         @login_info = response["loginInfo"]
         self.class.cookies({self.session["name"] => self.session["value"]})
