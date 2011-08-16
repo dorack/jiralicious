@@ -1,42 +1,7 @@
 # encoding: utf-8
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-module ConfigurationHelper
-  def self.included(base)
-    Jiralicious.configure do |config|
-      config.username = "jstewart"
-      config.password = "topsecret"
-      config.uri = "http://localhost"
-      config.api_version = "latest"
-    end
-  end
-end
-
-module LoginHelper
-  def register_login
-    response = %Q|
-    {
-      "session": {
-      "name": "JSESSIONID",
-      "value": "12345678901234567890"
-    },
-      "loginInfo": {
-        "failedLoginCount": 10,
-        "loginCount": 127,
-        "lastFailedLoginTime": "2011-07-25T06:31:07.556-0500",
-        "previousLoginTime": "2011-07-25T06:31:07.556-0500"
-      }
-    }|
-    FakeWeb.register_uri(:post,
-                         Jiralicious.uri + '/rest/auth/latest/session',
-                         :body => response)
-  end
-end
-
 describe Jiralicious::Session, "when logging in" do
-  include ConfigurationHelper
-  include LoginHelper
-
   context "successfully" do
     before :each do
       register_login
@@ -143,9 +108,6 @@ describe Jiralicious::Session, "when logging in" do
 end
 
 describe Jiralicious::Session, "when logging out" do
-  include ConfigurationHelper
-  include LoginHelper
-
   before :each do
     register_login
     @session = Jiralicious::Session.new
@@ -242,9 +204,6 @@ describe Jiralicious::Session, "performing a request" do
 end
 
 describe  "performing a request with a successful response" do
-    include ConfigurationHelper
-    include LoginHelper
-
     before :each do
       FakeWeb.register_uri(:get,
                            Jiralicious.uri + '/ok',
@@ -278,9 +237,6 @@ describe  "performing a request with a successful response" do
 end
 
 describe  "performing a request with an unsuccessful response" do
-    include ConfigurationHelper
-    include LoginHelper
-
     before :each do
       FakeWeb.register_uri(:get,
                            Jiralicious.uri + '/cookie_expired',

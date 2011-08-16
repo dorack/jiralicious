@@ -11,4 +11,12 @@ FakeWeb.allow_net_connect = false
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
+  config.include ConfigurationHelper
+  config.include LoginHelper
+  config.include JsonResponse
+
+  config.before(:each) do
+    configure_jiralicious
+    register_login
+  end
 end

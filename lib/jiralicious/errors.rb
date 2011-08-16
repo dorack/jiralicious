@@ -11,4 +11,5 @@ module Jiralicious
   # http://confluence.atlassian.com/display/JIRA/JIRA+REST+API+%28Alpha%29+Tutorial
   class CookieExpired < AuthenticationError; end
   class CaptchaRequired < AuthenticationError; end
+  class IssueNotFound < StandardError; end
 end
