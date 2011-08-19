@@ -1,11 +1,11 @@
 # encoding: utf-8
 module Jiralicious
-  class Issue < Hashie::Mash
-
-    def initialize(json)
-      super
-      # TODO Deep initialize
-    end
+  class Issue < Hashie::Trash
+    property :jira_key, :from  => :key
+    property :expand
+    property :jira_self, :from => :self
+    property :fields
+    property :transitions
 
     def self.find(key, options = {})
       response = Jiralicious.session.perform_request do
