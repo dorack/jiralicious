@@ -12,7 +12,8 @@ module Jiralicious
         fields.each do |field, details|
           next if details["name"].nil?
           method_name = details["name"].gsub(/(\w+)([A-Z].*)/, '\1_\2').
-            gsub(/-/, "_").downcase
+            gsub(/-\ /, "_").
+            downcase
 
           if singleton.method_defined?(method_name)
             method_name = "jira_#{method_name}"

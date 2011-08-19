@@ -16,7 +16,8 @@ describe Jiralicious::Parsers::FieldParser do
         "testfield" => {"name" => "testfield", "value"  => "Test Data"},
         "methods" => {"name" => "methods", "value" => "Test Data 2"},
         "testField" => {"name" => "testField", "value" => "Test Data 3"},
-        "test_field_dash" => {"name" => "test-field-dash", "value" => "Test Data 4"}
+        "test_field_dash" => {"name" => "test-field-dash", "value" => "Test Data 4"},
+        "test_field_space" => {"name" => "test field space", "value" => "Test Data 5"}
       }
       @parsed_class = ParserMock.new(@parsed_data)
     end
@@ -43,8 +44,9 @@ describe Jiralicious::Parsers::FieldParser do
         @parsed_class.test_field.should == "Test Data 3"
       end
 
-      it "converts dashes to underscore" do
+      it "converts dashes and spaces to underscore" do
         @parsed_class.test_field_dash.should == "Test Data 4"
+        @parsed_class.test_field_space.should == "Test Data 5"
       end
     end
   end
