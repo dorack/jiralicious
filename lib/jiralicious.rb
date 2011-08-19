@@ -3,9 +3,12 @@
 require 'hashie'
 require 'httparty'
 require 'json'
+
+require 'jiralicious/parsers/field_parser'
 require 'jiralicious/issue'
 require 'jiralicious/session'
 require 'jiralicious/errors'
+
 
 module Jiralicious
   extend Configuration
