@@ -44,7 +44,7 @@ describe Jiralicious::Parsers::FieldParser do
         @parsed_class.test_field.should == "Test Data 3"
       end
 
-      it "converts dashes and spaces to underscore" do
+      it "converts nonword  to underscore" do
         @parsed_class.test_field_dash.should == "Test Data 4"
         @parsed_class.test_field_space.should == "Test Data 5"
       end
