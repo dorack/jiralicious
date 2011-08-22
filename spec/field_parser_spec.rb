@@ -17,7 +17,11 @@ describe Jiralicious::Parsers::FieldParser do
         "methods" => {"name" => "methods", "value" => "Test Data 2"},
         "testField" => {"name" => "testField", "value" => "Test Data 3"},
         "test_field_dash" => {"name" => "test-field-dash", "value" => "Test Data 4"},
-        "test_field_space" => {"name" => "test field space", "value" => "Test Data 5"}
+        "test_field_space" => {"name" => "test field space", "value" => "Test Data 5"},
+        "test_field_hash" => {"name" => "test_field_hash", "value" => {"it" => "is a Hash"}},
+        "test_field_array" => {"name" => "test_field_array", "value" => ["Not a hash"]},
+        "test_field_array_with_hash" => {"name" => "test_field_array_with_hash",
+          "value" => [{"try" => "this"}]}
       }
       @parsed_class = ParserMock.new(@parsed_data)
     end
@@ -47,6 +51,21 @@ describe Jiralicious::Parsers::FieldParser do
       it "converts nonword  to underscore" do
         @parsed_class.test_field_dash.should == "Test Data 4"
         @parsed_class.test_field_space.should == "Test Data 5"
+      end
+    end
+
+    context "mashifying data" do
+      it "makes hashes a mash" do
+        @parsed_class.test_field_hash.should be_instance_of(Hashie::Mash)
+      end
+
+      it "recursively makes array elements mashes" do
+        @parsed_class.test_field_array_with_hash.
+          first.should be_instance_of(Hashie::Mash)
+      end
+
+      it "leaves array data alone when it's not a hash" do
+        @parsed_class.test_field_array.should == ["Not a hash"]
       end
     end
   end

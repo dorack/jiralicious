@@ -11,7 +11,8 @@ module Jiralicious
 
         fields.each do |field, details|
           next if details["name"].nil?
-          method_name = details["name"].gsub(/(\w+)([A-Z].*)/, '\1_\2').
+          method_value = mashify(details["value"])
+          method_name  = details["name"].gsub(/(\w+)([A-Z].*)/, '\1_\2').
             gsub(/\W/, "_").
             downcase
 
@@ -19,10 +20,22 @@ module Jiralicious
             method_name = "jira_#{method_name}"
           end
 
-          @jiralicious_field_parser_data[method_name] = details["value"]
+          @jiralicious_field_parser_data[method_name] = method_value
           singleton.send :define_method, method_name do
             @jiralicious_field_parser_data[method_name]
           end
+        end
+      end
+
+      private
+
+      def mashify(data)
+        if data.is_a?(Array)
+          data.map { |d| mashify(d) }
+        elsif data.is_a?(Hash)
+          Hashie::Mash.new(data)
+        else
+          data
         end
       end
     end
