@@ -12,4 +12,5 @@ module Jiralicious
   class CookieExpired < AuthenticationError; end
   class CaptchaRequired < AuthenticationError; end
   class IssueNotFound < StandardError; end
+  class JqlError < StandardError; end
 end

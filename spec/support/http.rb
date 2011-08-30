@@ -23,4 +23,8 @@ module JsonResponse
   def issue_json
     File.new(File.expand_path('issue.json', File.dirname(__FILE__) + '/../fixtures')).read
   end
+
+  def search_json
+    File.new(File.expand_path('search.json', File.dirname(__FILE__) + '/../fixtures')).read
+  end
 end

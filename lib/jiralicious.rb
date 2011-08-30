@@ -6,6 +6,7 @@ require 'json'
 
 require 'jiralicious/parsers/field_parser'
 require 'jiralicious/issue'
+require 'jiralicious/search'
 require 'jiralicious/session'
 require 'jiralicious/errors'
 
