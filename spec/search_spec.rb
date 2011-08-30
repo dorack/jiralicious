@@ -14,7 +14,7 @@ describe Jiralicious, "search", do
 
   context "when successful" do
     before :each do
-      FakeWeb.register_uri(:get,
+      FakeWeb.register_uri(:post,
                            "#{Jiralicious.rest_path}/search",
                            :status => "200",
                            :body => search_json)
@@ -25,20 +25,11 @@ describe Jiralicious, "search", do
       results = Jiralicious.search("key = HSP-1")
       results["issues"].should be_instance_of(Array)
     end
-
-    it "should override the defaults when specified" do
-      FakeWeb.register_uri(:post,
-                           "#{Jiralicious.rest_path}/search",
-                           :status => "200",
-                           :body => search_json)
-      results = Jiralicious.search("key = HSP-1", :method => :post)
-      results["issues"].should be_instance_of(Array)
-    end
   end
 
   context "When there's a problem with the query" do
     before :each do
-      FakeWeb.register_uri(:get,
+      FakeWeb.register_uri(:post,
                            "#{Jiralicious.rest_path}/search",
                            :status => "400")
     end
