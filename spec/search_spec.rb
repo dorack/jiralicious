@@ -21,9 +21,9 @@ describe Jiralicious, "search", do
 
     end
 
-    it "get a list of issues" do
+    it "instantiates a search result" do
       results = Jiralicious.search("key = HSP-1")
-      results["issues"].should be_instance_of(Array)
+      results.should be_instance_of(Jiralicious::SearchResult)
     end
   end
 

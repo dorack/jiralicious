@@ -18,7 +18,7 @@ module Jiralicious
     end
 
     if response.code == 200
-      response = JSON.parse(response.body)
+      Jiralicious::SearchResult.new(JSON.parse(response.body))
     else
       raise Jiralicious::JqlError
     end
