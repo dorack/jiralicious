@@ -9,6 +9,7 @@ require 'jiralicious/issue'
 require 'jiralicious/search'
 require 'jiralicious/session'
 require 'jiralicious/errors'
+require 'jiralicious/search_result'
 
 
 module Jiralicious
