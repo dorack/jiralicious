@@ -13,4 +13,5 @@ module Jiralicious
   class CaptchaRequired < AuthenticationError; end
   class IssueNotFound < StandardError; end
   class JqlError < StandardError; end
+  class TransitionError < StandardError; end
 end

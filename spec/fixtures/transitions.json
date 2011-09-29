@@ -1,0 +1,65 @@
+{
+    "2": {
+        "name": "Close Issue",
+        "fields": [{
+            "id": "resolution",
+            "required": true,
+            "type": "com.atlassian.jira.issue.resolution.Resolution"
+        },
+        {
+            "id": "fixVersions",
+            "required": false,
+            "type": "com.atlassian.jira.project.version.Version"
+        },
+        {
+            "id": "customfield_10105",
+            "required": false,
+            "type": "com.atlassian.jira.plugins.jira-importers-plugin:bug-importid"
+        },
+        {
+            "id": "customfield_10106",
+            "required": false,
+            "type": "com.atlassian.jira.plugin.system.customfieldtypes:textfield"
+        },
+        {
+            "id": "assignee",
+            "required": false,
+            "type": "com.opensymphony.user.User"
+        }],
+        "transitionDestination": "6"
+    },
+    "4": {
+        "name": "Start Progress",
+        "fields": [],
+        "transitionDestination": "3"
+    },
+    "5": {
+        "name": "Resolve Issue",
+        "fields": [{
+            "id": "resolution",
+            "required": true,
+            "type": "com.atlassian.jira.issue.resolution.Resolution"
+        },
+        {
+            "id": "fixVersions",
+            "required": false,
+            "type": "com.atlassian.jira.project.version.Version"
+        },
+        {
+            "id": "customfield_10105",
+            "required": false,
+            "type": "com.atlassian.jira.plugins.jira-importers-plugin:bug-importid"
+        },
+        {
+            "id": "customfield_10106",
+            "required": false,
+            "type": "com.atlassian.jira.plugin.system.customfieldtypes:textfield"
+        },
+        {
+            "id": "assignee",
+            "required": false,
+            "type": "com.opensymphony.user.User"
+        }],
+        "transitionDestination": "5"
+    }
+}
