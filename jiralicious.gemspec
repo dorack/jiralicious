@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   s.add_runtime_dependency 'httparty', '~>0.7.8'
-  s.add_runtime_dependency 'hashie', '~>1.1.0'
+  s.add_runtime_dependency 'hashie', '~>1.1'
   s.add_runtime_dependency 'json', '~>1.6.3'
   s.add_development_dependency 'rspec', '~>2.6.0'
   s.add_development_dependency 'fakeweb', '~>1.3.0'
