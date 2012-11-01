@@ -12,8 +12,6 @@ Gem::Specification.new do |s|
   s.description = %Q{A Ruby library for interacting with JIRA's REST API}
   s.email = "jstewart@fusionary.com"
   s.authors = ["Jason Stewart"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   s.add_runtime_dependency 'httparty', '~>0.7.8'
   s.add_runtime_dependency 'hashie', '~>1.1'
   s.add_runtime_dependency 'json', '~>1.6.3'

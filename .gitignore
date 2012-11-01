@@ -5,6 +5,7 @@ pkg/*
 *.swp
 *.swo
 TAGS
+vendor/bundle
 *~
 \#*#
 *.#*

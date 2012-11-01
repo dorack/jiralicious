@@ -1,5 +1,5 @@
 # encoding: utf-8
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
 
 class ParserMock
   include Jiralicious::Parsers::FieldParser
@@ -14,6 +14,7 @@ describe Jiralicious::Parsers::FieldParser do
     before :each do
       @parsed_data = {
         "testfield" => {"name" => "testfield", "value"  => "Test Data"},
+        "without_hash" => "test",
         "methods" => {"name" => "methods", "value" => "Test Data 2"},
         "testField" => {"name" => "testField", "value" => "Test Data 3"},
         "test_field_dash" => {"name" => "test-field-dash", "value" => "Test Data 4"},

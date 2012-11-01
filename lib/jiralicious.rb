@@ -11,6 +11,8 @@ require 'jiralicious/issue'
 require 'jiralicious/search'
 require 'jiralicious/search_result'
 require 'jiralicious/session'
+require 'jiralicious/basic_session'
+require 'jiralicious/cookie_session'
 
 
 module Jiralicious
@@ -18,7 +20,8 @@ module Jiralicious
   extend self
 
   def session
-    @session ||= Session.new
+    session_type = "#{self.auth_type.to_s.capitalize}Session"
+    @session ||= Jiralicious.const_get(session_type).new
   end
 
   def rest_path

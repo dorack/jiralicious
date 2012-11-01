@@ -1,11 +1,11 @@
 # encoding: utf-8
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require "spec_helper"
 
-describe Jiralicious::Session, "when logging in" do
+describe Jiralicious::CookieSession, "when logging in" do
   context "successfully" do
     before :each do
       register_login
-      @session = Jiralicious::Session.new
+      @session = Jiralicious::CookieSession.new
       @session.login
     end
 
@@ -32,7 +32,7 @@ describe Jiralicious::Session, "when logging in" do
       FakeWeb.register_uri(:post,
                            Jiralicious.uri + '/rest/auth/latest/session',
                            :status => ["401", "Not Authorized"])
-      @session = Jiralicious::Session.new
+      @session = Jiralicious::CookieSession.new
     end
 
     it "raises the correct exception" do
@@ -59,7 +59,7 @@ describe Jiralicious::Session, "when logging in" do
       FakeWeb.register_uri(:post,
                            Jiralicious.uri + '/rest/auth/latest/session',
                            :status => ["403", "Captcha Required"])
-      @session = Jiralicious::Session.new
+      @session = Jiralicious::CookieSession.new
     end
 
     it "raises an exception" do
@@ -80,8 +80,9 @@ describe Jiralicious::Session, "when logging in" do
     before :each do
       FakeWeb.register_uri(:post,
                            Jiralicious.uri + '/rest/auth/latest/session',
+                           :body => "Internal Server Error",
                            :status => ["500", "Internal Server Error"])
-      @session = Jiralicious::Session.new
+      @session = Jiralicious::CookieSession.new
     end
 
     it "raises an exception" do
@@ -107,10 +108,10 @@ describe Jiralicious::Session, "when logging in" do
   end
 end
 
-describe Jiralicious::Session, "when logging out" do
+describe Jiralicious::CookieSession, "when logging out" do
   before :each do
     register_login
-    @session = Jiralicious::Session.new
+    @session = Jiralicious::CookieSession.new
     @session.login
     @session.should be_alive
     FakeWeb.register_uri(:delete,
@@ -130,7 +131,7 @@ describe Jiralicious::Session, "when logging out" do
 
   context "when not logged in" do
     before :each do
-      @session = Jiralicious::Session.new
+      @session = Jiralicious::CookieSession.new
       FakeWeb.register_uri(:delete,
                          Jiralicious.uri + '/rest/auth/latest/session',
                          :status => ["401", "Not Authorized"])
@@ -143,7 +144,7 @@ describe Jiralicious::Session, "when logging out" do
 
   context "with any other HTTP error" do
     before :each do
-      @session = Jiralicious::Session.new
+      @session = Jiralicious::CookieSession.new
       FakeWeb.register_uri(:delete,
                          Jiralicious.uri + '/rest/auth/latest/session',
                          :status => ["500", "Internal Server Error"])
@@ -164,7 +165,7 @@ describe Jiralicious::Session, "when logging out" do
   end
 end
 
-describe Jiralicious::Session, "performing a request" do
+describe Jiralicious::CookieSession, "performing a request" do
   include ConfigurationHelper
   include LoginHelper
 
@@ -176,29 +177,25 @@ describe Jiralicious::Session, "performing a request" do
 
   context "when login is required" do
     before :each do
-      @session = Jiralicious::Session.new
+      @session = Jiralicious::CookieSession.new
       @session.stub!(:require_login?).and_return(true)
     end
 
     it "attempts to log in beforehand" do
       @session.should_receive(:login)
-      @session.perform_request do
-        Jiralicious::Session.get('/fake/uri')
-      end
+      @session.request(:get, '/fake/uri')
     end
   end
 
   context "when login is not required" do
     before :each do
-      @session = Jiralicious::Session.new
+      @session = Jiralicious::CookieSession.new
       @session.stub!(:require_login?).and_return(false)
     end
 
     it "doesn't try to log in before making the request" do
       @session.should_receive(:login).never
-      @session.perform_request do
-        Jiralicious::Session.get('/fake/uri')
-      end
+      @session.request(:get, '/fake/uri')
     end
   end
 end
@@ -218,21 +215,18 @@ describe  "performing a request with a successful response" do
       register_login
   end
 
-  let(:session) { Jiralicious::Session.new }
+  let(:session) { Jiralicious::CookieSession.new }
 
   it "returns the response on ok" do
-    r = session.perform_request { Jiralicious::Session.get('/ok') }
-    r.class.should == HTTParty::Response
+    session.request(:get, '/ok').class.should == HTTParty::Response
   end
 
   it "returns the response on created" do
-    r = session.perform_request { Jiralicious::Session.post('/created') }
-    r.class.should == HTTParty::Response
+    session.request(:post, '/created').class.should == HTTParty::Response
   end
 
   it "returns the response on no content" do
-    r = session.perform_request { Jiralicious::Session.delete('/nocontent') }
-    r.class.should == HTTParty::Response
+    session.request(:delete, '/nocontent').class.should == HTTParty::Response
   end
 end
 
@@ -251,28 +245,24 @@ describe  "performing a request with an unsuccessful response" do
       register_login
   end
 
-  let(:session) { Jiralicious::Session.new }
+  let(:session) { Jiralicious::CookieSession.new }
 
-  it "retries the login when the cookie expires" do
-    session.should_receive(:login).twice
-    session.perform_request { Jiralicious::Session.get('/cookie_expired') }
-  end
-
-  it "raises an exception when retried and failed" do
+  it "raises an exception when cookie invalid" do
     FakeWeb.register_uri(:get,
                          Jiralicious.uri + '/cookie_expired',
                          [
                           {:status => "401", :body => "Cookie Expired"},
                           {:status => "401", :body => "Cookie Expired"}
                          ])
+
     lambda {
-      session.perform_request { Jiralicious::Session.get('/cookie_expired') }
+      session.request(:get, '/cookie_expired')
     }.should raise_error(Jiralicious::CookieExpired)
   end
 
   it "raises an exception when the captcha is required" do
     lambda {
-      session.perform_request { Jiralicious::Session.get('/captcha_needed') }
+      session.request(:get, '/captcha_needed')
     }.should raise_error(Jiralicious::CaptchaRequired)
   end
 end

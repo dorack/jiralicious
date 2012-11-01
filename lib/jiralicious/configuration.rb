@@ -2,8 +2,9 @@
 
 module Jiralicious
   module Configuration
-    VALID_OPTIONS = [:username, :password, :uri, :api_version]
+    VALID_OPTIONS = [:username, :password, :uri, :api_version, :auth_type]
     DEFAULT_USERNAME = nil
+    DEFAULT_AUTH_TYPE = :basic
     DEFAULT_PASSWORD = nil
     DEFAULT_URI = nil
     DEFAULT_API_VERSION = "latest"
@@ -30,6 +31,7 @@ module Jiralicious
       self.password = DEFAULT_PASSWORD
       self.uri = DEFAULT_URI
       self.api_version = DEFAULT_API_VERSION
+      self.auth_type = DEFAULT_AUTH_TYPE
     end
   end
 end

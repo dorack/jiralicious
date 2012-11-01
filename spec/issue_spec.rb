@@ -8,6 +8,7 @@ describe Jiralicious::Issue, "finding" do
       config.username = "jstewart"
       config.password = "topsecret"
       config.uri = "http://localhost"
+      config.auth_type = :cookie
       config.api_version = "latest"
     end
 

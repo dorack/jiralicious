@@ -10,11 +10,14 @@ module Jiralicious
         singleton = class << self; self end
 
         fields.each do |field, details|
-          next if details["name"].nil?
-          method_value = mashify(details["value"])
-          method_name  = details["name"].gsub(/(\w+)([A-Z].*)/, '\1_\2').
-            gsub(/\W/, "_").
-            downcase
+          if details.is_a?(Hash)
+            next if details["name"].nil?
+            method_value = mashify(details["value"])
+            method_name  = normalize(details["name"])
+          else
+            method_value = mashify(details)
+            method_name = normalize(field)
+          end
 
           if singleton.method_defined?(method_name)
             method_name = "jira_#{method_name}"
@@ -28,6 +31,12 @@ module Jiralicious
       end
 
       private
+
+      def normalize(name)
+        name.gsub(/(\w+)([A-Z].*)/, '\1_\2').
+              gsub(/\W/, "_").
+              downcase
+      end
 
       def mashify(data)
         if data.is_a?(Array)

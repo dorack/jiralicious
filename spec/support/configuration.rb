@@ -5,6 +5,7 @@ module ConfigurationHelper
       config.password = "topsecret"
       config.uri = "http://localhost"
       config.api_version = "latest"
+      config.auth_type = :cookie
     end
   end
 end

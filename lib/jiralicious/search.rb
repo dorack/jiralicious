@@ -10,12 +10,11 @@ module Jiralicious
       :maxResults => options[:max_results]
     }.to_json
 
-    response = Jiralicious.session.perform_request do
-      Jiralicious::Session.post(
-                                "#{Jiralicious.rest_path}/search",
-                                :body => request_body
-                                )
-    end
+    response = Jiralicious.session.request(
+      :post,
+      "#{Jiralicious.rest_path}/search",
+      :body => request_body
+    )
 
     if response.code == 200
       Jiralicious::SearchResult.new(JSON.parse(response.body))

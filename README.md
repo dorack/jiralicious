@@ -10,7 +10,13 @@ Before doing anything, you must configure your session:
       config.password = "yourpass"
       config.uri = "http://example.com/foo/bar"
       config.api_version = "latest"
+      config.auth_type = :basic
     end
+
+Default auth type is now Basic auth. Cookie auth is still available with the
+following option:
+
+    config.auth_type = :cookie
 
 Search for issues:
 
