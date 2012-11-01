@@ -10,16 +10,19 @@ module Jiralicious
       :maxResults => options[:max_results]
     }.to_json
 
-    response = Jiralicious.session.request(
+    handler = Proc.new do |response|
+      if response.code == 200
+        Jiralicious::SearchResult.new(response)
+      else
+        raise Jiralicious::JqlError.new(response['errorMessages'].join('\n'))
+      end
+    end
+
+    Jiralicious.session.request(
       :post,
       "#{Jiralicious.rest_path}/search",
-      :body => request_body
+      :body => request_body,
+      :handler => handler
     )
-
-    if response.code == 200
-      Jiralicious::SearchResult.new(JSON.parse(response.body))
-    else
-      raise Jiralicious::JqlError
-    end
   end
 end

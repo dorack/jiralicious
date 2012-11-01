@@ -28,43 +28,48 @@ module Jiralicious
 
     def login
       @authenticating = true
-      response = self.request(:post, '/rest/auth/latest/session',
-                              :body => { :username => Jiralicious.username,
-                                         :password => Jiralicious.password}.to_json)
-
-      if response.code == 200
-        response = JSON.parse(response.body)
-        @session = response["session"]
-        @login_info = response["loginInfo"]
-        self.class.cookies({self.session["name"] => self.session["value"]})
-      else
-        clear_session
-        case response.code
-        when 401 then
-          raise Jiralicious::InvalidLogin.new("Invalid login")
-        when 403
-          raise Jiralicious::CaptchaRequired.new("Captacha is required. Try logging into Jira via the web interface")
+      handler = Proc.new do |response|
+        if response.code == 200
+          @session = response["session"]
+          @login_info = response["loginInfo"]
+          self.class.cookies({self.session["name"] => self.session["value"]})
         else
-          # Give Net::HTTP reason
-          raise Jiralicious::JiraError.new(response.body)
+          clear_session
+          case response.code
+          when 401 then
+            raise Jiralicious::InvalidLogin.new("Invalid login")
+          when 403
+            raise Jiralicious::CaptchaRequired.new("Captacha is required. Try logging into Jira via the web interface")
+          else
+            # Give Net::HTTP reason
+            raise Jiralicious::JiraError.new(response)
+          end
         end
       end
+
+      self.request(:post, '/rest/auth/latest/session',
+                   :body => { :username => Jiralicious.username,
+                              :password => Jiralicious.password}.to_json,
+                   :handler => handler)
+
     end
 
     def logout
-      response = request(:delete, '/rest/auth/latest/session')
-
-      if response.code == 204
-        clear_session
-      else
-        case response.code
-        when 401 then
-          raise Jiralicious::NotLoggedIn.new("Not logged in")
+      handler = Proc.new do |request|
+        if response.code == 204
+          clear_session
         else
-          # Give Net::HTTP reason
-          raise Jiralicious::JiraError.new(response.message)
+          case response.code
+          when 401 then
+            raise Jiralicious::NotLoggedIn.new("Not logged in")
+          else
+            # Give Net::HTTP reason
+            raise Jiralicious::JiraError.new(response)
+          end
         end
       end
+
+      request(:delete, '/rest/auth/latest/session', :handler => handler)
     end
 
     private

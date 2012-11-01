@@ -1,5 +1,5 @@
 # encoding: utf-8
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require "spec_helper"
 
 describe Jiralicious::Issue, "finding" do
 
@@ -27,6 +27,7 @@ describe Jiralicious::Issue, "finding" do
     lambda {
       FakeWeb.register_uri(:get,
                            "#{Jiralicious.rest_path}/issue/EX-1",
+                           :body => "{errorMessages: ['error']}",
                            :status => ["404" "Not Found"])
       Jiralicious::Issue.find("EX-1")
     }.should raise_error(Jiralicious::IssueNotFound)
@@ -70,7 +71,7 @@ describe Jiralicious::Issue, "transitions" do
 
     result = Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
                                   {"transition" => "3", "fields" => []})
-    result.should be_empty
+    result.should be_nil
   end
 
   it "raises an exception on transition failure" do

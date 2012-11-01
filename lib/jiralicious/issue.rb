@@ -16,43 +16,32 @@ module Jiralicious
     end
 
     def self.find(key, options = {})
-      response = Jiralicious.session.request(:get, "#{Jiralicious.rest_path}/issue/#{key}")
-
-      if response.code == 200
-        response = JSON.parse(response.body)
-      elsif response.code == 404
-        raise Jiralicious::IssueNotFound.new(response.body)
-      else
-        raise Jiralicious::JiraError.new(response.body)
-      end
-
+      response = Jiralicious.session.request(:get, "#{Jiralicious.rest_path}/issue/#{key}", :handler => handler)
       new(response)
     end
 
     def self.get_transitions(transitions_url)
-      response = Jiralicious.session.request(:get, transitions_url)
-
-      if response.code == 200
-        response = JSON.parse(response.body)
-      elsif response.code == 404
-        raise Jiralicious::IssueNotFound.new(response.body)
-      else
-        raise Jiralicious::JiraError.new(response.body)
-      end
+      Jiralicious.session.request(:get, transitions_url, :handler => handler)
     end
 
     def self.transition(transitions_url, data)
-      response = Jiralicious.session.request(:post, transitions_url, :body => data.to_json)
+      Jiralicious.session.request(:post, transitions_url,
+                                  :handler => handler,
+                                  :body => data.to_json)
+    end
 
-      case response.code
-      when 204
-        response.body
-      when 400
-        error = JSON.parse(response.body)
-        raise Jiralicious::TransitionError.new(error['errorMessages'].join('\n'))
-      when 404
-        error = JSON.parse(response.body)
-        raise Jiralicious::IssueNotFound.new(error['errorMessages'].join('\n'))
+    def self.handler
+      Proc.new do |response|
+        case response.code
+        when 200..204
+          response
+        when 400
+          raise Jiralicious::TransitionError.new(response['errorMessages'].join('\n'))
+        when 404
+          raise Jiralicious::IssueNotFound.new(response['errorMessages'].join('\n'))
+        else
+          raise Jiralicious::JiraError.new(response['errorMessages'].join('\n'))
+        end
       end
     end
   end
