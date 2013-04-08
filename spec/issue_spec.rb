@@ -27,7 +27,7 @@ describe Jiralicious::Issue, "finding" do
     lambda {
       FakeWeb.register_uri(:get,
                            "#{Jiralicious.rest_path}/issue/EX-1",
-                           :body => "{errorMessages: ['error']}",
+                           :body => '{"errorMessages": ["error"]}',
                            :status => ["404" "Not Found"])
       Jiralicious::Issue.find("EX-1")
     }.should raise_error(Jiralicious::IssueNotFound)
