@@ -31,7 +31,7 @@ describe Jiralicious, "search" do
     before :each do
       FakeWeb.register_uri(:post,
                            "#{Jiralicious.rest_path}/search",
-                           :body => "{errorMessages: ['error']}",
+                           :body => '{"errorMessages": ["error"]}',
                            :status => "400")
     end
 
