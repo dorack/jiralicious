@@ -1,6 +1,6 @@
 # jiralicious
 
-[![Build Status](https://travis-ci.org/jstewart/jiralicious.png)](https://travis-ci.org/jstewart/jiralicious])
+[![Build Status](https://travis-ci.org/jstewart/jiralicious.png)](https://travis-ci.org/jstewart/jiralicious)
 
 ## Examples:
 
