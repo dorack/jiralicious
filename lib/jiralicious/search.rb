@@ -3,7 +3,7 @@ module Jiralicious
   def search(jql, options = {})
     options[:start_at] ||= 0
     options[:max_results] ||= 50
-	options[:fields] = [options[:fields]] if options[:fields].kind_of? String
+	options[:fields] = [options[:fields]] if options[:fields].is_a? String
 	options[:fields] ||= ["*navigable"]
 
     request_body = {

@@ -8,9 +8,9 @@ module Jiralicious
 		property :fields
 		property :transitions
 		property :id
-		attr_accessor :Fields
-		attr_accessor :Comments
-		attr_accessor :Watchers
+		attr_accessor :fields
+		attr_accessor :comments
+		attr_accessor :watchers
 		attr_accessor :createmeta
 		attr_accessor :editmeta
 
@@ -21,15 +21,15 @@ module Jiralicious
 				super(decoded_json)
 				parse!(decoded_json["fields"])
 				if default.nil?
-					@Fields = Fields.new(self['fields']) if self['fields']
-					@Comments = Comment.find_by_key(self.jira_key)
-					@Watchers = Watchers.find_by_key(self.jira_key)
+					@fields = Fields.new(self['fields']) if self['fields']
+					@comments = Comment.find_by_key(self.jira_key)
+					@watchers = Watchers.find_by_key(self.jira_key)
 					@loaded = true
 				end
 			end
-			@Fields = Fields.new if @Fields.nil?
-			@Comments = Comment.new if @Comments.nil?
-			@Watchers = Watchers.new if @Watchers.nil?
+			@fields = Fields.new if @fields.nil?
+			@comments = Comment.new if @comments.nil?
+			@watchers = Watchers.new if @watchers.nil?
 			@createmeta = nil
 			@editmeta = nil
 		end
@@ -40,9 +40,9 @@ module Jiralicious
 			end
 			if default.nil?
 				parse!(self['fields'])
-				@Fields = Fields.new(self['fields']) if self['fields']
-				@Comments = Comment.find_by_key(self.jira_key)
-				@Watchers = Watchers.find_by_key(self.jira_key)
+				@fields = Fields.new(self['fields']) if self['fields']
+				@comments = Comment.find_by_key(self.jira_key)
+				@watchers = Watchers.find_by_key(self.jira_key)
 				@loaded = true
 			else
 				parse!(decoded_hash)
@@ -57,7 +57,7 @@ module Jiralicious
 		### Class Methods ###
 		class << self
 			def assignee(name, key)
-				name = {"name" => name} if name.kind_of? String
+				name = {"name" => name} if name.is_a? String
 				fetch({:method => :put, :key => key, :body => name})
 			end
 
@@ -120,10 +120,10 @@ module Jiralicious
 
 		def save
 			if loaded?
-				self.class.update(@Fields.format_for_update, self.jira_key)
+				self.class.update(@fields.format_for_update, self.jira_key)
 				key = self.jira_key
 			else
-				response = self.class.create(@Fields.format_for_create)
+				response = self.class.create(@fields.format_for_create)
 				key = response['key']
 			end
 			load(self.class.find(key, {:reload => true}).parsed_response)

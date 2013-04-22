@@ -7,10 +7,9 @@ module Jiralicious
 			attr_accessor :meta
 
 			def initialize(decoded_json, default = nil, &blk)
-				puts "\n"; puts decoded_json.inspect; puts "\n"
 				@loaded = false
 				@meta = nil
-				if decoded_json.kind_of? Hash
+				if decoded_json.is_a? Hash
 					properties_from_hash(decoded_json)
 					super(decoded_json)
 					parse!(decoded_json)
@@ -45,16 +44,16 @@ module Jiralicious
 
 				def go(key, id, options = {})
 					transition = {"transition" => {"id" => id}}
-					if options[:comment].kind_of? String
+					if options[:comment].is_a? String
 						transition.merge!({"update" => {"comment" => [{"add" => {"body" => options[:comment].to_s}}]}})
-					elsif options[:comment].kind_of? Jiralicious::Issue::Fields
+					elsif options[:comment].is_a? Jiralicious::Issue::Fields
 						transition.merge!(options[:comment].format_for_update)
-					elsif options[:comment].kind_of? Hash
+					elsif options[:comment].is_a? Hash
 						transition.merge!({"update" => options[:comment]})
 					end
-					if options[:fields].kind_of? Jiralicious::Issue::Fields
+					if options[:fields].is_a? Jiralicious::Issue::Fields
 						transition.merge!(options[:fields].format_for_create)
-					elsif options[:fields].kind_of? Hash
+					elsif options[:fields].is_a? Hash
 						transition.merge!({"fields" => options[:fields]})
 					end
 					fetch({:method => :post, :parent => parent_name, :parent_key => key, :body => transition})

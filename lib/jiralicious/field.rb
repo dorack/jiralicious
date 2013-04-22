@@ -5,16 +5,16 @@ module Jiralicious
 
 		def initialize(decoded_json, default = nil, &blk)
 			@loaded = false
-			if decoded_json.kind_of? Hash
+			if decoded_json.is_a? Hash
 				properties_from_hash(decoded_json)
 				super(decoded_json)
 				parse!(decoded_json)
 				self.each do |k, v|
-					if v.kind_of? Hash
+					if v.is_a? Hash
 						self[k] = self.class.new(v)
-					elsif v.kind_of? Array
+					elsif v.is_a? Array
 						v.each_index do |i|
-							if v[i].kind_of? Hash
+							if v[i].is_a? Hash
 								v[i] = self.class.new(v[i])
 							end
 						end

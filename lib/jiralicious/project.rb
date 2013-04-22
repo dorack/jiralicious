@@ -8,7 +8,7 @@ module Jiralicious
 		### Initialization ###
 		def initialize(decoded_json, default = nil, &blk)
 			@loaded = false
-			if decoded_json.kind_of? Hash
+			if decoded_json.is_a? Hash
 				properties_from_hash(decoded_json)
 				super(decoded_json)
 				parse!(decoded_json)

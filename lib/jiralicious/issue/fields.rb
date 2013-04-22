@@ -34,8 +34,8 @@ module Jiralicious
 
 			def append_a(field, value)
 				@fields_update[field] = @fields_current[field] if (@fields_update[field] == nil)
-				@fields_update[field] = Array.new if !(@fields_update[field].kind_of? Array)
-				if value.kind_of? String
+				@fields_update[field] = Array.new if !(@fields_update[field].is_a? Array)
+				if value.is_a? String
 					@fields_update[field].push(value)
 				else
 					@fields_update[field] = @fields_update[field].concat(value)
@@ -44,7 +44,7 @@ module Jiralicious
 
 			def append_h(field, hash)
 				@fields_update[field] = @fields_current[field] if (@fields_update[field] == nil)
-				@fields_update[field] = Hash.new if !(@fields_update[field].kind_of? Hash)
+				@fields_update[field] = Hash.new if !(@fields_update[field].is_a? Hash)
 				@fields_update[field].merge!(hash)
 			end
 

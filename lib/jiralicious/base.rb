@@ -24,7 +24,7 @@ module Jiralicious
 					new(response.parsed_response) unless options[:reload]
 				end
 			end
-			
+
 			def find_all
 				response = fetch()
 				new(response)
@@ -43,7 +43,7 @@ module Jiralicious
 				options[:method] = :get unless [:get, :post, :put, :delete].include?(options[:method])
 				options[:parent_uri] = "#{parent_name}/#{options[:parent_key]}/" unless options[:parent].nil?
 				if !options[:body_override]
-					options[:body_uri] = (options[:body].kind_of? Hash) ? options[:body] : {:body => options[:body]}
+					options[:body_uri] = (options[:body].is_a? Hash) ? options[:body] : {:body => options[:body]}
 				else
 					options[:body_uri] = options[:body]
 				end
@@ -52,7 +52,6 @@ module Jiralicious
 					options[:body_uri] = nil
 				end
 				options[:url_uri] = options[:url].nil? ? "#{Jiralicious.rest_path}/#{options[:parent_uri]}#{endpoint_name}/#{options[:key]}#{options[:params_uri]}" : options[:url]
-				puts options.inspect
 				Jiralicious.session.request(options[:method], options[:url_uri], :handler => handler, :body => options[:body_uri].to_json)
 			end
 

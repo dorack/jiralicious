@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'ostruct'
 
 module Jiralicious
   module Configuration
@@ -37,12 +36,9 @@ module Jiralicious
 
 	def load_yml(yml_file)
 		if File.exist?(yml_file)
-			yml_os = OpenStruct.new(YAML.load_file(yml_file))
-			self.configure do |config|
-				config.username = yml_os.jira['username']
-				config.password = yml_os.jira['password']
-				config.uri = yml_os.jira['host']
-				config.auth_type = yml_os.jira['auth_type']
+			yml_cfg = OpenStruct.new(YAML.load_file(yml_file))
+			yml_cfg.jira.each do |k, v|
+				instance_variable_set("@#{k}", v)
 			end
 		else
 			reset
