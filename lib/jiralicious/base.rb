@@ -10,8 +10,14 @@ module Jiralicious
 		### Trash Extention Methods ###
 		def properties_from_hash(hash)
 			hash.each do |k, v|
+				ko = k
+				k = k.gsub("-", "_")
+				k = "_#{k.to_s}" if k =~ /^\d/
 				self.class.property :"#{k}"
+				hash.delete(ko)
+				hash[k] = v
 			end
+			hash
 		end
 
 		### Class Methods ###

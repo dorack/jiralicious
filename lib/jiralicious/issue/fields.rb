@@ -27,7 +27,8 @@ module Jiralicious
 
 			def append_s(field, value)
 				if (@fields_update[field] == nil)
-					@fields_update[field] = @fields_current[field]
+					@fields_update[field] = @fields_current[field] unless @fields_current.nil?
+					@fields_update[field] ||= ""
 				end
 				@fields_update[field] += " " + value.to_s
 			end
@@ -75,10 +76,10 @@ module Jiralicious
 			def format_for_update
 				up = Hash.new
 				@fields_update.each do |k, v|
-					if k = "comment"
+					if k == "comment"
 						up[k] = v
 					else
-						up[k] = [{"set" => v}] unless k = "comment"
+						up[k] = [{"set" => v}]
 					end
 				end
 				return {"update" => up}

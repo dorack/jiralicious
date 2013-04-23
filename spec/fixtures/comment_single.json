@@ -1,0 +1,29 @@
+{
+  "self": "http://www.example.com/rest/api/2/issue/10265/comment/10402",
+  "id": "10000",
+  "author": {
+    "self": "http://www.example.com/rest/api/2/user?username=fred",
+    "name": "fred",
+    "emailAddress": "fred@example.com",
+    "avatarUrls": {
+      "16x16": "http://www.example.com/secure/useravatar?size=small&avatarId=10122",
+      "48x48": "http://www.example.com/secure/useravatar?avatarId=10122"
+    },
+    "displayName": "JIRA Administrator",
+    "active": true
+  },
+  "body": "a new comment without key after specials",
+  "updateAuthor": {
+    "self": "http://www.example.com/rest/api/2/user?username=fred",
+    "name": "fred",
+    "emailAddress": "fred@example.com",
+    "avatarUrls": {
+      "16x16": "http://www.example.com/secure/useravatar?size=small&avatarId=10122",
+      "48x48": "http://www.example.com/secure/useravatar?avatarId=10122"
+    },
+    "displayName": "JIRA Administrator",
+    "active": true
+  },
+  "created": "2013-04-10T08:38:17.000-0500",
+  "updated": "2013-04-10T08:38:17.000-0500"
+}

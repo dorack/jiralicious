@@ -1,0 +1,7 @@
+# Jira Information
+jira:
+    uri: http://localhost:8080
+    username: jira_admin
+    password: jira_admin
+    api_version: latest
+    auth_type: :basic

@@ -6,7 +6,7 @@ module Jiralicious
 		def initialize(decoded_json, default = nil, &blk)
 			@loaded = false
 			if decoded_json.is_a? Hash
-				properties_from_hash(decoded_json)
+				decoded_json = properties_from_hash(decoded_json)
 				super(decoded_json)
 				parse!(decoded_json)
 				self.each do |k, v|

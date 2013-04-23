@@ -17,7 +17,7 @@ module Jiralicious
 		### Initialization ###
 		def initialize(decoded_json = nil, default = nil, &blk)
 			@loaded = false
-			if (decoded_json != nil)
+			if (!decoded_json.nil?)
 				super(decoded_json)
 				parse!(decoded_json["fields"])
 				if default.nil?
@@ -58,7 +58,7 @@ module Jiralicious
 		class << self
 			def assignee(name, key)
 				name = {"name" => name} if name.is_a? String
-				fetch({:method => :put, :key => key, :body => name})
+				fetch({:method => :put, :key => "#{key}/assignee", :body => name})
 			end
 
 			def create(issue)
@@ -75,11 +75,12 @@ module Jiralicious
 
 			def createmeta(projectkeys, issuetypeids = nil)
 				response = fetch({:body_to_params => true, :key => "createmeta", :body => {:expand => "projects.issuetypes.fields.", :projectKeys => projectkeys, :issuetypeIds => issuetypeids}})
-				Field.new(response.parsed_response)
+				return Field.new(response.parsed_response)
 			end
 
 			def editmeta(key)
 				response = fetch({:key => "#{key}/editmeta"})
+				response.parsed_response["key"] = key
 				Field.new(response.parsed_response)
 			end
 
@@ -96,7 +97,7 @@ module Jiralicious
 
 		### Public Classes ###
 
-		def assignee(name)
+		def set_assignee(name)
 			self.class.assignee(name, self.jira_key)
 		end
 
@@ -124,7 +125,7 @@ module Jiralicious
 				key = self.jira_key
 			else
 				response = self.class.create(@fields.format_for_create)
-				key = response['key']
+				key = response.parsed_response['key']
 			end
 			load(self.class.find(key, {:reload => true}).parsed_response)
 		end

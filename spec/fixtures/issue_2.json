@@ -1,0 +1,30 @@
+{
+  "expand": "html",
+  "self": "http://example.com:8080/jira/rest/api/2.0/issue/EX-2",
+  "key": "EX-2",
+  "fields": {
+    "timetracking": {
+      "name": "timetracking",
+      "type": "timetracking",
+      "value": {
+        "timeoriginalestimate": 10,
+        "timeestimate": 3,
+        "timespent": 6
+      }
+    },
+    "project": {
+      "name": "project",
+      "type": "com.atlassian.jira.project.Project",
+      "value": {
+        "self": "http://www.example.com/jira/rest/api/2.0/project/EX",
+        "key": "EX",
+        "name": "Example"
+      }
+    },
+    "description": {
+      "name": "description",
+      "type": "java.lang.String",
+      "value": "example bug report"
+    }
+  }
+}

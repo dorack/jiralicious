@@ -1,0 +1,24 @@
+<Jiralicious::Issue::Comment
+author={
+	"avatarUrls"=>{
+		"16x16"=>"http://rome:8080/secure/useravatar?size=small&avatarId=10122",
+		"48x48"=>"http://rome:8080/secure/useravatar?avatarId=10122"},
+	"name"=>"jira_admin",
+	"emailAddress"=>"richard.waskiewicz@hcaudit.com",
+	"active"=>true,
+	"displayName"=>"JIRA Administrator",
+	"self"=>"http://rome:8080/rest/api/2/user?username=jira_admin"}
+body="a new comment without key after specials"
+created="2013-04-10T08:38:17.000-0500"
+id="10402"
+self="http://rome:8080/rest/api/2/issue/10265/comment/10402"
+updateAuthor={
+	"avatarUrls"=>{
+		"16x16"=>"http://rome:8080/secure/useravatar?size=small&avatarId=10122",
+		"48x48"=>"http://rome:8080/secure/useravatar?avatarId=10122"},
+	"name"=>"jira_admin",
+	"emailAddress"=>"richard.waskiewicz@hcaudit.com",
+	"active"=>true,
+	"displayName"=>"JIRA Administrator",
+	"self"=>"http://rome:8080/rest/api/2/user?username=jira_admin"}
+updated="2013-04-10T08:38:17.000-0500">
