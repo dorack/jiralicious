@@ -31,11 +31,11 @@ describe Jiralicious::Configuration do
   end
 
   it "loads the yml in the specified format into the configuation variables" do
-	  Jiralicious.load_yml(jira_yml)
-	  Jiralicious.username.should == "jira_admin"
-	  Jiralicious.password.should == "jira_admin"
-	  Jiralicious.uri.should == "http://localhost:8080"
-	  Jiralicious.api_version.should == "latest"
-	  Jiralicious.auth_type.should == :basic
+    Jiralicious.load_yml(jira_yml)
+    Jiralicious.username.should == "jira_admin"
+    Jiralicious.password.should == "jira_admin"
+    Jiralicious.uri.should == "http://localhost:8080"
+    Jiralicious.api_version.should == "latest"
+    Jiralicious.auth_type.should == :basic
   end
 end

@@ -1,34 +1,34 @@
 {
   "expand": "projects",
   "projects": [
+  {
+    "self": "http://www.example.com/jira/rest/api/2/project/EX",
+    "id": "10000",
+    "key": "EX",
+    "name": "Example Project",
+    "avatarUrls": {
+      "16x16": "http://www.example.com/jira/secure/projectavatar?size=small&pid=10000&avatarId=10011",
+      "48x48": "http://www.example.com/jira/secure/projectavatar?pid=10000&avatarId=10011"
+    },
+    "issuetypes": [
     {
-      "self": "http://www.example.com/jira/rest/api/2/project/EX",
-      "id": "10000",
-      "key": "EX",
-      "name": "Example Project",
-      "avatarUrls": {
-        "16x16": "http://www.example.com/jira/secure/projectavatar?size=small&pid=10000&avatarId=10011",
-        "48x48": "http://www.example.com/jira/secure/projectavatar?pid=10000&avatarId=10011"
-      },
-      "issuetypes": [
-        {
-          "self": "http://www.example.com/jira/rest/api/2/issueType/1",
-          "id": "1",
-          "description": "An error in the code",
-          "iconUrl": "http://www.example.com/jira/images/icons/issuetypes/bug.png",
-          "name": "Bug",
-          "subtask": false,
-          "fields": {
-            "issuetype": {
-              "required": true,
-              "name": "Issue Type",
-              "operations": [
-                "set"
-              ]
-            }
-          }
+      "self": "http://www.example.com/jira/rest/api/2/issueType/1",
+      "id": "1",
+      "description": "An error in the code",
+      "iconUrl": "http://www.example.com/jira/images/icons/issuetypes/bug.png",
+      "name": "Bug",
+      "subtask": false,
+      "fields": {
+        "issuetype": {
+          "required": true,
+          "name": "Issue Type",
+          "operations": [
+          "set"
+          ]
         }
-      ]
+      }
     }
+    ]
+  }
   ]
 }

@@ -3,15 +3,15 @@
   "isWatching": true,
   "watchCount": 1,
   "watchers": [
-    {
-      "self": "http://www.example.com/rest/api/2/user?username=jira_admin",
-      "name": "fred",
-      "avatarUrls": {
-        "16x16": "http://www.example.com/secure/useravatar?size=small&avatarId=10122",
-        "48x48": "http://www.example.com/secure/useravatar?avatarId=10122"
-      },
-      "displayName": "fred",
-      "active": true
-    }
+  {
+    "self": "http://www.example.com/rest/api/2/user?username=jira_admin",
+    "name": "fred",
+    "avatarUrls": {
+      "16x16": "http://www.example.com/secure/useravatar?size=small&avatarId=10122",
+      "48x48": "http://www.example.com/secure/useravatar?avatarId=10122"
+    },
+    "displayName": "fred",
+    "active": true
+  }
   ]
 }

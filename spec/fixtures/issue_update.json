@@ -7,14 +7,14 @@
       "name": "sub-tasks",
       "type": "issuelinks",
       "value": [
-        {
-          "issueKey": "EX-2",
-          "issue": "http://example.com:8080/jira/rest/api/2.0/issue/EX-2",
-          "type": {
-            "name": "Sub-task",
-            "direction": "OUTBOUND"
-          }
+      {
+        "issueKey": "EX-2",
+        "issue": "http://example.com:8080/jira/rest/api/2.0/issue/EX-2",
+        "type": {
+          "name": "Sub-task",
+          "direction": "OUTBOUND"
         }
+      }
       ]
     },
     "timetracking": {
@@ -41,50 +41,50 @@
       "value": 1
     },
     "description": "example bug report updated description ",
-	"labels": ["test_label"],
+    "labels": ["test_label"],
     "links": {
       "name": "links",
       "type": "issuelinks",
       "value": [
-        {
-          "issueKey": "PRJ-2",
-          "issue": "http://example.com:8080/jira/rest/api/2.0/issue/PRJ-2",
-          "type": {
-            "name": "Dependent",
-            "direction": "OUTBOUND",
-            "description": "depends on"
-          }
-        },
-        {
-          "issueKey": "PRJ-3",
-          "issue": "http://example.com:8080/jira/rest/api/2.0/issue/PRJ-3",
-          "type": {
-            "name": "Dependent",
-            "direction": "INBOUND",
-            "description": "is depended by"
-          }
+      {
+        "issueKey": "PRJ-2",
+        "issue": "http://example.com:8080/jira/rest/api/2.0/issue/PRJ-2",
+        "type": {
+          "name": "Dependent",
+          "direction": "OUTBOUND",
+          "description": "depends on"
         }
+      },
+      {
+        "issueKey": "PRJ-3",
+        "issue": "http://example.com:8080/jira/rest/api/2.0/issue/PRJ-3",
+        "type": {
+          "name": "Dependent",
+          "direction": "INBOUND",
+          "description": "is depended by"
+        }
+      }
       ]
     },
     "attachment": {
       "name": "attachment",
       "type": "attachment",
       "value": [
-        {
-          "self": "http://www.example.com/jira/rest/api/2.0/attachments/10000",
-          "filename": "picture.jpg",
-          "author": {
-            "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
-            "name": "fred",
-            "displayName": "Fred F. User",
-            "active": false
-          },
-          "created": "2011-07-25T06:31:08.307-0500",
-          "size": 23123,
-          "mimeType": "image/jpeg",
-          "content": "http://www.example.com/jira/attachments/10000",
-          "thumbnail": "http://www.example.com/jira/secure/thumbnail/10000"
-        }
+      {
+        "self": "http://www.example.com/jira/rest/api/2.0/attachments/10000",
+        "filename": "picture.jpg",
+        "author": {
+          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+          "name": "fred",
+          "displayName": "Fred F. User",
+          "active": false
+        },
+        "created": "2011-07-25T06:31:08.307-0500",
+        "size": 23123,
+        "mimeType": "image/jpeg",
+        "content": "http://www.example.com/jira/attachments/10000",
+        "thumbnail": "http://www.example.com/jira/secure/thumbnail/10000"
+      }
       ]
     },
     "watcher": {
@@ -95,12 +95,12 @@
         "isWatching": false,
         "watchCount": 1,
         "watchers": [
-          {
-            "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
-            "name": "fred",
-            "displayName": "Fred F. User",
-            "active": false
-          }
+        {
+          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+          "name": "fred",
+          "displayName": "Fred F. User",
+          "active": false
+        }
         ]
       }
     },
@@ -108,56 +108,56 @@
       "name": "comment",
       "type": "java.lang.String",
       "value": [
-        {
-          "self": "http://example.com:8080/jira/rest/api/2.0/comment/10000",
-          "author": {
-            "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
-            "name": "fred",
-            "displayName": "Fred F. User",
-            "active": false
-          },
-          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.",
-          "updateAuthor": {
-            "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
-            "name": "fred",
-            "displayName": "Fred F. User",
-            "active": false
-          },
-          "created": "2011-07-25T06:31:08.311-0500",
-          "updated": "2011-07-25T06:31:08.311-0500",
-          "visibility": {
-            "type": "ROLE",
-            "value": "Administrators"
-          }
+      {
+        "self": "http://example.com:8080/jira/rest/api/2.0/comment/10000",
+        "author": {
+          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+          "name": "fred",
+          "displayName": "Fred F. User",
+          "active": false
+        },
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.",
+        "updateAuthor": {
+          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+          "name": "fred",
+          "displayName": "Fred F. User",
+          "active": false
+        },
+        "created": "2011-07-25T06:31:08.311-0500",
+        "updated": "2011-07-25T06:31:08.311-0500",
+        "visibility": {
+          "type": "ROLE",
+          "value": "Administrators"
         }
+      }
       ]
     },
     "worklog": {
       "name": "worklog",
       "type": "worklog",
       "value": [
-        {
-          "self": "http://www.example.com/jira/rest/api/2.0/worklog/10000",
-          "author": {
-            "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
-            "name": "fred",
-            "displayName": "Fred F. User",
-            "active": false
-          },
-          "updateAuthor": {
-            "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
-            "name": "fred",
-            "displayName": "Fred F. User",
-            "active": false
-          },
-          "comment": "I did some work here.",
-          "visibility": {
-            "type": "GROUP",
-            "value": "jira-developers"
-          },
-          "started": "2011-07-25T06:31:08.314-0500",
-          "minutesSpent": 180
-        }
+      {
+        "self": "http://www.example.com/jira/rest/api/2.0/worklog/10000",
+        "author": {
+          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+          "name": "fred",
+          "displayName": "Fred F. User",
+          "active": false
+        },
+        "updateAuthor": {
+          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+          "name": "fred",
+          "displayName": "Fred F. User",
+          "active": false
+        },
+        "comment": "I did some work here.",
+        "visibility": {
+          "type": "GROUP",
+          "value": "jira-developers"
+        },
+        "started": "2011-07-25T06:31:08.314-0500",
+        "minutesSpent": 180
+      }
       ]
     }
   }

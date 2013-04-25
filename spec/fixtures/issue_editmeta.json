@@ -10,12 +10,12 @@
       },
       "name": "My Multi Select",
       "operations": [
-        "set",
-        "add"
+      "set",
+      "add"
       ],
       "allowedValues": [
-        "red",
-        "blue"
+      "red",
+      "blue"
       ]
     }
   }

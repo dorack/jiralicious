@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.description = %Q{A Ruby library for interacting with JIRA's REST API}
   s.email = "jstewart@fusionary.com"
   s.authors = ["Jason Stewart"]
+  s.add_runtime_dependency 'crack', '~> 0.1.8'
   s.add_runtime_dependency 'httparty', '~> 0.11.0'
   s.add_runtime_dependency 'hashie', '>= 1.1'
   s.add_runtime_dependency 'json', '~> 1.7.7'

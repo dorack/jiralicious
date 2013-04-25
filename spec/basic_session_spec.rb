@@ -2,10 +2,10 @@
 require "spec_helper"
 
 describe  "performing a request" do
-    before :each do
-      FakeWeb.register_uri(:get,
-                           Jiralicious.uri + '/ok',
-                           :status => "200")
+  before :each do
+    FakeWeb.register_uri(:get,
+      Jiralicious.uri + '/ok',
+      :status => "200")
   end
 
   let(:session) { Jiralicious::BasicSession.new }

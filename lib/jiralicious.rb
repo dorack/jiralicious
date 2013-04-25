@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'hashie'
+require 'crack'
 require 'httparty'
 require 'json'
 

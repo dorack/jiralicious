@@ -48,9 +48,9 @@ module Jiralicious
       end
 
       self.request(:post, '/rest/auth/latest/session',
-                   :body => { :username => Jiralicious.username,
-                              :password => Jiralicious.password}.to_json,
-                   :handler => handler)
+        :body => { :username => Jiralicious.username,
+          :password => Jiralicious.password}.to_json,
+        :handler => handler)
 
     end
 
@@ -77,8 +77,8 @@ module Jiralicious
     def captcha_required(response)
       response.code == 401 &&
         # Fakeweb lowercases headers automatically. :(
-        (response.headers["X-Seraph-LoginReason"] == "AUTHENTICATION_DENIED" ||
-         response.headers["x-seraph-loginreason"] == "AUTHENTICATION_DENIED")
+      (response.headers["X-Seraph-LoginReason"] == "AUTHENTICATION_DENIED" ||
+          response.headers["x-seraph-loginreason"] == "AUTHENTICATION_DENIED")
     end
 
     def cookie_invalid(response)

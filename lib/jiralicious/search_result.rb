@@ -14,8 +14,8 @@ module Jiralicious
       end
     end
 
-	def issues_raw
-		@issues
-	end
+    def issues_raw
+      @issues
+    end
   end
 end
