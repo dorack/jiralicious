@@ -1,0 +1,20 @@
+{
+  "expand": "schema,names",
+  "startAt": 0,
+  "maxResults": 50,
+  "total": 2,
+  "issues": [
+  {
+    "expand": "editmeta,renderedFields,transitions,changelog,operations",
+    "id": "10000",
+    "self": "http://www.example.com/jira/rest/api/2/issue/10324",
+    "key": "EX-1"
+  },
+  {
+    "expand": "editmeta,renderedFields,transitions,changelog,operations",
+    "id": "10001",
+    "self": "http://www.example.com/jira/rest/api/2/issue/10323",
+    "key": "EX-2"
+  }
+  ]
+}

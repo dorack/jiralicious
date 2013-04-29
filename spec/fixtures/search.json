@@ -1,11 +1,11 @@
 {
-    "startAt": 0,
-    "maxResults": 50,
-    "total": 1,
-    "issues": [
-        {
-            "self": "http://www.example.com/jira/rest/api/2.0/jira/rest/api/2.0/issue/HSP-1",
-            "key": "HSP-1"
-        }
-    ]
+  "startAt": 0,
+  "maxResults": 50,
+  "total": 1,
+  "issues": [
+  {
+    "self": "http://www.example.com/jira/rest/api/2.0/jira/rest/api/2.0/issue/HSP-1",
+    "key": "HSP-1"
+  }
+  ]
 }

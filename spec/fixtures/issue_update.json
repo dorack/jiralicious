@@ -1,7 +1,7 @@
 {
   "expand": "html",
   "self": "http://example.com:8080/jira/rest/api/2.0/issue/EX-1",
-  "key": "EX-1",
+  "key": "EX-3",
   "fields": {
     "sub-tasks": {
       "name": "sub-tasks",
@@ -40,7 +40,8 @@
       "type": "java.util.Date",
       "value": 1
     },
-    "description": "example bug report",
+    "description": "example bug report updated description ",
+    "labels": ["test_label"],
     "links": {
       "name": "links",
       "type": "issuelinks",
