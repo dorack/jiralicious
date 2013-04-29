@@ -15,10 +15,15 @@ Before doing anything, you must configure your session:
       config.auth_type = :basic
     end
 
-Default auth type is now Basic auth. Cookie auth is still available with the
-following option:
+Session configuration is also available via YAML:
 
-    config.auth_type = :cookie
+    jira:
+      username: youruser
+      password: yourpass
+      uri: https://example.com/
+
+
+    Jiralicious.load_yml(File.expand_path("/path/to/jira.yml"))
 
 Search for issues:
 
@@ -29,6 +34,27 @@ Finding a single issue:
 
     issue = Jiralicious::Issue.find("HSP-1")
     issue.key => "HSP-1"
+
+
+## Deprecation Warning
+
+Default auth type is now Basic auth. Cookie auth will be deprecated in the next version.
+
+
+## Changes from 0.1.0
+
+* Issues can be created, updated, or deleted as needed. This includes most components such as comments, transitions, and assignees.
+* Projects can now be accessed as well as related issues
+* A Field class has been added to allow proper access to the meta data for create, edit, and update requests. This data is searchable via Hash or dot notation
+* Some sections can now be lazy loaded
+* Configuration can be loaded via yaml
+
+
+## Contributors
+
+* Stanley Handschuh (dorack)
+* Mike Fiedler (miketheman)
+* Girish Sonawane (girishso)
 
 ## Contributing to jiralicious
 
@@ -42,5 +68,5 @@ Finding a single issue:
 
 ## Copyright
 
-Copyright (c) 2012 Jason Stewart. See LICENSE for
+Copyright (c) 2013 Jason Stewart. See LICENSE for
 further details.
