@@ -34,8 +34,8 @@ module Jiralicious
 
       def normalize(name)
         name.gsub(/(\w+)([A-Z].*)/, '\1_\2').
-              gsub(/\W/, "_").
-              downcase
+          gsub(/\W/, "_").
+          downcase
       end
 
       def mashify(data)

@@ -13,5 +13,9 @@ module Jiralicious
         Jiralicious::Issue.find(issue["key"])
       end
     end
+
+    def issues_raw
+      @issues
+    end
   end
 end

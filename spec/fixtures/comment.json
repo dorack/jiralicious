@@ -1,0 +1,30 @@
+{
+  "startAt": 0,
+  "maxResults": 1,
+  "total": 1,
+  "comments": [
+  {
+    "self": "http://www.example.com/jira/rest/api/2.0/issue/EX-1/comment/10000",
+    "id": "10000",
+    "author": {
+      "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+      "name": "fred",
+      "displayName": "Fred F. User",
+      "active": false
+    },
+    "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.",
+    "updateAuthor": {
+      "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+      "name": "fred",
+      "displayName": "Fred F. User",
+      "active": false
+    },
+    "created": "2013-02-26T07:47:25.089-0600",
+    "updated": "2013-02-26T07:47:25.090-0600",
+    "visibility": {
+      "type": "role",
+      "value": "Administrators"
+    }
+  }
+  ]
+}
