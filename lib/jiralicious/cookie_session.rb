@@ -1,96 +1,111 @@
 # encoding: utf-8
-
 module Jiralicious
-  class CookieSession < Session
-    attr_accessor :authenticating, :session, :login_info
+	##
+	# The CookieSesssion class extends the Session class with the
+	# functionality of utilizing cookies for authorization management.
+	# 
+	# Deprecated:: CookieSession is deprecated as of version 0.2.0
+	#
+	class CookieSession < Session
+		# Adds attributes to the CookieSession
+		attr_accessor :authenticating, :session, :login_info
 
-    def alive?
-      @session && @login_info
-    end
+		# Checks to see if session is active
+		def alive?
+			@session && @login_info
+		end
 
-    def before_request
-      self.login if require_login? && !@authenticating
-    end
+		# Provides login information on every request
+		def before_request
+			self.login if require_login? && !@authenticating
+		end
 
-    def after_request(response)
-      unless @authenticating
-        if captcha_required(response)
-          raise Jiralicious::CaptchaRequired.
-            new("Captacha is required. Try logging into Jira via the web interface")
-        elsif cookie_invalid(response)
-          # Can usually be fixed by logging in again
-          clear_session
-          raise Jiralicious::CookieExpired
-        end
-      end
-      @authenticating = false
-    end
+		# Handles the response from the request
+		def after_request(response)
+			unless @authenticating
+				if captcha_required(response)
+					raise Jiralicious::CaptchaRequired.
+					  new("Captacha is required. Try logging into Jira via the web interface")
+				elsif cookie_invalid(response)
+					# Can usually be fixed by logging in again
+					clear_session
+					raise Jiralicious::CookieExpired
+				end
+			end
+			@authenticating = false
+		end
 
-    def login
-      @authenticating = true
-      handler = Proc.new do |response|
-        if response.code == 200
-          @session = response["session"]
-          @login_info = response["loginInfo"]
-          self.class.cookies({self.session["name"] => self.session["value"]})
-        else
-          clear_session
-          case response.code
-          when 401 then
-            raise Jiralicious::InvalidLogin.new("Invalid login")
-          when 403
-            raise Jiralicious::CaptchaRequired.new("Captacha is required. Try logging into Jira via the web interface")
-          else
-            # Give Net::HTTP reason
-            raise Jiralicious::JiraError.new(response)
-          end
-        end
-      end
+		# Authenticates the login
+		def login
+			@authenticating = true
+			handler = Proc.new do |response|
+				if response.code == 200
+					@session = response["session"]
+					@login_info = response["loginInfo"]
+					self.class.cookies({self.session["name"] => self.session["value"]})
+				else
+					clear_session
+					case response.code
+					when 401 then
+						raise Jiralicious::InvalidLogin.new("Invalid login")
+					when 403
+						raise Jiralicious::CaptchaRequired.new("Captacha is required. Try logging into Jira via the web interface")
+					else
+						# Give Net::HTTP reason
+						raise Jiralicious::JiraError.new(response)
+					end
+				end
+			end
 
-      self.request(:post, '/rest/auth/latest/session',
-        :body => { :username => Jiralicious.username,
-          :password => Jiralicious.password}.to_json,
-        :handler => handler)
+			self.request(:post, '/rest/auth/latest/session',
+				:body => { :username => Jiralicious.username,
+					:password => Jiralicious.password}.to_json,
+				:handler => handler)
 
-    end
+		end
 
-    def logout
-      handler = Proc.new do |request|
-        if response.code == 204
-          clear_session
-        else
-          case response.code
-          when 401 then
-            raise Jiralicious::NotLoggedIn.new("Not logged in")
-          else
-            # Give Net::HTTP reason
-            raise Jiralicious::JiraError.new(response)
-          end
-        end
-      end
+		# Logs out of the API
+		def logout
+			handler = Proc.new do |request|
+				if response.code == 204
+					clear_session
+				else
+					case response.code
+					when 401 then
+						raise Jiralicious::NotLoggedIn.new("Not logged in")
+					else
+						# Give Net::HTTP reason
+						raise Jiralicious::JiraError.new(response)
+					end
+				end
+			end
 
-      request(:delete, '/rest/auth/latest/session', :handler => handler)
-    end
+			request(:delete, '/rest/auth/latest/session', :handler => handler)
+		end
 
-    private
+		private
 
-    def captcha_required(response)
-      response.code == 401 &&
-        # Fakeweb lowercases headers automatically. :(
-      (response.headers["X-Seraph-LoginReason"] == "AUTHENTICATION_DENIED" ||
-          response.headers["x-seraph-loginreason"] == "AUTHENTICATION_DENIED")
-    end
+		# Handles Captcha if necessary
+		def captcha_required(response)
+			response.code == 401 &&
+			  # Fakeweb lowercases headers automatically. :(
+			(response.headers["X-Seraph-LoginReason"] == "AUTHENTICATION_DENIED" ||
+				  response.headers["x-seraph-loginreason"] == "AUTHENTICATION_DENIED")
+		end
 
-    def cookie_invalid(response)
-      response.code == 401 && response.body =~ /cookie/i
-    end
+		# Throws if cookie is invalid
+		def cookie_invalid(response)
+			response.code == 401 && response.body =~ /cookie/i
+		end
 
-    def require_login?
-      !(Jiralicious.username.empty? && Jiralicious.password.empty?) && !alive?
-    end
+		# Checks to see if login is required
+		def require_login?
+			!(Jiralicious.username.empty? && Jiralicious.password.empty?) && !alive?
+		end
 
-    def clear_session
-      @session = @login_info = nil
-    end
-  end
+		# Resets the current Session
+		def clear_session
+			@session = @login_info = nil
+		end
+	end
 end
