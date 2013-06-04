@@ -26,14 +26,14 @@ require 'jiralicious/configuration'
 # The Jiralicious module standard options and methods
 #
 module Jiralicious
-	# Adds Configuration functionality
+  # Adds Configuration functionality
   extend Configuration
   # Adds self functionality
   extend self
 
-	##
-	# Processes the session information and returns the current session object
-	#
+  ##
+  # Processes the session information and returns the current session object
+  #
   def session
     session_type = "#{self.auth_type.to_s.capitalize}Session"
     @session ||= Jiralicious.const_get(session_type).new

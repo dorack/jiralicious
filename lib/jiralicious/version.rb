@@ -1,4 +1,4 @@
 module Jiralicious
-	# Current Jiralicious Version
+  # Current Jiralicious Version
   VERSION = "0.2.0"
 end
