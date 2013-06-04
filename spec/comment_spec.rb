@@ -33,14 +33,14 @@ describe Jiralicious, "search" do
       :status => "204")
   end
 
-  it "finds by isusse key" do
+  it "finds by issue key" do
     comments = Jiralicious::Issue::Comment.find_by_key("EX-1")
     comments.should be_instance_of(Jiralicious::Issue::Comment)
     comments.comments.count.should == 1
-    comments.comments[0]['id'].should == "10000"
+    comments.comments.first[1].id.should == "10000"
   end
 
-  it "finds by isusse key and comment id" do
+  it "finds by issue key and comment id" do
     comments = Jiralicious::Issue::Comment.find_by_key_and_id("EX-1", "10000")
     comments.should be_instance_of(Jiralicious::Issue::Comment)
     comments.id.should == "10000"

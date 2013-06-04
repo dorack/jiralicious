@@ -134,7 +134,7 @@ describe Jiralicious::Issue, "Managing Issues" do
     issue.fields.set("labels", ["new_label_p"])
     issue.fields.set("environment", "example of environment")
     issue.fields.set("description", "example of the description extending")
-    issue.save
+    issue.save!
     issue.jira_key.should == 'EX-2'
     issue.comments.comments.count.should == 0
     issue.watchers.watchers.count.should == 1
@@ -142,7 +142,7 @@ describe Jiralicious::Issue, "Managing Issues" do
 
   it "updates a new issue" do
     issue = Jiralicious::Issue.find("EX-3")
-    issue.fields.append_a("labels", "test_label")
+    issue.fields.append_a("labels", ["test_label"])
     issue.fields.append_s("description", " updated description ")
     issue.save
     issue.jira_key.should == 'EX-3'

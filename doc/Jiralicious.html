@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module Jiralicious - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/jiralicious.rb
+    <li>lib/jiralicious/base.rb
+    <li>lib/jiralicious/basic_session.rb
+    <li>lib/jiralicious/configuration.rb
+    <li>lib/jiralicious/cookie_session.rb
+    <li>lib/jiralicious/custom_field_option.rb
+    <li>lib/jiralicious/errors.rb
+    <li>lib/jiralicious/field.rb
+    <li>lib/jiralicious/issue.rb
+    <li>lib/jiralicious/issue/comment.rb
+    <li>lib/jiralicious/issue/fields.rb
+    <li>lib/jiralicious/issue/transitions.rb
+    <li>lib/jiralicious/issue/watchers.rb
+    <li>lib/jiralicious/parsers/field_parser.rb
+    <li>lib/jiralicious/project.rb
+    <li>lib/jiralicious/search.rb
+    <li>lib/jiralicious/search_result.rb
+    <li>lib/jiralicious/session.rb
+    <li>lib/jiralicious/version.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Extension Modules -->
+<nav id="extends-section" class="section">
+  <h3 class="section-header">Extended With Modules</h3>
+
+  <ul class="link-list">
+    
+  
+    <li><a class="extend" href="Jiralicious/Configuration.html">Jiralicious::Configuration</a>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-rest_path">#rest_path</a>
+    
+    <li ><a href="#method-i-search">#search</a>
+    
+    <li ><a href="#method-i-session">#session</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Jiralicious.html">Jiralicious</a>
+  
+    <li><a href="./Jiralicious/AuthenticationError.html">Jiralicious::AuthenticationError</a>
+  
+    <li><a href="./Jiralicious/Base.html">Jiralicious::Base</a>
+  
+    <li><a href="./Jiralicious/BasicSession.html">Jiralicious::BasicSession</a>
+  
+    <li><a href="./Jiralicious/CaptchaRequired.html">Jiralicious::CaptchaRequired</a>
+  
+    <li><a href="./Jiralicious/Configuration.html">Jiralicious::Configuration</a>
+  
+    <li><a href="./Jiralicious/CookieExpired.html">Jiralicious::CookieExpired</a>
+  
+    <li><a href="./Jiralicious/CookieSession.html">Jiralicious::CookieSession</a>
+  
+    <li><a href="./Jiralicious/CustomFieldOption.html">Jiralicious::CustomFieldOption</a>
+  
+    <li><a href="./Jiralicious/Field.html">Jiralicious::Field</a>
+  
+    <li><a href="./Jiralicious/InvalidLogin.html">Jiralicious::InvalidLogin</a>
+  
+    <li><a href="./Jiralicious/Issue.html">Jiralicious::Issue</a>
+  
+    <li><a href="./Jiralicious/Issue/Comment.html">Jiralicious::Issue::Comment</a>
+  
+    <li><a href="./Jiralicious/Issue/Fields.html">Jiralicious::Issue::Fields</a>
+  
+    <li><a href="./Jiralicious/Issue/Transitions.html">Jiralicious::Issue::Transitions</a>
+  
+    <li><a href="./Jiralicious/Issue/Watchers.html">Jiralicious::Issue::Watchers</a>
+  
+    <li><a href="./Jiralicious/IssueNotFound.html">Jiralicious::IssueNotFound</a>
+  
+    <li><a href="./Jiralicious/JiraError.html">Jiralicious::JiraError</a>
+  
+    <li><a href="./Jiralicious/JqlError.html">Jiralicious::JqlError</a>
+  
+    <li><a href="./Jiralicious/NotLoggedIn.html">Jiralicious::NotLoggedIn</a>
+  
+    <li><a href="./Jiralicious/Parsers.html">Jiralicious::Parsers</a>
+  
+    <li><a href="./Jiralicious/Parsers/FieldParser.html">Jiralicious::Parsers::FieldParser</a>
+  
+    <li><a href="./Jiralicious/Project.html">Jiralicious::Project</a>
+  
+    <li><a href="./Jiralicious/SearchResult.html">Jiralicious::SearchResult</a>
+  
+    <li><a href="./Jiralicious/Session.html">Jiralicious::Session</a>
+  
+    <li><a href="./Jiralicious/TransitionError.html">Jiralicious::TransitionError</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module Jiralicious</h1>
+
+  <div id="description" class="description">
+    
+<p>The <a href="Jiralicious.html">Jiralicious</a> module standard options and
+methods</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="VERSION">VERSION
+        
+        <dd class="description"><p>Current <a href="Jiralicious.html">Jiralicious</a> Version</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-rest_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">rest_path</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the currently defined Rest API path</p>
+          
+          
+
+          
+          <div class="method-source-code" id="rest_path-source">
+            <pre><span class="ruby-comment"># File lib/jiralicious.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rest_path</span>
+  <span class="ruby-node">&quot;#{self.uri}/rest/api/#{self.api_version}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- rest_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- rest_path-method -->
+
+    
+      <div id="method-i-search" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">search</span><span
+            class="method-args">(jql, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Provides the interface to access the JQL search functionality. Uses the
+same syntax as Rest interface for JQL criteria.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="search-source">
+            <pre><span class="ruby-comment"># File lib/jiralicious/search.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">search</span>(<span class="ruby-identifier">jql</span>, <span class="ruby-identifier">options</span> = {})
+        <span class="ruby-identifier">options</span>[<span class="ruby-value">:start_at</span>] <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>
+        <span class="ruby-identifier">options</span>[<span class="ruby-value">:max_results</span>] <span class="ruby-operator">||=</span> <span class="ruby-value">50</span>
+        <span class="ruby-identifier">options</span>[<span class="ruby-value">:fields</span>] = [<span class="ruby-identifier">options</span>[<span class="ruby-value">:fields</span>]] <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:fields</span>].<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+        <span class="ruby-identifier">options</span>[<span class="ruby-value">:fields</span>] <span class="ruby-operator">||=</span> [<span class="ruby-string">&quot;*navigable&quot;</span>]
+
+        <span class="ruby-identifier">request_body</span> = {
+                <span class="ruby-value">:jql</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">jql</span>,
+                <span class="ruby-value">:startAt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:start_at</span>],
+                <span class="ruby-value">:maxResults</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:max_results</span>],
+                <span class="ruby-value">:fields</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:fields</span>]
+        }.<span class="ruby-identifier">to_json</span>
+
+        <span class="ruby-identifier">handler</span> = <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">code</span> <span class="ruby-operator">==</span> <span class="ruby-value">200</span>
+                        <span class="ruby-constant">Jiralicious</span><span class="ruby-operator">::</span><span class="ruby-constant">SearchResult</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>)
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">raise</span> <span class="ruby-constant">Jiralicious</span><span class="ruby-operator">::</span><span class="ruby-constant">JqlError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>[<span class="ruby-string">'errorMessages'</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">'\n'</span>))
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-constant">Jiralicious</span>.<span class="ruby-identifier">session</span>.<span class="ruby-identifier">request</span>(
+                <span class="ruby-value">:post</span>,
+                <span class="ruby-node">&quot;#{Jiralicious.rest_path}/search&quot;</span>,
+                <span class="ruby-value">:body</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">request_body</span>,
+                <span class="ruby-value">:handler</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">handler</span>
+        )
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- search-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- search-method -->
+
+    
+      <div id="method-i-session" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">session</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Processes the session information and returns the current session object</p>
+          
+          
+
+          
+          <div class="method-source-code" id="session-source">
+            <pre><span class="ruby-comment"># File lib/jiralicious.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">session</span>
+  <span class="ruby-identifier">session_type</span> = <span class="ruby-node">&quot;#{self.auth_type.to_s.capitalize}Session&quot;</span>
+  <span class="ruby-ivar">@session</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Jiralicious</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">session_type</span>).<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- session-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- session-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
