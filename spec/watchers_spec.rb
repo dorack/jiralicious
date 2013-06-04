@@ -24,7 +24,7 @@ describe Jiralicious, "search" do
       :status => "204")
   end
 
-  it "finds by isusse key" do
+  it "finds by issue key" do
     watchers = Jiralicious::Issue::Watchers.find_by_key("EX-1")
     watchers.should be_instance_of(Jiralicious::Issue::Watchers)
     watchers.watchers.count.should == 1
