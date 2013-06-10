@@ -21,7 +21,7 @@ module Jiralicious
             if self.comments.is_a? Array
               a = {}
               self.comments.each do |comment|
-                a["_#{comment.id}"] = Comment.new(comment)
+                a["_#{comment['id']}"] = Comment.new(comment)
               end
               self.comments = a
             end
