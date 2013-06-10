@@ -1,17 +1,26 @@
 # encoding: utf-8
-
 module Jiralicious
+  ##
+  # The CookieSesssion class extends the Session class with the
+  # functionality of utilizing cookies for authorization management.
+  # 
+  # Deprecated:: CookieSession is deprecated as of version 0.2.0
+  #
   class CookieSession < Session
+    # Adds attributes to the CookieSession
     attr_accessor :authenticating, :session, :login_info
 
+    # Checks to see if session is active
     def alive?
       @session && @login_info
     end
 
+    # Provides login information on every request
     def before_request
       self.login if require_login? && !@authenticating
     end
 
+    # Handles the response from the request
     def after_request(response)
       unless @authenticating
         if captcha_required(response)
@@ -26,6 +35,7 @@ module Jiralicious
       @authenticating = false
     end
 
+    # Authenticates the login
     def login
       @authenticating = true
       handler = Proc.new do |response|
@@ -54,6 +64,7 @@ module Jiralicious
 
     end
 
+    # Logs out of the API
     def logout
       handler = Proc.new do |request|
         if response.code == 204
@@ -74,6 +85,7 @@ module Jiralicious
 
     private
 
+    # Handles Captcha if necessary
     def captcha_required(response)
       response.code == 401 &&
         # Fakeweb lowercases headers automatically. :(
@@ -81,14 +93,17 @@ module Jiralicious
           response.headers["x-seraph-loginreason"] == "AUTHENTICATION_DENIED")
     end
 
+    # Throws if cookie is invalid
     def cookie_invalid(response)
       response.code == 401 && response.body =~ /cookie/i
     end
 
+    # Checks to see if login is required
     def require_login?
       !(Jiralicious.username.empty? && Jiralicious.password.empty?) && !alive?
     end
 
+    # Resets the current Session
     def clear_session
       @session = @login_info = nil
     end

@@ -1,8 +1,16 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+# encoding: utf-8
 module Jiralicious
+  ##
+  # The Field class is used in multiple classes as a support object. This class
+  # is designed as a Object Oriented Method of viewing the Jira JSON/Hash.
+  #
   class Field < Jiralicious::Base
-
+    ##
+    # Initialization Method
+    # 
+    # Builds the dynamic Field object from either a Hash or Array. The decoded JSON object can be nested
+    # as deep as necessary but it is recommended that JSON objects are no deeper then 5 levels maximum.
+    #
     def initialize(decoded_json, default = nil, &blk)
       @loaded = false
       if decoded_json.is_a? Hash

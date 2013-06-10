@@ -1,5 +1,9 @@
 # encoding: utf-8
 module Jiralicious
+  ##
+  # Provides the interface to access the JQL search functionality.
+  # Uses the same syntax as Rest interface for JQL criteria.
+  #
   def search(jql, options = {})
     options[:start_at] ||= 0
     options[:max_results] ||= 50
