@@ -22,15 +22,26 @@ require 'jiralicious/basic_session'
 require 'jiralicious/cookie_session'
 require 'jiralicious/configuration'
 
+##
+# The Jiralicious module standard options and methods
+#
 module Jiralicious
+  # Adds Configuration functionality
   extend Configuration
+  # Adds self functionality
   extend self
 
+  ##
+  # Processes the session information and returns the current session object
+  #
   def session
     session_type = "#{self.auth_type.to_s.capitalize}Session"
     @session ||= Jiralicious.const_get(session_type).new
   end
 
+  ##
+  # Returns the currently defined Rest API path
+  #
   def rest_path
     "#{self.uri}/rest/api/#{self.api_version}"
   end
