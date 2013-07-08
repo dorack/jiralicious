@@ -41,6 +41,11 @@ Finding a single issue:
 Default auth type is now Basic auth. Cookie auth will be deprecated in the next version.
 
 
+## Changes from 0.2.2
+
+* For more flexible error handling, Return the full HTTParty response instead of parsing errorMessages. **NOTE: This API change may break exising error handling code. Please update your application code to parse the response from JiraError, TransitionError, and IssueNotFound.**
+
+
 ## Changes from 0.1.0
 
 * Issues can be created, updated, or deleted as needed. This includes most components such as comments, transitions, and assignees.
