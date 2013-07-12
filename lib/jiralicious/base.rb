@@ -102,11 +102,11 @@ module Jiralicious
           when 200..204
             response
           when 400
-            raise Jiralicious::TransitionError.new(response['errorMessages'].join('\n'))
+            raise Jiralicious::TransitionError.new(response)
           when 404
-            raise Jiralicious::IssueNotFound.new(response['errorMessages'].join('\n'))
+            raise Jiralicious::IssueNotFound.new(response)
           else
-            raise Jiralicious::JiraError.new(response['errorMessages'].join('\n'))
+            raise Jiralicious::JiraError.new(response)
           end
         end
       end
