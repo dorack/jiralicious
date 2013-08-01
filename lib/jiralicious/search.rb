@@ -4,6 +4,15 @@ module Jiralicious
   # Provides the interface to access the JQL search functionality.
   # Uses the same syntax as Rest interface for JQL criteria.
   #
+  # [Arguments]
+  # :jql            (required)    JQL string
+  #
+  # :start_at       (optional)    offset to start at
+  #
+  # :max_results    (optional)    maximum number to return
+  #
+  # :fields         (optional)    field options
+  #
   def search(jql, options = {})
     options[:start_at] ||= 0
     options[:max_results] ||= 50

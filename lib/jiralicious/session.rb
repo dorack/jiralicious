@@ -17,6 +17,11 @@ module Jiralicious
     ##
     # Main access method to request data from the Jira API
     #
+    # [Arguments]
+    # :method    (required)    http method type
+    #
+    # :options   (required)    request specific options
+    #
     def request(method, *options)
       if options.last.is_a?(Hash) && options.last[:handler]
         response_handler = options.last.delete(:handler)

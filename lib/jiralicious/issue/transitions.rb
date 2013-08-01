@@ -2,8 +2,9 @@
 module Jiralicious
   class Issue
     ##
-    # The Transitions Class provides all of the functionality to retrieve,
-    # and use a transition associated with an Issue.
+    # The Transitions Class provides all of the
+    # functionality to retrieve, and use a transition
+    # associated with an Issue.
     #
     class Transitions < Jiralicious::Base
 
@@ -13,7 +14,12 @@ module Jiralicious
       ##
       # Initialization Method
       #
-      def initialize(decoded_json = nil, default = nil, &blk)
+      # [Arguments]
+      # :decoded_json    (optional)    rubyized json object
+      #
+      # :default         (optional)    default issue key
+      #
+      def initialize(decoded_json = nil, default = nil)
         @loaded = false
         @meta = nil
         if decoded_json.is_a? Array
@@ -45,29 +51,45 @@ module Jiralicious
         ##
         # Retrieves the associated Transitions based on the Issue Key
         #
-        def find(key, options = {})
+        # [Arguments]
+        # :key    (required)    issue key
+        #
+        def find(key)
           response = fetch({:parent => parent_name, :parent_key => key})
           response.parsed_response['transitions'].each do |t|
             t['jira_key'] = key
           end
-          a = new(response.parsed_response['transitions'], key)
-          return a
+          return new(response.parsed_response['transitions'], key)
         end
 
         ##
         # Retrieves the Transition based on the Issue Key and Transition ID
         #
-        def find_by_key_and_id(key, id, options = {})
+        # [Arguments]
+        # :key    (required)    issue key
+        #
+        # :id     (required)    transition id
+        #
+        def find_by_key_and_id(key, id)
           response = fetch({:parent => parent_name, :parent_key => key, :body => {"transitionId" => id}, :body_to_params => true })
           response.parsed_response['transitions'].each do |t|
             t['jira_key'] = key
           end
-          a = new(response.parsed_response['transitions'])
-          return a
+          return new(response.parsed_response['transitions'])
         end
 
         ##
         # Processes the Transition based on the provided options
+        #
+        # [Arguments]
+        # :key      (required)    issue key
+        #
+        # :id       (required)    transaction id
+        #
+        # :comment  (optional)    comment to be added with transition
+        #
+        # :fields   (mixed)       the fields that are required or optional
+        #                             based on the individual transition
         #
         def go(key, id, options = {})
           transition = {"transition" => {"id" => id}}
@@ -90,14 +112,20 @@ module Jiralicious
         # Retrieves the meta data for the Transition based on the
         # options, Issue Key and Transition ID provided.
         #
+        # [Arguments]
+        # :key      (required)    issue key
+        #
+        # :id       (required)    transaction id
+        #
+        # :return   (optional)    boolean flag to determine if an object or hash is returned
+        #
         def meta(key, id, options = {})
           response = fetch({:method => :get, :parent => parent_name, :parent_key => key, :body_to_params => true,
               :body => {"transitionId" => id, "expand" => "transitions.fields"}})
           response.parsed_response['transitions'].each do |t|
             t['jira_key'] = key
           end
-          a = (options[:return].nil?) ?  new(response.parsed_response['transitions'], key) : response
-          return a
+          return (options[:return].nil?) ?  new(response.parsed_response['transitions'], key) : response
         end
 
         alias :find_all :find
@@ -112,6 +140,9 @@ module Jiralicious
 
       ##
       # Processes the Transition based on the provided options
+      #
+      # [Arguments]
+      # :options are passed on to the 'class.go' function
       #
       def go(options = {})
         self.class.go(self.jira_key, self.id, options)
