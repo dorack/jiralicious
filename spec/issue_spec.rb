@@ -7,8 +7,8 @@ describe Jiralicious::Issue, "finding" do
     Jiralicious.configure do |config|
       config.username = "jstewart"
       config.password = "topsecret"
-      config.uri = "http://localhost"
-      config.auth_type = :cookie
+      config.uri = "http://jstewart:topsecret@localhost"
+      config.auth_type = :basic
       config.api_version = "latest"
     end
 
@@ -56,8 +56,8 @@ describe Jiralicious::Issue, "Managing Issues" do
     Jiralicious.configure do |config|
       config.username = "jstewart"
       config.password = "topsecret"
-      config.uri = "http://localhost"
-      config.auth_type = :cookie
+      config.uri = "http://jstewart:topsecret@localhost"
+      config.auth_type = :basic
       config.api_version = "latest"
     end
 
@@ -159,8 +159,8 @@ describe Jiralicious::Issue, "Managing Issues" do
     Jiralicious.configure do |config|
       config.username = "jstewart"
       config.password = "topsecret"
-      config.uri = "http://localhost"
-      config.auth_type = :cookie
+      config.uri = "http://jstewart:topsecret@localhost"
+      config.auth_type = :basic
       config.api_version = "latest"
     end
 
@@ -215,8 +215,8 @@ describe Jiralicious::Issue, "Issue Information and Field Class" do
     Jiralicious.configure do |config|
       config.username = "jstewart"
       config.password = "topsecret"
-      config.uri = "http://localhost"
-      config.auth_type = :cookie
+      config.uri = "http://jstewart:topsecret@localhost"
+      config.auth_type = :basic
       config.api_version = "latest"
     end
 
@@ -281,7 +281,8 @@ describe Jiralicious::Issue, "transitions" do
     Jiralicious.configure do |config|
       config.username = "jstewart"
       config.password = "topsecret"
-      config.uri = "http://localhost"
+      config.uri = "http://jstewart:topsecret@localhost"
+	  config.auth_type = :basic
       config.api_version = "latest"
     end
 
