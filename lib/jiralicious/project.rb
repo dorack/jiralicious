@@ -9,7 +9,10 @@ module Jiralicious
     ##
     # Initialization Method
     #
-    def initialize(decoded_json, default = nil, &blk)
+    # [Arguments]
+    # :decoded_json    (optional)    rubyized json object
+    #
+    def initialize(decoded_json)
       @loaded = false
       if decoded_json.is_a? Hash
         properties_from_hash(decoded_json)
@@ -29,6 +32,9 @@ module Jiralicious
       # Returns a list of issues within the project. The issue list is limited
       # to only return the issue ID and KEY values to minimize the amount of
       # data being returned This is used in lazy loading methodology.
+      #
+      # [Arguments]
+      # :key    (required)    project key
       #
       def issue_list(key)
         response = Jiralicious.search("project=#{key}", {:fields => ["id", "key"]})

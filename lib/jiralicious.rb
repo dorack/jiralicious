@@ -15,12 +15,16 @@ require 'jiralicious/issue/comment'
 require 'jiralicious/issue/watchers'
 require 'jiralicious/issue/transitions'
 require 'jiralicious/project'
+require 'jiralicious/project/avatar'
 require 'jiralicious/search'
 require 'jiralicious/search_result'
 require 'jiralicious/session'
+require 'jiralicious/user'
+require 'jiralicious/user/avatar'
 require 'jiralicious/basic_session'
 require 'jiralicious/cookie_session'
 require 'jiralicious/configuration'
+require 'jiralicious/avatar'
 
 ##
 # The Jiralicious module standard options and methods
