@@ -96,4 +96,16 @@ module JsonResponse
     File.expand_path('user_picker.json', File.dirname(__FILE__) + '/../fixtures')
   end
 
+  def avatar_list_json
+    File.expand_path('avatar_list.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def avatar_custom_json
+    File.expand_path('avatar_custom.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def avatar_temp_json
+    File.expand_path('avatar_temp.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
 end
