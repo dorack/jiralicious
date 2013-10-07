@@ -2,9 +2,11 @@
 module Jiralicious
   class Issue
     ##
-    # The Fields class provides functionality to the Issue class that allows it to easily
-    # update or create issues. The class retains the original  and the proposed information
-    # which could be used for cross validation prior to posting an update.
+    # The Fields class provides functionality to the Issue
+    # class that allows it to easily update or create issues.
+    # The class retains the original  and the proposed
+    # information which could be used for cross validation
+    # prior to posting an update.
     #
     class Fields
       # The fields that will be updated or created
@@ -14,6 +16,9 @@ module Jiralicious
 
       ##
       # Initialization Method
+      #
+      # [Arguments]
+      # :fc    (optional) fields to load
       #
       def initialize(fc = nil)
         @fields_current = (fc == nil) ? Hash.new : fc
@@ -37,6 +42,9 @@ module Jiralicious
       ##
       # Adds a comment to the field list
       #
+      # [Arguments]
+      # :comment   (required)    comment text
+      #
       def add_comment(comment)
         if !(@fields_update['comment'].is_a? Array)
           @fields_update['comment'] = Array.new
@@ -46,6 +54,11 @@ module Jiralicious
 
       ##
       # Appends the current String with the provided value
+      #
+      # [Arguments]
+      # :field   (required)    field to update
+      #
+      # :value   (required)    value text
       #
       def append_s(field, value)
         if (@fields_update[field] == nil)
@@ -57,6 +70,11 @@ module Jiralicious
 
       ##
       # Appends the current Array with the provided value
+      #
+      # [Arguments]
+      # :field   (required)    field to update
+      #
+      # :value   (required)    value array
       #
       def append_a(field, value)
         @fields_update[field] = @fields_current[field] if (@fields_update[field] == nil)
@@ -71,6 +89,11 @@ module Jiralicious
       ##
       # Appends the current Hash with the provided value
       #
+      # [Arguments]
+      # :field   (required)    field to update
+      #
+      # :value   (required)    value hash
+      #
       def append_h(field, hash)
         @fields_update[field] = @fields_current[field] if (@fields_update[field] == nil)
         @fields_update[field] = Hash.new if !(@fields_update[field].is_a? Hash)
@@ -80,6 +103,11 @@ module Jiralicious
       ##
       # Sets the field key with the provided value.
       #
+      # [Arguments]
+      # :field   (required)    field to update
+      #
+      # :value   (required)    value to add
+      #
       def set(field, value)
         @fields_update[field] = value
       end
@@ -87,6 +115,11 @@ module Jiralicious
       ##
       # Sets the field with a name hash.
       # This is necessary for some objects in Jira.
+      #
+      # [Arguments]
+      # :field   (required)    field to update
+      #
+      # :value   (required)    value text
       #
       def set_name(field, value)
         @fields_update[field] = {"name" => value}
@@ -96,11 +129,19 @@ module Jiralicious
       # Sets the field with a id hash.
       # This is necessary for some objects in Jira.
       #
+      # [Arguments]
+      # :field   (required)    field to update
+      #
+      # :value   (required)    value text/int
+      #
       def set_id(field, value)
         @fields_update[field] = {"id" => value}
       end
       ##
       # Fills the fields_current object with the provided Hash.
+      #
+      # [Arguments]
+      # :fc    (optional) fields to load
       #
       def set_current(fc)
         @fields_current = fc if fc.type == Hash

@@ -1,0 +1,16 @@
+{
+  "system": [
+    {
+      "id": "10100",
+      "isSystemAvatar": false,
+      "isSelected": false,
+      "selected": false
+    },
+    {
+      "id": "10101",
+      "isSystemAvatar": true,
+      "isSelected": false,
+      "selected": false
+    }
+  ]
+}

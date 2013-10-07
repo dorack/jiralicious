@@ -1,0 +1,26 @@
+[
+  {
+    "self": "http://www.example.com/jira/rest/api/2/user?username=test_user",
+    "name": "test_user",
+  "emailAddress": "test_user@example.com",
+    "avatarUrls": {
+      "16x16": "http://www.example.com/jira/secure/useravatar?size=small&ownerId=test_user",
+      "48x48": "http://www.example.com/jira/secure/useravatar?size=large&ownerId=test_user"
+    },
+    "displayName": "Test User",
+    "active": false,
+  "timeZone": "America/Chicago"
+  },
+  {
+    "self": "http://www.example.com/jira/rest/api/2/user?username=simple_user",
+    "name": "simple_user",
+  "emailAddress": "simple_user@example.com",
+    "avatarUrls": {
+      "16x16": "http://www.example.com/jira/secure/useravatar?size=small&ownerId=simple_user",
+      "48x48": "http://www.example.com/jira/secure/useravatar?size=large&ownerId=simple_user"
+    },
+    "displayName": "Simple User",
+    "active": false,
+  "timeZone": "America/Chicago"
+  }
+]

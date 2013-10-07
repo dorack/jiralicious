@@ -12,7 +12,10 @@ module Jiralicious
       ##
       # Initialization Method
       #
-      def initialize(decoded_json = nil, default = nil, &blk)
+      # [Arguments]
+      # :decoded_json    (optional)    rubyized json object
+      #
+      def initialize(decoded_json = nil)
         if (decoded_json != nil)
           properties_from_hash(decoded_json)
           super(decoded_json)
@@ -33,7 +36,10 @@ module Jiralicious
         ##
         # Retrieves the Comments based on the Issue Key
         #
-        def find_by_key(key, options = {})
+        # [Arguments]
+        # :key    (required)    issue key
+        #
+        def find_by_key(key)
           response = fetch({:parent => parent_name, :parent_key => key})
           a = new(response)
           a.jira_key = key
@@ -43,7 +49,12 @@ module Jiralicious
         ##
         # Retrieves the Comment based on the Issue Key and Comment ID
         #
-        def find_by_key_and_id(key, id, options = {})
+        # [Arguments]
+        # :key    (required)    issue key
+        #
+        # :id     (required)    comment id
+        #
+        def find_by_key_and_id(key, id)
           response = fetch({:parent => parent_name, :parent_key => key, :key => id})
           a = new(response)
           a.jira_key = key
@@ -53,6 +64,11 @@ module Jiralicious
         ##
         # Adds a new Comment to the Issue
         #
+        # [Arguments]
+        # :comment    (required)    comment to post
+        #
+        # :key        (required)    issue key
+        #
         def add(comment, key)
           fetch({:method => :post, :body => comment, :parent => parent_name, :parent_key => key})
         end
@@ -60,31 +76,49 @@ module Jiralicious
         ##
         # Updates a Comment based on Issue Key and Comment ID
         #
+        # [Arguments]
+        # :comment    (required)    comment to post
+        #
+        # :key        (required)    issue key
+        #
+        # :id         (required)    comment id
+        #
         def edit(comment, key, id)
           fetch({:method => :put, :key => id, :body => comment, :parent => parent_name, :parent_key => key})
         end
 
         ##
-        # Removes/Deletes the Comment from the Jira Issue. It is not recommended  to delete comments however the functionality is provided.
-        # it is recommended to override this function to throw an error or warning
-        # to maintain data integrity in systems that do not allow deleting from a
-        # remote location.
+        # Removes/Deletes the Comment from the Jira Issue. It is
+        # not recommended  to delete comments however the functionality
+        # is provided. It is recommended to override this function
+        # to throw an error or warning to maintain data integrity
+        # in systems that do not allow deleting from a remote location.
+        #
+        # [Arguments]
+        # :key        (required)    issue key
+        #
+        # :id         (required)    comment id
         #
         def remove(key, id)
           fetch({:method => :delete, :body_to_params => true, :key => id, :parent => parent_name, :parent_key => key})
-
         end
       end
 
       ##
       # Retrieves the Comment based on the loaded Issue and Comment ID
       #
-      def find_by_id(id, options = {})
+      # [Arguments]
+      # :id         (required)    comment id
+      #
+      def find_by_id(id)
         self.class.find_by_key_and_id(@jira_key, id)
       end
 
       ##
       # Adds a new Comment to the loaded Issue
+      #
+      # [Arguments]
+      # :comment    (required)    comment text
       #
       def add(comment)
         self.class.add(comment, @jira_key)
@@ -93,14 +127,22 @@ module Jiralicious
       ##
       # Updates a Comment based on loaded Issue and Comment 
       #
+      # [Arguments]
+      # :comment    (required)    comment text
+      #
       def edit(comment)
         self.class.edit(comment, @jira_key, self.id)
       end
 
       ##
-      # Removes/Deletes the Comment from the Jira Issue. It is not recommended to delete comments;
-      # However, the functionality is provided. It is recommended to override this function to throw an error or
-      # warning to maintain data integrity in systems that do not allow deleting from a remote location.
+      # Removes/Deletes the Comment from the Jira Issue. It is
+      # not recommended to delete comments. However, the functionality
+      # is provided. It is recommended to override this function
+      # to throw an error or warning to maintain data integrity
+      # in systems that do not allow deleting from a remote location.
+      #
+      # [Arguments]
+      # :id    (optional)    comment id
       #
       def remove(id = self.id)
         self.class.remove(@jira_key, id)

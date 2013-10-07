@@ -1,5 +1,8 @@
 # encoding: utf-8
 module Jiralicious
+  ##
+  # Parsing module contains all of the parser functionality
+  #
   module Parsers
     ##
     # The FieldParser module is an extention that assists in
@@ -8,6 +11,9 @@ module Jiralicious
     module FieldParser
       ##
       # Parses an Array or Hash into the current class object.
+      #
+      # [Arguments]
+      # :fields    (required)    fields to be parsed
       #
       def parse!(fields)
         unless fields.is_a?(Hash)
@@ -42,6 +48,9 @@ module Jiralicious
       ##
       # Normalizes key names
       #
+      # [Arguments]
+      # :name    (required)    name to be normalized
+      #
       def normalize(name)
         name.gsub(/(\w+)([A-Z].*)/, '\1_\2').
           gsub(/\W/, "_").
@@ -50,6 +59,9 @@ module Jiralicious
 
       ##
       # Converts Array or Hash to a Mash object
+      #
+      # [Arguments]
+      # :data    (required)    data be be mashified
       #
       def mashify(data)
         if data.is_a?(Array)

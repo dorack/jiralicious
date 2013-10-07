@@ -1,9 +1,10 @@
 # encoding: utf-8
 module Jiralicious
   ##
-  # The Issue class rolls up all functionality of issues from jira. This class contains methods to manage
-  # Issues from Ruby via the API. Several child classes are added in order to facilitate several different
-  # aspects of managing the issues.
+  # The Issue class rolls up all functionality of issues from Jira.
+  # This class contains methods to manage Issues from Ruby via the
+  # API. Several child classes are added in order to facilitate
+  # several different aspects of managing the issues.
   #
   class Issue < Jiralicious::Base
 
@@ -30,8 +31,15 @@ module Jiralicious
     # Contains the editmeta
     attr_accessor :editmeta
 
+    ##
     # Initialization Method
-    def initialize(decoded_json = nil, default = nil, &blk)
+    #
+    # [Arguments]
+    # :decoded_json    (optional)    rubyized json object
+    #
+    # :default         (optional)    set to not load subclasses
+    #
+    def initialize(decoded_json = nil, default = nil)
       @loaded = false
       if (!decoded_json.nil?)
         super(decoded_json)
@@ -53,8 +61,14 @@ module Jiralicious
     end
 
     ##
-    # Imports all data from a decoded hash. This function is used when a blank
-    # issue is created but needs to be loaded from a JSON string at a later time.
+    # Imports all data from a decoded hash. This function is used
+    # when a blank issue is created but needs to be loaded from a
+    # JSON string at a later time.
+    #
+    # [Arguments]
+    # :decoded_hash    (optional)    rubyized json object
+    #
+    # :default         (optional)    set to not load subclasses
     #
     def load(decoded_hash, default = nil)
       decoded_hash.each do |k,v|
@@ -83,6 +97,11 @@ module Jiralicious
       ##
       # Adds specified assignee to the Jira Issue.
       #
+      # [Arguments]
+      # :name    (required)    name of assignee
+      #
+      # :key     (required)    issue key
+      #
       def assignee(name, key)
         name = {"name" => name} if name.is_a? String
         fetch({:method => :put, :key => "#{key}/assignee", :body => name})
@@ -92,22 +111,39 @@ module Jiralicious
       # Creates a new issue. This method is not recommended
       # for direct access but is provided for advanced users.
       #
+      # [Arguments]
+      # :issue    (required)    issue fields in hash format
+      #
       def create(issue)
         fetch({:method => :post, :body => issue})
       end
 
       ##
-      # Removes/Deletes the Issue from the Jira Project. It is not recommended to delete issues however the
-      # functionality is provided. It is recommended to override this function to throw an error or warning
-      # to maintain data integrity in systems that do not allow deleting from a remote location.
+      # Removes/Deletes the Issue from the Jira Project. It is not
+      # recommended to delete issues however the functionality is
+      # provided. It is recommended to override this function to
+      # throw an error or warning to maintain data integrity in
+      # systems that do not allow deleting from a remote location.
+      #
+      # [Arguments]
+      # :key               (required)    issue key
+      #
+      # :deleteSubtasks    (optional)    boolean flag to remove subtasks
+      #
       #
       def remove(key, options = {})
         fetch({:method => :delete, :body_to_params => true, :key => key, :body => options})
       end
 
       ##
-      # Updates the specified issue based on the provided HASH. It is not recommended
-      # to access this method directly but is provided for advanced users.
+      # Updates the specified issue based on the provided HASH. It
+      # is not recommended to access this method directly but is
+      # provided for advanced users.
+      #
+      # [Arguments]
+      # :issue    (required)    hash of fields to update
+      #
+      # :key      (required)    issue key to update
       #
       def update(issue, key)
         fetch({:method => :put, :key => key, :body => issue})
@@ -116,6 +152,11 @@ module Jiralicious
       ##
       # Retrieves the create meta for the Jira Project based on Issue Types.
       # Can be used to validate or filter create requests to minimize errors.
+      #
+      # [Arguments]
+      # :projectkeys    (required)    project key to generate create meta
+      #
+      # :issuetypeids   (opitonal)    list of issues types for create meta
       #
       def createmeta(projectkeys, issuetypeids = nil)
         response = fetch({:body_to_params => true, :key => "createmeta", :body => {:expand => "projects.issuetypes.fields.", :projectKeys => projectkeys, :issuetypeIds => issuetypeids}})
@@ -126,6 +167,9 @@ module Jiralicious
       # Retrieves the edit meta for the Jira Issue. Can be used
       # to validate or filter create requests to minimize errors.
       #
+      # [Arguments]
+      # :key    (required)    issue key
+      #
       def editmeta(key)
         response = fetch({:key => "#{key}/editmeta"})
         response.parsed_response["key"] = key
@@ -135,12 +179,20 @@ module Jiralicious
       ##
       # Legacy method to retrieve transitions manually.
       #
+      # [Arguments]
+      # :transitions_url    (required)    full URL
+      #
       def get_transitions(transitions_url)
         Jiralicious.session.request(:get, transitions_url, :handler => handler)
       end
 
       ##
       # Legacy method to process transitions manually.
+      #
+      # [Arguments]
+      # :transitions_url    (required)    full URL and params to be processed
+      #
+      # :data               (required)    data for the transition
       #
       def transition(transitions_url, data)
         Jiralicious.session.request(:post, transitions_url,
@@ -152,12 +204,18 @@ module Jiralicious
     ##
     # Method to assign an assignee by name in a current issue.
     #
+    # [Arguments]
+    # :name    (required)    name of assignee
+    #
     def set_assignee(name)
       self.class.assignee(name, self.jira_key)
     end
 
     ##
     # Method to remove or delete the current issue.
+    #
+    # [Arguments]
+    # :options    (optional)    passed on
     #
     def remove(options = {})
       self.class.remove(self.jira_key, options)

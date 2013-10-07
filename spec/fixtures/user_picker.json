@@ -1,0 +1,18 @@
+{
+  "users": [
+  {
+    "name": "test_user",
+    "html": "test_user@example.com",
+    "displayName": "Test User",
+    "avatarUrl": "http://www.example.com/jira/secure/useravatar?size=small&ownerId=test_user"
+  },
+  {
+    "name": "simple_user",
+    "html": "simple_user@example.com",
+    "displayName": "Simple User",
+    "avatarURL": "http://www.example.com/jira/secure/useravatar?size=small&ownerId=simple_user"
+  }
+  ],
+  "total": 2,
+  "header": "Showing 2 of 25 matching groups"
+}
