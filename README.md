@@ -40,6 +40,9 @@ Finding a single issue:
 
 Default auth type is now Basic auth. Cookie auth will be deprecated in the next version.
 
+## Changes from 0.3.0
+
+* User and Avatars are now supported.
 
 ## Changes from 0.2.2
 
