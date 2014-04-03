@@ -1,5 +1,7 @@
 # encoding: utf-8
 require "uri"
+require 'hash'
+
 module Jiralicious
   ##
   # The Base class encapsulates all of the default functionality necessary in order
