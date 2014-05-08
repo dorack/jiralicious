@@ -42,10 +42,19 @@ module Jiralicious
     def initialize(decoded_json = nil, default = nil)
       @loaded = false
       if (!decoded_json.nil?)
+        if !decoded_json.include? 'fields'
+          decoded_json = {'fields' => decoded_json}
+        end
         super(decoded_json)
         parse!(decoded_json["fields"])
         if default.nil?
           @fields = Fields.new(self['fields']) if self['fields']
+          @fields.force_update
+          if !Jiralicious::Base.issueKey_test(self.jira_key, true)
+            if !save!
+              raise Jiralicious::JiraError.new("Issue did not save correctly.")
+            end
+          end
           @comments = Comment.find_by_key(self.jira_key)
           @watchers = Watchers.find_by_key(self.jira_key)
           @transitions = Transitions.new(self.jira_key)
@@ -71,18 +80,30 @@ module Jiralicious
     # :default         (optional)    set to not load subclasses
     #
     def load(decoded_hash, default = nil)
-      decoded_hash.each do |k,v|
-        self[:"#{k}"] = v
-      end
+      if (!decoded_hash.nil?)
+        if !decoded_hash.include? 'fields'
+          decoded_hash = {'fields' => decoded_json}
+        end
+        decoded_hash.each do |k,v|
+          self[:"#{k}"] = v
+        end
       if default.nil?
         parse!(self['fields'])
         @fields = Fields.new(self['fields']) if self['fields']
-        @comments = Comment.find_by_key(self.jira_key)
-        @watchers = Watchers.find_by_key(self.jira_key)
+        if self.jira_key
+          @comments = Comment.find_by_key(self.jira_key)
+          @watchers = Watchers.find_by_key(self.jira_key)
+          @transitions = Transitions.new(self.jira_key)
+        end
         @loaded = true
       else
         parse!(decoded_hash)
       end
+    end
+      @fields = Fields.new if @fields.nil?
+      @comments = Comment.new if @comments.nil?
+      @watchers = Watchers.new if @watchers.nil?
+      @transitions = Transitions.new if @transitions.nil?
     end
 
     ##

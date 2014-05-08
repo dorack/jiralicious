@@ -40,6 +40,13 @@ Finding a single issue:
 
 Default auth type is now Basic auth. Cookie auth will be deprecated in the next version.
 
+## Changes in 0.4.2 from 0.4.0
+
+* Opened up HTTParty to any version
+* Issue.new now works if provided a hash set
+* Error is thrown if the Jira key is invalid
+* Error is thrown if issue cannot be created during new opperation
+
 ## Changes from 0.3.0
 
 * User and Avatars are now supported.
@@ -63,6 +70,7 @@ Default auth type is now Basic auth. Cookie auth will be deprecated in the next 
 * Stanley Handschuh (dorack)
 * Mike Fiedler (miketheman)
 * Girish Sonawane (girishso)
+* Jan Lindblom (janlindblom)
 
 ## Contributing to jiralicious
 
