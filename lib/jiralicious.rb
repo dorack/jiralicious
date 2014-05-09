@@ -23,6 +23,7 @@ require 'jiralicious/user'
 require 'jiralicious/user/avatar'
 require 'jiralicious/basic_session'
 require 'jiralicious/cookie_session'
+require 'jiralicious/oauth_session'
 require 'jiralicious/configuration'
 require 'jiralicious/avatar'
 
