@@ -14,14 +14,18 @@ Gem::Specification.new do |s|
   s.authors = ["Jason Stewart"]
   s.add_runtime_dependency 'crack', '~> 0.1.8'
   if RUBY_VERSION > '1.9.2'
-  s.add_runtime_dependency 'httparty', '>= 0.10'
+    s.add_runtime_dependency 'httparty', '>= 0.10'
   else
-  s.add_runtime_dependency 'httparty', '>= 0.10', '< 0.12.0'
+    s.add_runtime_dependency 'httparty', '>= 0.10', '< 0.12.0'
   end
   s.add_runtime_dependency 'hashie', '>= 1.1'
   s.add_runtime_dependency 'json', '>= 1.6', '< 1.9.0'
   s.add_runtime_dependency 'oauth'
-  s.add_runtime_dependency 'nokogiri'
+  if RUBY_VERSION >= '1.9.0'
+    s.add_runtime_dependency 'nokogiri'
+  else
+    s.add_runtime_dependency 'nokogiri', '< 1.6'
+  end
   s.add_development_dependency 'rspec', '~> 2.6'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'fakeweb', '~> 1.3.0'
