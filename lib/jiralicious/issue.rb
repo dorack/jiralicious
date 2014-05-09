@@ -49,16 +49,12 @@ module Jiralicious
         parse!(decoded_json["fields"])
         if default.nil?
           @fields = Fields.new(self['fields']) if self['fields']
-          @fields.force_update
-          if !Jiralicious::Base.issueKey_test(self.jira_key, true)
-            if !save!
-              raise Jiralicious::JiraError.new("Issue did not save correctly.")
-            end
+          if self.jira_key
+            @comments = Comment.find_by_key(self.jira_key)
+            @watchers = Watchers.find_by_key(self.jira_key)
+            @transitions = Transitions.new(self.jira_key)
+            @loaded = true
           end
-          @comments = Comment.find_by_key(self.jira_key)
-          @watchers = Watchers.find_by_key(self.jira_key)
-          @transitions = Transitions.new(self.jira_key)
-          @loaded = true
         end
       end
       @fields = Fields.new if @fields.nil?
@@ -80,32 +76,20 @@ module Jiralicious
     # :default         (optional)    set to not load subclasses
     #
     def load(decoded_hash, default = nil)
-      if (!decoded_hash.nil?)
-        if !decoded_hash.include? 'fields'
-          decoded_hash = {'fields' => decoded_json}
-        end
-        decoded_hash.each do |k,v|
-          self[:"#{k}"] = v
-        end
+      decoded_hash.each do |k,v|
+        self[:"#{k}"] = v
+      end
       if default.nil?
         parse!(self['fields'])
         @fields = Fields.new(self['fields']) if self['fields']
-        if self.jira_key
-          @comments = Comment.find_by_key(self.jira_key)
-          @watchers = Watchers.find_by_key(self.jira_key)
-          @transitions = Transitions.new(self.jira_key)
-        end
-        @loaded = true
+        @comments = Comment.find_by_key(self.jira_key) if self.jira_key
+        @watchers = Watchers.find_by_key(self.jira_key) if self.jira_key
+        @loaded = true if self.jira_key
       else
         parse!(decoded_hash)
       end
     end
-      @fields = Fields.new if @fields.nil?
-      @comments = Comment.new if @comments.nil?
-      @watchers = Watchers.new if @watchers.nil?
-      @transitions = Transitions.new if @transitions.nil?
-    end
-
+	
     ##
     # Forces the Jira Issue to reload with current or updated
     # information. This method is used in lazy loading methods.
@@ -270,12 +254,11 @@ module Jiralicious
     def save
       if loaded?
         self.class.update(@fields.format_for_update, self.jira_key)
-        key = self.jira_key
       else
         response = self.class.create(@fields.format_for_create)
-        key = response.parsed_response['key']
+        self.jira_key = response.parsed_response['key']
       end
-      return key
+      return self.jira_key
     end
 
     ##

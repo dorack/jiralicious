@@ -46,6 +46,7 @@ Default auth type is now Basic auth. Cookie auth will be deprecated in the next 
 * Issue.new now works if provided a hash set.
 * Error is thrown if the Jira key is invalid.
 * Error is thrown if issue cannot be created during new opperation.
+* Corrected and Updated RSPEC
 
 ## Changes from 0.4.0 to 0.4.1
 

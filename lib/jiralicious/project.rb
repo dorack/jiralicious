@@ -42,7 +42,8 @@ module Jiralicious
         response.issues_raw.each do |issue|
           i_out.class.property :"#{issue["key"].gsub("-", "_")}"
           t = Issue.new
-          i_out[issue["key"].gsub("-", "_")] = t.load(issue, true)
+          t.load(issue, true)
+          i_out[issue["key"].gsub("-", "_")] = t
         end
         i_out
       end
