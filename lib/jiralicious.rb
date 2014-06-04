@@ -26,6 +26,8 @@ require 'jiralicious/cookie_session'
 require 'jiralicious/oauth_session'
 require 'jiralicious/configuration'
 require 'jiralicious/avatar'
+require 'jiralicious/component'
+require 'jiralicious/versions'
 
 ##
 # The Jiralicious module standard options and methods
