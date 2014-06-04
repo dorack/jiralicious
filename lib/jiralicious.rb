@@ -14,6 +14,8 @@ require 'jiralicious/issue/fields'
 require 'jiralicious/issue/comment'
 require 'jiralicious/issue/watchers'
 require 'jiralicious/issue/transitions'
+require 'jiralicious/component'
+require 'jiralicious/versions'
 require 'jiralicious/project'
 require 'jiralicious/project/avatar'
 require 'jiralicious/search'
@@ -26,8 +28,6 @@ require 'jiralicious/cookie_session'
 require 'jiralicious/oauth_session'
 require 'jiralicious/configuration'
 require 'jiralicious/avatar'
-require 'jiralicious/component'
-require 'jiralicious/versions'
 
 ##
 # The Jiralicious module standard options and methods
