@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   else
     s.add_runtime_dependency 'httparty', '>= 0.10', '< 0.12.0'
   end
-  s.add_runtime_dependency 'hashie', '>= 1.1'
+  s.add_runtime_dependency 'hashie', '>= 1.1', '< 3.0.0'
   s.add_runtime_dependency 'json', '>= 1.6', '< 1.9.0'
   s.add_runtime_dependency 'oauth'
   if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('1.9.0')
