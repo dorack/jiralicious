@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.authors = ["Jason Stewart"]
   s.add_runtime_dependency 'crack', '~> 0.1.8'
   s.add_runtime_dependency 'httparty', '>= 0.10', '< 0.12.0'
-  s.add_runtime_dependency 'hashie', '>= 1.1'
+  s.add_runtime_dependency 'hashie', '~> 2.1'
   s.add_runtime_dependency 'json', '>= 1.6', '< 1.9.0'
   s.add_development_dependency 'rspec', '~> 2.6'
   s.add_development_dependency 'rake'
