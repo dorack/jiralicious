@@ -40,6 +40,11 @@ Finding a single issue:
 
 Default auth type is now Basic auth. Cookie auth will be deprecated in the next version.
 
+## Changes in 0.5.0
+* Added restriction for Hashie to not use version 3.0.0 and above
+* Added Component class and included all API functionality
+* Added Version class and included all API functionality
+
 ## Changes in 0.4.2
 
 * Opened up HTTParty to any version.
