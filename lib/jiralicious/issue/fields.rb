@@ -101,6 +101,14 @@ module Jiralicious
       end
 
       ##
+      # Merges current to updated to allow for a forced
+      # update request to process.
+      #
+      def force_update
+        @fields_update.merge!(@fields_current)
+      end
+
+      ##
       # Sets the field key with the provided value.
       #
       # [Arguments]

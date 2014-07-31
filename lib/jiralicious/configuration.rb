@@ -6,7 +6,7 @@ module Jiralicious
   #
   module Configuration
     # Array of available attributes
-    VALID_OPTIONS = [:username, :password, :uri, :api_version, :auth_type, :project]
+    VALID_OPTIONS = [:username, :password, :uri, :api_version, :auth_type, :project, :oauth_secret, :oauth_secret_filename, :oauth_pass_phrase, :oauth_consumer_key, :config_path]
     # Default user name set prior to login attempt
     DEFAULT_USERNAME = nil
     # Default password set prior to login attempt
@@ -56,6 +56,12 @@ module Jiralicious
       self.uri = DEFAULT_URI
       self.api_version = DEFAULT_API_VERSION
       self.auth_type = DEFAULT_AUTH_TYPE
+	  self.project = nil
+	  self.oauth_secret = nil
+	  self.oauth_secret_filename = nil
+	  self.oauth_pass_phrase = nil
+	  self.oauth_consumer_key = nil
+	  self.config_path = nil
     end
 
     ##

@@ -1,7 +1,7 @@
 # encoding: utf-8
 require "spec_helper"
 
-describe Jiralicious, "search" do
+describe Jiralicious, "Project Management Class: " do
 
   before :each do
     Jiralicious.configure do |config|
@@ -20,6 +20,14 @@ describe Jiralicious, "search" do
       "#{Jiralicious.rest_path}/project/EX",
       :status => "200",
       :body => project_json)
+    FakeWeb.register_uri(:get,
+      "#{Jiralicious.rest_path}/project/EX/components",
+      :status => "200",
+      :body => project_componets_json)
+    FakeWeb.register_uri(:get,
+      "#{Jiralicious.rest_path}/project/EX/versions",
+      :status => "200",
+      :body => project_versions_json)
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/project/ABC",
       :status => "200",
@@ -52,4 +60,19 @@ describe Jiralicious, "search" do
     issues.EX_1['id'].should == "10000"
   end
 
+  it "finds project componets" do
+    components = Jiralicious::Project.components("EX")
+    components.count.should == 2
+    components.id_10000.name.should == "Component 1"
+    components.id_10050.name.should == "PXA"
+  end
+
+  it "finds project versions" do
+    versions = Jiralicious::Project.versions("EX")
+    versions.count.should == 2
+    versions.id_10000.name.should == "New Version 1"
+    versions.id_10000.overdue.should == true
+    versions.id_10010.name.should == "Next Version"
+    versions.id_10010.overdue.should == false
+  end
 end

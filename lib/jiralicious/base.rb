@@ -139,6 +139,18 @@ module Jiralicious
         end
       end
 
+      ##
+      # Validates that the provided key is not malformed
+      #
+      #
+      def issueKey_test(key, no_throw = false)
+        if key.nil? || !(/^[A-Z]+-[0-9]+$/i =~ key)
+          raise Jiralicious::JiraError.new("The key #{key} is invalid") unless no_throw
+          return false
+        end
+        return true
+      end
+
       alias :all :find_all
     end
 
