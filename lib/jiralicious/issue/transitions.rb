@@ -55,6 +55,7 @@ module Jiralicious
         # :key    (required)    issue key
         #
         def find(key)
+          issueKey_test(key)
           response = fetch({:parent => parent_name, :parent_key => key})
           response.parsed_response['transitions'].each do |t|
             t['jira_key'] = key
@@ -71,6 +72,7 @@ module Jiralicious
         # :id     (required)    transition id
         #
         def find_by_key_and_id(key, id)
+          issueKey_test(key)
           response = fetch({:parent => parent_name, :parent_key => key, :body => {"transitionId" => id}, :body_to_params => true })
           response.parsed_response['transitions'].each do |t|
             t['jira_key'] = key
@@ -92,6 +94,7 @@ module Jiralicious
         #                             based on the individual transition
         #
         def go(key, id, options = {})
+          issueKey_test(key)
           transition = {"transition" => {"id" => id}}
           if options[:comment].is_a? String
             transition.merge!({"update" => {"comment" => [{"add" => {"body" => options[:comment].to_s}}]}})
@@ -120,6 +123,7 @@ module Jiralicious
         # :return   (optional)    boolean flag to determine if an object or hash is returned
         #
         def meta(key, id, options = {})
+          issueKey_test(key)
           response = fetch({:method => :get, :parent => parent_name, :parent_key => key, :body_to_params => true,
               :body => {"transitionId" => id, "expand" => "transitions.fields"}})
           response.parsed_response['transitions'].each do |t|

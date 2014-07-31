@@ -123,8 +123,7 @@ describe Jiralicious::Issue, "Managing Issues" do
     issue.watchers.watchers.count.should == 1
   end
 
-
-  it "creates a new issue" do
+  it "creates a new issue through fields" do
     issue = Jiralicious::Issue.new
     issue.fields.set_id("project", "10000")
     issue.fields.set("summary", "this is a test of creating a scratch ticket")
@@ -134,6 +133,59 @@ describe Jiralicious::Issue, "Managing Issues" do
     issue.fields.set("labels", ["new_label_p"])
     issue.fields.set("environment", "example of environment")
     issue.fields.set("description", "example of the description extending")
+    issue.save!
+    issue.jira_key.should == 'EX-2'
+    issue.comments.comments.count.should == 0
+    issue.watchers.watchers.count.should == 1
+  end
+  
+  it "creates a new issue thgrough load with reload" do
+    hash = {"fields" => {"project" => {"id" => "10000"},
+        "summary" => "this is a test of creating a scratch ticket",
+        "issuetype" => {"id" => "7"},
+        "assignee" => {"name" => "stanley.handschuh"},
+        "priority" => {"id" => "1"},
+        "labels" => ["new_label_p"],
+        "environment" => "example of environment",
+        "description" => "example of the description extending"
+      }}
+    issue = Jiralicious::Issue.new
+    issue.load(hash, true)
+    issue.save!
+    issue.jira_key.should == 'EX-2'
+    issue.comments.comments.count.should == 0
+    issue.watchers.watchers.count.should == 1
+  end
+
+  it "creates a new issue thgrough load without reload" do
+    hash = {"fields" => {"project" => {"id" => "10000"},
+        "summary" => "this is a test of creating a scratch ticket",
+        "issuetype" => {"id" => "7"},
+        "assignee" => {"name" => "stanley.handschuh"},
+        "priority" => {"id" => "1"},
+        "labels" => ["new_label_p"],
+        "environment" => "example of environment",
+        "description" => "example of the description extending"
+      }}
+    issue = Jiralicious::Issue.new
+    issue.load(hash)
+    issue.save!
+    issue.jira_key.should == 'EX-2'
+    issue.comments.comments.count.should == 0
+    issue.watchers.watchers.count.should == 1
+  end
+
+  it "creates a new issue through new" do
+    hash = {"project" => {"id" => "10000"},
+        "summary" => "this is a test of creating a scratch ticket",
+        "issuetype" => {"id" => "7"},
+        "assignee" => {"name" => "stanley.handschuh"},
+        "priority" => {"id" => "1"},
+        "labels" => ["new_label_p"],
+        "environment" => "example of environment",
+        "description" => "example of the description extending"
+      }
+    issue = Jiralicious::Issue.new(hash)
     issue.save!
     issue.jira_key.should == 'EX-2'
     issue.comments.comments.count.should == 0

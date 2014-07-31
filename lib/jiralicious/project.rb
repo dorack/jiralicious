@@ -6,6 +6,11 @@ module Jiralicious
   #
   class Project < Jiralicious::Base
 
+    # Contains the Fields Class
+    attr_accessor :components
+    # Contains the Fields Class
+    attr_accessor :versions
+
     ##
     # Initialization Method
     #
@@ -42,9 +47,34 @@ module Jiralicious
         response.issues_raw.each do |issue|
           i_out.class.property :"#{issue["key"].gsub("-", "_")}"
           t = Issue.new
-          i_out[issue["key"].gsub("-", "_")] = t.load(issue, true)
+          t.load(issue, true)
+          i_out[issue["key"].gsub("-", "_")] = t
         end
         i_out
+      end
+
+      ##
+      # Retrieves the components associated with the project
+      #
+      # [Arguments]
+      # :key    (required)    project key to generate components
+      #
+      def components(key)
+        response = fetch({:key => "#{key}/components"})
+        Field.new(response.parsed_response)
+      end
+
+      ##
+      # Retrieves the versions associated with the project
+      #
+      # [Arguments]
+      # :key      (required)    project key to generate versions
+      #
+      # :expand   (optional)    expansion options.
+      #
+      def versions(key, expand = {})
+        response = fetch({:key => "#{key}/versions", :body => expand})
+        Field.new(response.parsed_response)
       end
     end
 
@@ -58,6 +88,29 @@ module Jiralicious
         @issues = self.class.issue_list(self.key)
       end
       return @issues
+    end
+
+    ##
+    # Retrieves the components associated with the project
+    #
+    def components
+      if @components.nil?
+        @components = self.class.components(self.key)
+      end
+      @components
+    end
+
+    ##
+    # Retrieves the versions associated with the project
+    #
+    # [Arguments]
+    # :expand   (optional)    expansion options.
+    #
+    def versions(expand = {})
+      if @versions.nil? || !expand.empty?
+        @versions = self.class.verions(self.key, expand)
+      end
+      @versions
     end
   end
 end

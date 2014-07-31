@@ -72,6 +72,14 @@ module JsonResponse
     File.expand_path('project.json', File.dirname(__FILE__) + '/../fixtures')
   end
 
+  def project_componets_json
+    File.expand_path('project_componets.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def project_versions_json
+    File.expand_path('project_versions.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
   def project_issue_list_json
     File.expand_path('project_issue_list.json', File.dirname(__FILE__) + '/../fixtures')
   end
@@ -106,6 +114,34 @@ module JsonResponse
 
   def avatar_temp_json
     File.expand_path('avatar_temp.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def component_json
+    File.expand_path('component.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def component_updated_json
+    File.expand_path('component_updated.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def component_ric_json
+    File.expand_path('component_ric.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def version_json
+    File.expand_path('version.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def version_updated_json
+    File.expand_path('version_updated.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def version_ric_json
+    File.expand_path('version_ric.json', File.dirname(__FILE__) + '/../fixtures')
+  end
+
+  def version_uic_json
+    File.expand_path('version_uic.json', File.dirname(__FILE__) + '/../fixtures')
   end
 
 end

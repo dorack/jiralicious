@@ -1,0 +1,22 @@
+[
+  {
+    "self": "http://www.example.com/jira/rest/api/2/version/10000",
+    "id": "10000",
+    "description": "An excellent version",
+    "name": "New Version 1",
+    "archived": false,
+    "released": true,
+    "releaseDate": "2010-07-05",
+    "overdue": true,
+    "userReleaseDate": "5/Jul/2010"
+  },
+  {
+    "self": "http://www.example.com/jira/rest/api/2/version/10010",
+    "id": "10010",
+    "description": "Minor Bugfix version",
+    "name": "Next Version",
+    "archived": false,
+    "released": false,
+    "overdue": false
+  }
+]

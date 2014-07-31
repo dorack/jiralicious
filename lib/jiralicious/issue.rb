@@ -42,14 +42,19 @@ module Jiralicious
     def initialize(decoded_json = nil, default = nil)
       @loaded = false
       if (!decoded_json.nil?)
+        if !decoded_json.include? 'fields'
+          decoded_json = {'fields' => decoded_json}
+        end
         super(decoded_json)
         parse!(decoded_json["fields"])
         if default.nil?
           @fields = Fields.new(self['fields']) if self['fields']
-          @comments = Comment.find_by_key(self.jira_key)
-          @watchers = Watchers.find_by_key(self.jira_key)
-          @transitions = Transitions.new(self.jira_key)
-          @loaded = true
+          if self.jira_key
+            @comments = Comment.find_by_key(self.jira_key)
+            @watchers = Watchers.find_by_key(self.jira_key)
+            @transitions = Transitions.new(self.jira_key)
+            @loaded = true
+          end
         end
       end
       @fields = Fields.new if @fields.nil?
@@ -77,14 +82,14 @@ module Jiralicious
       if default.nil?
         parse!(self['fields'])
         @fields = Fields.new(self['fields']) if self['fields']
-        @comments = Comment.find_by_key(self.jira_key)
-        @watchers = Watchers.find_by_key(self.jira_key)
-        @loaded = true
+        @comments = Comment.find_by_key(self.jira_key) if self.jira_key
+        @watchers = Watchers.find_by_key(self.jira_key) if self.jira_key
+        @loaded = true if self.jira_key
       else
         parse!(decoded_hash)
       end
     end
-
+	
     ##
     # Forces the Jira Issue to reload with current or updated
     # information. This method is used in lazy loading methods.
@@ -249,12 +254,11 @@ module Jiralicious
     def save
       if loaded?
         self.class.update(@fields.format_for_update, self.jira_key)
-        key = self.jira_key
       else
         response = self.class.create(@fields.format_for_create)
-        key = response.parsed_response['key']
+        self.jira_key = response.parsed_response['key']
       end
-      return key
+      return self.jira_key
     end
 
     ##
