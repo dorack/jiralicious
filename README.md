@@ -78,6 +78,7 @@ Default auth type is now Basic auth. Cookie auth will be deprecated in the next 
 
 ## Contributors
 
+* Jason Stewart (jstewart)
 * Stanley Handschuh (dorack)
 * Mike Fiedler (miketheman)
 * Girish Sonawane (girishso)
