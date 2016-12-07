@@ -107,7 +107,7 @@ module Jiralicious
         options[:method] = :get unless [:get, :post, :put, :delete].include?(options[:method])
         options[:parent_uri] = "#{parent_name}/#{options[:parent_key]}/" unless options[:parent].nil?
         if !options[:body_override]
-          options[:body_uri] = options[:body].is_a? Hash ? options[:body] : { :body => options[:body] }
+          options[:body_uri] = options[:body].is_a?(Hash) ? options[:body] : { :body => options[:body] }
         else
           options[:body_uri] = options[:body]
         end
