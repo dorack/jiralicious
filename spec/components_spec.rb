@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "Project Components Class: " do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -32,7 +31,6 @@ describe Jiralicious, "Project Components Class: " do
       "#{Jiralicious.rest_path}/component/10000/relatedIssueCounts",
       :status => "200",
       :body => component_ric_json)
-
   end
 
   it "find a component" do

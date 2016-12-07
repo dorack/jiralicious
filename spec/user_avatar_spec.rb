@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "Project Avatar" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -62,5 +61,4 @@ describe Jiralicious, "Project Avatar" do
     response = Jiralicious::User::Avatar.remove("fred", 10100)
     expect(response.response.class).to eq(Net::HTTPOK)
   end
-
 end

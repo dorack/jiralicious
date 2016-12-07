@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "search" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"

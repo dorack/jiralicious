@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious::Issue, "finding" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -51,7 +50,6 @@ end
 #################################################################################################################
 
 describe Jiralicious::Issue, "Managing Issues" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -211,7 +209,6 @@ end
 #################################################################################################################
 
 describe Jiralicious::Issue, "Managing Issues" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -267,7 +264,6 @@ end
 #################################################################################################################
 
 describe Jiralicious::Issue, "Issue Information and Field Class" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -327,13 +323,11 @@ describe Jiralicious::Issue, "Issue Information and Field Class" do
     expect(meta.jira_key).to eq("EX-1")
     expect(meta.fields.summary.required).to eq(false)
   end
-
 end
 
 #################################################################################################################
 
 describe Jiralicious::Issue, "transitions" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -342,7 +336,6 @@ describe Jiralicious::Issue, "transitions" do
 	  config.auth_type = :basic
       config.api_version = "latest"
     end
-
   end
 
   it "returns list of possible transitions" do

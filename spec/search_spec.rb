@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "search" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -19,7 +18,6 @@ describe Jiralicious, "search" do
         "#{Jiralicious.rest_path}/search",
         :status => "200",
         :body => search_json)
-
     end
 
     it "instantiates a search result" do

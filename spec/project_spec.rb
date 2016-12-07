@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "Project Management Class: " do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"

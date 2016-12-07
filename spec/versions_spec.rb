@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "Project Versions Class: " do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -36,7 +35,6 @@ describe Jiralicious, "Project Versions Class: " do
       "#{Jiralicious.rest_path}/version/10000/unresolvedIssueCount",
       :status => "200",
       :body => version_uic_json)
-
   end
 
   it "find a version" do

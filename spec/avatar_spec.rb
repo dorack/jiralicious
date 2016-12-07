@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "avatar" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -46,5 +45,4 @@ describe Jiralicious, "avatar" do
 			 :needsCropping => false})
     expect(response.response.class).to eq(Net::HTTPOK)
   end
-
 end
