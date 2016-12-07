@@ -61,7 +61,7 @@ module Jiralicious
       # Ruby application.
       #
       def find_all
-        response = fetch()
+        response = fetch
         new(response)
       end
 
@@ -107,7 +107,7 @@ module Jiralicious
         options[:method] = :get unless [:get, :post, :put, :delete].include?(options[:method])
         options[:parent_uri] = "#{parent_name}/#{options[:parent_key]}/" unless options[:parent].nil?
         if !options[:body_override]
-          options[:body_uri] = (options[:body].is_a? Hash) ? options[:body] : { :body => options[:body] }
+          options[:body_uri] = options[:body].is_a? Hash ? options[:body] : { :body => options[:body] }
         else
           options[:body_uri] = options[:body]
         end
@@ -188,8 +188,7 @@ module Jiralicious
     # Default reload method is blank. For classes that implement lazy loading
     # this method will be overridden with the necessary functionality.
     #
-    def reload
-    end
+    def reload; end
 
     ##
     # Overrides the default method_missing check. This override is used in lazy

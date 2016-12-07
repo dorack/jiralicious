@@ -41,7 +41,7 @@ module Jiralicious
       # :key    (required)    project key
       #
       def issue_list(key)
-        response = Jiralicious.search("project=#{key}", { :fields => ["id", "key"] })
+        response = Jiralicious.search("project=#{key}", { :fields => %w(id key) })
         i_out = Issue.new
         response.issues_raw.each do |issue|
           i_out.class.property :"#{issue["key"].gsub("-", "_")}"

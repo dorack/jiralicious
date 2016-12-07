@@ -145,6 +145,7 @@ module Jiralicious
       def set_id(field, value)
         @fields_update[field] = { "id" => value }
       end
+
       ##
       # Fills the fields_current object with the provided Hash.
       #

@@ -103,7 +103,7 @@ module Jiralicious
         # :id     (required)    avatar id
         #
         def remove(key, id)
-          response = fetch({ :method => :delete, :body_to_params => true, :parent => true, :parent_key => key, :key => "#{id}" })
+          response = fetch({ :method => :delete, :body_to_params => true, :parent => true, :parent_key => key, :key => id.to_s })
         end
 
         ##
