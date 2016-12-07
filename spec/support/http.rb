@@ -1,6 +1,6 @@
 module LoginHelper
   def register_login
-    response = %|
+    response = %(
     {
       "session": {
       "name": "JSESSIONID",
@@ -12,7 +12,7 @@ module LoginHelper
         "lastFailedLoginTime": "2011-07-25T06:31:07.556-0500",
         "previousLoginTime": "2011-07-25T06:31:07.556-0500"
       }
-    }|
+    })
     FakeWeb.register_uri(:post,
       Jiralicious.uri + "/rest/auth/latest/session",
       :body => response)
