@@ -15,7 +15,7 @@ module Jiralicious
       # Initialization Method
       #
       def initialize(decoded_json = nil)
-        if (decoded_json != nil)
+        unless (decoded_json.nil?)
           properties_from_hash(decoded_json)
           super(decoded_json)
           parse!(decoded_json)
