@@ -2,5 +2,17 @@ AllCops:
   DisplayCopNames: true
   DisabledByDefault: true
 
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
