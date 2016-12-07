@@ -34,7 +34,7 @@ describe Jiralicious::Issue, "finding" do
       FakeWeb.register_uri(:get,
         "#{Jiralicious.rest_path}/issue/EX-1",
         :body => '{"errorMessages": ["error"]}',
-        :status => ["404" "Not Found"])
+        :status => ["404 Not Found"])
       Jiralicious::Issue.find("EX-1")
     end
     expect(l).to raise_error(Jiralicious::IssueNotFound)
