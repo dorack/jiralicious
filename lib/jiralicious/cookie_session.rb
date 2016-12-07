@@ -24,8 +24,8 @@ module Jiralicious
     def after_request(response)
       unless @authenticating
         if captcha_required(response)
-          raise Jiralicious::CaptchaRequired.
-            new("Captacha is required. Try logging into Jira via the web interface")
+          raise Jiralicious::CaptchaRequired
+            .new("Captacha is required. Try logging into Jira via the web interface")
         elsif cookie_invalid(response)
           # Can usually be fixed by logging in again
           clear_session

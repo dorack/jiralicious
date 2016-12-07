@@ -54,9 +54,9 @@ module Jiralicious
       # :name    (required)    name to be normalized
       #
       def normalize(name)
-        name.gsub(/(\w+)([A-Z].*)/, '\1_\2').
-          gsub(/\W/, "_").
-          downcase
+        name.gsub(/(\w+)([A-Z].*)/, '\1_\2')
+          .gsub(/\W/, "_")
+          .downcase
       end
 
       ##
