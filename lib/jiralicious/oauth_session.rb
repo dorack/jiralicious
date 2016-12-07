@@ -88,7 +88,7 @@ module Jiralicious
     ##
     # Restructures the Hash into a param string
     #
-      def build_body(a)
+    def build_body(a)
       o = ""
       a.each do |k, v|
         o += "#{k}=#{v}&"

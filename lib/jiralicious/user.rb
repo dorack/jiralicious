@@ -15,7 +15,7 @@ module Jiralicious
     #
     def initialize(decoded_json = nil)
       @loaded = false
-    unless decoded_json.nil?
+      unless decoded_json.nil?
         if decoded_json.is_a? Hash
           decoded_json = properties_from_hash(decoded_json)
           super(decoded_json)

@@ -45,10 +45,10 @@ module Jiralicious
             else
               id = :"#{list["id"]}"
             end
-      else
+          else
             id = :"_#{i}"
             i += 1
-      end
+          end
           self.class.property id
          self[id] = self.class.new(list)
         end
