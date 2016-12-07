@@ -1,7 +1,7 @@
 # encoding: utf-8
 require "spec_helper"
 
-describe  "performing a request" do
+describe "performing a request" do
   before :each do
     Jiralicious.configure do |config|
       config.uri = "http://jstewart:topsecret@localhost"

@@ -20,7 +20,7 @@ describe Jiralicious::SearchResult do
   let(:search_data) {
     {
       "startAt" => 0,
-      "maxResults" =>  50,
+      "maxResults" => 50,
       "total" =>  1,
       "issues" => [{
           "self" => "http://www.example.com/jira/rest/api/2.0/jira/rest/api/2.0/issue/EX-1",

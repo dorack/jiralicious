@@ -3,7 +3,7 @@ module Jiralicious
   ##
   # The CookieSesssion class extends the Session class with the
   # functionality of utilizing cookies for authorization management.
-  # 
+  #
   # Deprecated:: CookieSession is deprecated as of version 0.2.0
   #
   class CookieSession < Session
@@ -42,7 +42,7 @@ module Jiralicious
         if response.code == 200
           @session = response["session"]
           @login_info = response["loginInfo"]
-          self.class.cookies({self.session["name"] => self.session["value"]})
+          self.class.cookies({ self.session["name"] => self.session["value"] })
         else
           clear_session
           case response.code
@@ -59,7 +59,7 @@ module Jiralicious
 
       self.request(:post, "/rest/auth/latest/session",
         :body => { :username => Jiralicious.username,
-          :password => Jiralicious.password}.to_json,
+          :password => Jiralicious.password }.to_json,
         :handler => handler)
 
     end

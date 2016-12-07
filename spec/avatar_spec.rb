@@ -34,15 +34,15 @@ describe Jiralicious, "avatar" do
 
   it "sends new avatar" do
     file = "#{File.dirname(__FILE__)}/fixtures/avatar_test.png"
-    avatar = Jiralicious::Avatar.temporary("user", {:filename => file, :size => 4035})
+    avatar = Jiralicious::Avatar.temporary("user", { :filename => file, :size => 4035 })
     expect(avatar.needsCropping).to eq(true)
   end
 
   it "crops the current avatar" do
-    response = Jiralicious::Avatar.temporary_crop("user", {:cropperWidth => 120,
+    response = Jiralicious::Avatar.temporary_crop("user", { :cropperWidth => 120,
 			 :cropperOffsetX => 50,
 			 :cropperOffsety => 50,
-			 :needsCropping => false})
+			 :needsCropping => false })
     expect(response.response.class).to eq(Net::HTTPOK)
   end
 end

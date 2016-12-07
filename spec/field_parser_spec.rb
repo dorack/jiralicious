@@ -13,16 +13,16 @@ describe Jiralicious::Parsers::FieldParser do
   context "parse!" do
     before :each do
       @parsed_data = {
-        "testfield" => {"name" => "testfield", "value"  => "Test Data"},
+        "testfield" => { "name" => "testfield", "value" => "Test Data" },
         "without_hash" => "test",
-        "methods" => {"name" => "methods", "value" => "Test Data 2"},
-        "testField" => {"name" => "testField", "value" => "Test Data 3"},
-        "test_field_dash" => {"name" => "test-field-dash", "value" => "Test Data 4"},
-        "test_field_space" => {"name" => "test field space", "value" => "Test Data 5"},
-        "test_field_hash" => {"name" => "test_field_hash", "value" => {"it" => "is a Hash"}},
-        "test_field_array" => {"name" => "test_field_array", "value" => ["Not a hash"]},
-        "test_field_array_with_hash" => {"name" => "test_field_array_with_hash",
-          "value" => [{"try" => "this"}]}
+        "methods" => { "name" => "methods", "value" => "Test Data 2" },
+        "testField" => { "name" => "testField", "value" => "Test Data 3" },
+        "test_field_dash" => { "name" => "test-field-dash", "value" => "Test Data 4" },
+        "test_field_space" => { "name" => "test field space", "value" => "Test Data 5" },
+        "test_field_hash" => { "name" => "test_field_hash", "value" => { "it" => "is a Hash" } },
+        "test_field_array" => { "name" => "test_field_array", "value" => ["Not a hash"] },
+        "test_field_array_with_hash" => { "name" => "test_field_array_with_hash",
+          "value" => [{ "try" => "this" }] }
       }
       @parsed_class = ParserMock.new(@parsed_data)
     end

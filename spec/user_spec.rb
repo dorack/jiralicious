@@ -63,7 +63,7 @@ describe Jiralicious::User, "finding" do
   end
 
   it "all assignable users for specified project key" do
-    user = Jiralicious::User.assignable_search({:project => "EX"})
+    user = Jiralicious::User.assignable_search({ :project => "EX" })
     expect(user).to be_instance_of(Jiralicious::User)
     expect(user.length).to eq(2)
     user.each do |k, u|

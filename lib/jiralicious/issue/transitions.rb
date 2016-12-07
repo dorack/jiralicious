@@ -41,7 +41,7 @@ module Jiralicious
             self.jira_key = default
             decoded_json.each do |list|
               self.class.property :"id_#{list["id"]}"
-              self.merge!({"id_#{list['id']}" => self.class.new(list)})
+              self.merge!({ "id_#{list['id']}" => self.class.new(list) })
             end
           end
         end
@@ -56,7 +56,7 @@ module Jiralicious
         #
         def find(key)
           issueKey_test(key)
-          response = fetch({:parent => parent_name, :parent_key => key})
+          response = fetch({ :parent => parent_name, :parent_key => key })
           response.parsed_response["transitions"].each do |t|
             t["jira_key"] = key
           end
@@ -73,7 +73,7 @@ module Jiralicious
         #
         def find_by_key_and_id(key, id)
           issueKey_test(key)
-          response = fetch({:parent => parent_name, :parent_key => key, :body => {"transitionId" => id}, :body_to_params => true })
+          response = fetch({ :parent => parent_name, :parent_key => key, :body => { "transitionId" => id }, :body_to_params => true })
           response.parsed_response["transitions"].each do |t|
             t["jira_key"] = key
           end
@@ -95,20 +95,20 @@ module Jiralicious
         #
         def go(key, id, options = {})
           issueKey_test(key)
-          transition = {"transition" => {"id" => id}}
+          transition = { "transition" => { "id" => id } }
           if options[:comment].is_a? String
-            transition.merge!({"update" => {"comment" => [{"add" => {"body" => options[:comment].to_s}}]}})
+            transition.merge!({ "update" => { "comment" => [{ "add" => { "body" => options[:comment].to_s } }] } })
           elsif options[:comment].is_a? Jiralicious::Issue::Fields
             transition.merge!(options[:comment].format_for_update)
           elsif options[:comment].is_a? Hash
-            transition.merge!({"update" => options[:comment]})
+            transition.merge!({ "update" => options[:comment] })
           end
           if options[:fields].is_a? Jiralicious::Issue::Fields
             transition.merge!(options[:fields].format_for_create)
           elsif options[:fields].is_a? Hash
-            transition.merge!({"fields" => options[:fields]})
+            transition.merge!({ "fields" => options[:fields] })
           end
-          fetch({:method => :post, :parent => parent_name, :parent_key => key, :body => transition})
+          fetch({ :method => :post, :parent => parent_name, :parent_key => key, :body => transition })
         end
 
         ##
@@ -124,12 +124,12 @@ module Jiralicious
         #
         def meta(key, id, options = {})
           issueKey_test(key)
-          response = fetch({:method => :get, :parent => parent_name, :parent_key => key, :body_to_params => true,
-              :body => {"transitionId" => id, "expand" => "transitions.fields"}})
+          response = fetch({ :method => :get, :parent => parent_name, :parent_key => key, :body_to_params => true,
+              :body => { "transitionId" => id, "expand" => "transitions.fields" } })
           response.parsed_response["transitions"].each do |t|
             t["jira_key"] = key
           end
-          return (options[:return].nil?) ?  new(response.parsed_response["transitions"], key) : response
+          return (options[:return].nil?) ? new(response.parsed_response["transitions"], key) : response
         end
 
         alias :find_all :find
@@ -158,7 +158,7 @@ module Jiralicious
       #
       def meta
         if @meta.nil?
-          l = self.class.meta(self.jira_key, self.id, {:return => true})
+          l = self.class.meta(self.jira_key, self.id, { :return => true })
           @meta = Field.new(l.parsed_response["transitions"].first)
         end
         @meta

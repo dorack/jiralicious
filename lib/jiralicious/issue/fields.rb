@@ -49,7 +49,7 @@ module Jiralicious
         if !(@fields_update["comment"].is_a? Array)
           @fields_update["comment"] = Array.new
         end
-        @fields_update["comment"].push({"add" => {"body" => comment}})
+        @fields_update["comment"].push({ "add" => { "body" => comment } })
       end
 
       ##
@@ -130,7 +130,7 @@ module Jiralicious
       # :value   (required)    value text
       #
       def set_name(field, value)
-        @fields_update[field] = {"name" => value}
+        @fields_update[field] = { "name" => value }
       end
 
       ##
@@ -143,7 +143,7 @@ module Jiralicious
       # :value   (required)    value text/int
       #
       def set_id(field, value)
-        @fields_update[field] = {"id" => value}
+        @fields_update[field] = { "id" => value }
       end
       ##
       # Fills the fields_current object with the provided Hash.
@@ -179,10 +179,10 @@ module Jiralicious
           if k == "comment"
             up[k] = v
           else
-            up[k] = [{"set" => v}]
+            up[k] = [{ "set" => v }]
           end
         end
-        return {"update" => up}
+        return { "update" => up }
       end
 
       ##
@@ -190,7 +190,7 @@ module Jiralicious
       # for Jira to perform an create request.
       #
       def format_for_create
-        return {"fields" => @fields_update}
+        return { "fields" => @fields_update }
       end
     end
   end

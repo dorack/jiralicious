@@ -47,7 +47,7 @@ module Jiralicious
       # :reload (required)    is object reloading forced
       #
       def find(key, options = {})
-        response = fetch({:key => key})
+        response = fetch({ :key => key })
         if options[:reload] == true
           response
         else
@@ -78,7 +78,7 @@ module Jiralicious
       #
       def parent_name
         arr = self.name.split("::")
-        arr[arr.length-2].downcase
+        arr[arr.length - 2].downcase
       end
 
       ##
@@ -108,7 +108,7 @@ module Jiralicious
         options[:method] = :get unless [:get, :post, :put, :delete].include?(options[:method])
         options[:parent_uri] = "#{parent_name}/#{options[:parent_key]}/" unless options[:parent].nil?
         if !options[:body_override]
-          options[:body_uri] = (options[:body].is_a? Hash) ? options[:body] : {:body => options[:body]}
+          options[:body_uri] = (options[:body].is_a? Hash) ? options[:body] : { :body => options[:body] }
         else
           options[:body_uri] = options[:body]
         end

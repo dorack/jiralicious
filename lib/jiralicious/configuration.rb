@@ -82,7 +82,7 @@ module Jiralicious
     #
     # :mode        (optional)    used to define environment type
     #
-    def load_yml(yml_file, mode=nil)
+    def load_yml(yml_file, mode = nil)
       if File.exist?(yml_file)
         yml_cfg = OpenStruct.new(YAML.load_file(yml_file))
       if mode.nil? || mode =~ /production/i
@@ -90,7 +90,7 @@ module Jiralicious
           instance_variable_set("@#{k}", v)
         end
       else
-        yml_cfg.send(mode).each do |k,v|
+        yml_cfg.send(mode).each do |k, v|
         instance_variable_set("@#{k}", v)
       end
     end

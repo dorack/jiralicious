@@ -45,14 +45,14 @@ module Jiralicious
 				a = {}
 				bsb.xpath("//input").each do |input|
 					if (input.get_attribute("name") != "deny" && !input.get_attribute("name").nil?)
-						a.merge!({input.get_attribute("name").to_sym => input.get_attribute("value")})
+						a.merge!({ input.get_attribute("name").to_sym => input.get_attribute("value") })
 					end
 				end
 				urip = "#{request_token.authorize_url.split('?')[0]}?#{build_body(a)}"
 				bsr = bs.request(bsb.xpath("//form")[0].get_attribute("method").downcase.to_sym, urip)
 				## Parse response for access ##
 				bss = bsr.message.split("&#39;") # brute force method don't know a better way to do this
-				crt = request_token.consumer.token_request(request_token.consumer.http_method, (request_token.consumer.access_token_url? ? request_token.consumer.access_token_url : request_token.consumer.access_token_path), request_token, {:oauth_verifier => bss[3]})
+				crt = request_token.consumer.token_request(request_token.consumer.http_method, (request_token.consumer.access_token_url? ? request_token.consumer.access_token_url : request_token.consumer.access_token_path), request_token, { :oauth_verifier => bss[3] })
 				super(request_token.consumer, crt[:oauth_token], crt[:oauth_token_secret])
 				self.params = crt
 			else

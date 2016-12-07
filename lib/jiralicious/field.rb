@@ -8,7 +8,7 @@ module Jiralicious
   class Field < Jiralicious::Base
     ##
     # Initialization Method
-    # 
+    #
     # Builds the dynamic Field object from either a Hash or Array.
     # The decoded JSON object can be nested as deep as necessary
     # but it is recommended that JSON objects are no deeper then
@@ -41,7 +41,7 @@ module Jiralicious
         decoded_json.each do |list|
           if !list["id"].nil?
             if numeric? list["id"]
-              id =  :"id_#{list["id"]}"
+              id = :"id_#{list["id"]}"
             else
               id = :"#{list["id"]}"
             end

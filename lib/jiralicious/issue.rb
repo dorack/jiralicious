@@ -9,7 +9,7 @@ module Jiralicious
   class Issue < Jiralicious::Base
 
     # Provides access to the Jira Key field
-    property :jira_key, :from  => :key
+    property :jira_key, :from => :key
     # Provides access to the expand fields
     property :expand
     # Provides access to the self string
@@ -43,7 +43,7 @@ module Jiralicious
       @loaded = false
       if (!decoded_json.nil?)
         if !decoded_json.include? "fields"
-          decoded_json = {"fields" => decoded_json}
+          decoded_json = { "fields" => decoded_json }
         end
         super(decoded_json)
         parse!(decoded_json["fields"])
@@ -76,7 +76,7 @@ module Jiralicious
     # :default         (optional)    set to not load subclasses
     #
     def load(decoded_hash, default = nil)
-      decoded_hash.each do |k,v|
+      decoded_hash.each do |k, v|
         self[:"#{k}"] = v
       end
       if default.nil?
@@ -89,13 +89,13 @@ module Jiralicious
         parse!(decoded_hash)
       end
     end
-	
+
     ##
     # Forces the Jira Issue to reload with current or updated
     # information. This method is used in lazy loading methods.
     #
     def reload
-      load(self.class.find(self.jira_key, {:reload => true}).parsed_response)
+      load(self.class.find(self.jira_key, { :reload => true }).parsed_response)
     end
 
     class << self
@@ -108,8 +108,8 @@ module Jiralicious
       # :key     (required)    issue key
       #
       def assignee(name, key)
-        name = {"name" => name} if name.is_a? String
-        fetch({:method => :put, :key => "#{key}/assignee", :body => name})
+        name = { "name" => name } if name.is_a? String
+        fetch({ :method => :put, :key => "#{key}/assignee", :body => name })
       end
 
       ##
@@ -120,7 +120,7 @@ module Jiralicious
       # :issue    (required)    issue fields in hash format
       #
       def create(issue)
-        fetch({:method => :post, :body => issue})
+        fetch({ :method => :post, :body => issue })
       end
 
       ##
@@ -137,7 +137,7 @@ module Jiralicious
       #
       #
       def remove(key, options = {})
-        fetch({:method => :delete, :body_to_params => true, :key => key, :body => options})
+        fetch({ :method => :delete, :body_to_params => true, :key => key, :body => options })
       end
 
       ##
@@ -151,7 +151,7 @@ module Jiralicious
       # :key      (required)    issue key to update
       #
       def update(issue, key)
-        fetch({:method => :put, :key => key, :body => issue})
+        fetch({ :method => :put, :key => key, :body => issue })
       end
 
       ##
@@ -164,7 +164,7 @@ module Jiralicious
       # :issuetypeids   (opitonal)    list of issues types for create meta
       #
       def createmeta(projectkeys, issuetypeids = nil)
-        response = fetch({:body_to_params => true, :key => "createmeta", :body => {:expand => "projects.issuetypes.fields.", :projectKeys => projectkeys, :issuetypeIds => issuetypeids}})
+        response = fetch({ :body_to_params => true, :key => "createmeta", :body => { :expand => "projects.issuetypes.fields.", :projectKeys => projectkeys, :issuetypeIds => issuetypeids } })
         return Field.new(response.parsed_response)
       end
 
@@ -176,7 +176,7 @@ module Jiralicious
       # :key    (required)    issue key
       #
       def editmeta(key)
-        response = fetch({:key => "#{key}/editmeta"})
+        response = fetch({ :key => "#{key}/editmeta" })
         response.parsed_response["key"] = key
         Field.new(response.parsed_response)
       end
@@ -265,7 +265,7 @@ module Jiralicious
     # Saves the current Issue and reloads to ensure it is upto date.
     #
     def save!
-      load(self.class.find(save, {:reload => true}).parsed_response)
+      load(self.class.find(save, { :reload => true }).parsed_response)
     end
   end
 end

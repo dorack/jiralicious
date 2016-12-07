@@ -36,7 +36,7 @@ module Jiralicious
       # Retrieves the options based on the ID
       #
       def find(id, options = {})
-        response = fetch({:key => id})
+        response = fetch({ :key => id })
         response.parsed_response["id"] = id
         new(response.parsed_response)
       end
