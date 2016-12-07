@@ -33,7 +33,7 @@ module Jiralicious
         :access_token_path => "/plugins/servlet/oauth/access-token",
         :site => "http://rome:8080"
       }
-      if (token.nil? || secret.nil?)
+      if token.nil? || secret.nil?
         consumer = OAuth::Consumer.new(Jiralicious.oauth_consumer_key, OpenSSL::PKey::RSA.new(get_secret, Jiralicious.oauth_pass_phrase.to_s), self.option)
         request_token = consumer.get_request_token
         ## request access confirmation ##
@@ -44,7 +44,7 @@ module Jiralicious
         ## Parse confirm page and send form ##
         a = {}
         bsb.xpath("//input").each do |input|
-          if (input.get_attribute("name") != "deny" && !input.get_attribute("name").nil?)
+          if input.get_attribute("name") != "deny" && !input.get_attribute("name").nil?
             a.merge!({ input.get_attribute("name").to_sym => input.get_attribute("value") })
           end
         end
