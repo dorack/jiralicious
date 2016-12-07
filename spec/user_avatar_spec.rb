@@ -46,9 +46,9 @@ describe Jiralicious, "Project Avatar" do
 
   it "crops the current user avatar" do
     response = Jiralicious::User::Avatar.post("fred", { :cropperWidth => 120,
-			 :cropperOffsetX => 50,
-			 :cropperOffsety => 50,
-			 :needsCropping => false })
+       :cropperOffsetX => 50,
+       :cropperOffsety => 50,
+       :needsCropping => false })
     expect(response.response.class).to eq(Net::HTTPOK)
   end
 

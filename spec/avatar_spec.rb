@@ -40,9 +40,9 @@ describe Jiralicious, "avatar" do
 
   it "crops the current avatar" do
     response = Jiralicious::Avatar.temporary_crop("user", { :cropperWidth => 120,
-			 :cropperOffsetX => 50,
-			 :cropperOffsety => 50,
-			 :needsCropping => false })
+       :cropperOffsetX => 50,
+       :cropperOffsety => 50,
+       :needsCropping => false })
     expect(response.response.class).to eq(Net::HTTPOK)
   end
 end

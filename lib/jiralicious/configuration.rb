@@ -56,12 +56,12 @@ module Jiralicious
       self.uri = DEFAULT_URI
       self.api_version = DEFAULT_API_VERSION
       self.auth_type = DEFAULT_AUTH_TYPE
-	  self.project = nil
-	  self.oauth_secret = nil
-	  self.oauth_secret_filename = nil
-	  self.oauth_pass_phrase = nil
-	  self.oauth_consumer_key = nil
-	  self.config_path = nil
+    self.project = nil
+    self.oauth_secret = nil
+    self.oauth_secret_filename = nil
+    self.oauth_pass_phrase = nil
+    self.oauth_consumer_key = nil
+    self.config_path = nil
     end
 
     ##
