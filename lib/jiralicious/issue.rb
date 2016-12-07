@@ -241,9 +241,7 @@ module Jiralicious
     # to validate or filter create requests to minimize errors.
     #
     def editmeta
-      if @editmeta.nil?
-        @editmeta = self.class.editmeta(self.jira_key)
-      end
+      @editmeta = self.class.editmeta(self.jira_key) if @editmeta.nil?
       @editmeta
     end
 

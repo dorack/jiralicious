@@ -22,9 +22,7 @@ module Jiralicious
         @loaded = false
         @meta = nil
         if decoded_json.is_a? Array
-          if decoded_json.length == 1
-            decoded_json = decoded_json[0]
-          end
+          decoded_json = decoded_json[0] if decoded_json.length == 1
         end
         unless decoded_json.nil?
           if decoded_json.is_a? String

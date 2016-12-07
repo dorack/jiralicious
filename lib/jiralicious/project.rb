@@ -83,9 +83,7 @@ module Jiralicious
     #
     attr_accessor :issues
     def issues
-      if @issues.nil?
-        @issues = self.class.issue_list(self.key)
-      end
+      @issues = self.class.issue_list(self.key) if @issues.nil?
       return @issues
     end
 
@@ -93,9 +91,7 @@ module Jiralicious
     # Retrieves the components associated with the project
     #
     def components
-      if @components.nil?
-        @components = self.class.components(self.key)
-      end
+      @components = self.class.components(self.key) if @components.nil?
       @components
     end
 

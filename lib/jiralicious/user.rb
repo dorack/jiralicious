@@ -24,9 +24,7 @@ module Jiralicious
               self[k] = self.class.new(v)
             elsif v.is_a? Array
               v.each_index do |i|
-                if v[i].is_a? Hash
-                  v[i] = self.class.new(v[i])
-                end
+                v[i] = self.class.new(v[i]) if v[i].is_a? Hash
               end
               self[k] = v
             end

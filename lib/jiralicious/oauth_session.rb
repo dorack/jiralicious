@@ -118,9 +118,7 @@ module Jiralicious
           response
         else
           message = response.body
-          if message.is_a?(Hash)
-            message = message["errorMessages"].join('\n')
-          end
+          message = message["errorMessages"].join('\n') if message.is_a?(Hash)
           Jiralicious::JiraError.new(message)
         end
       end
