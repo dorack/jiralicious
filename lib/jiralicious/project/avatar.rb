@@ -13,38 +13,37 @@ module Jiralicious
       #
       def initialize(decoded_json = nil)
         @loaded = false
-        unless decoded_json.nil?
-          if decoded_json.is_a? Hash
-            decoded_json = properties_from_hash(decoded_json)
-            super(decoded_json)
-            parse!(decoded_json)
-            self.each do |k, v|
-              if v.is_a? Hash
-                self[k] = self.class.new(v)
-              elsif v.is_a? Array
-                v.each_index do |i|
-                  v[i] = self.class.new(v[i]) if v[i].is_a? Hash
-                end
-                self[k] = v
+        return if decoded_json.nil?
+        if decoded_json.is_a? Hash
+          decoded_json = properties_from_hash(decoded_json)
+          super(decoded_json)
+          parse!(decoded_json)
+          self.each do |k, v|
+            if v.is_a? Hash
+              self[k] = self.class.new(v)
+            elsif v.is_a? Array
+              v.each_index do |i|
+                v[i] = self.class.new(v[i]) if v[i].is_a? Hash
               end
+              self[k] = v
             end
-            @loaded = true
-          else
-            i = 0
-            decoded_json.each do |list|
-              if !list["id"].nil?
-                if numeric? list["id"]
-                  id = :"id_#{list["id"]}"
-                else
-                  id = :"#{list["id"]}"
-                end
+          end
+          @loaded = true
+        else
+          i = 0
+          decoded_json.each do |list|
+            if !list["id"].nil?
+              if numeric? list["id"]
+                id = :"id_#{list["id"]}"
               else
-                id = :"_#{i}"
-                i += 1
+                id = :"#{list["id"]}"
               end
-              self.class.property id
-              self[id] = self.class.new(list)
+            else
+              id = :"_#{i}"
+              i += 1
             end
+            self.class.property id
+            self[id] = self.class.new(list)
           end
         end
       end

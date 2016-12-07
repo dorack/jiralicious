@@ -24,22 +24,21 @@ module Jiralicious
         if decoded_json.is_a? Array
           decoded_json = decoded_json[0] if decoded_json.length == 1
         end
-        unless decoded_json.nil?
-          if decoded_json.is_a? String
-            self.class.property :jira_key
-            self.jira_key = decoded_json
-          elsif decoded_json.is_a? Hash
-            properties_from_hash(decoded_json)
-            super(decoded_json)
-            parse!(decoded_json)
-            @loaded = true
-          else
-            self.class.property :jira_key
-            self.jira_key = default
-            decoded_json.each do |list|
-              self.class.property :"id_#{list["id"]}"
-              self.merge!({ "id_#{list['id']}" => self.class.new(list) })
-            end
+        return if decoded_json.nil?
+        if decoded_json.is_a? String
+          self.class.property :jira_key
+          self.jira_key = decoded_json
+        elsif decoded_json.is_a? Hash
+          properties_from_hash(decoded_json)
+          super(decoded_json)
+          parse!(decoded_json)
+          @loaded = true
+        else
+          self.class.property :jira_key
+          self.jira_key = default
+          decoded_json.each do |list|
+            self.class.property :"id_#{list["id"]}"
+            self.merge!({ "id_#{list['id']}" => self.class.new(list) })
           end
         end
       end

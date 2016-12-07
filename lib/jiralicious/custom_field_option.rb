@@ -14,12 +14,11 @@ module Jiralicious
     #
     def initialize(decoded_json)
       @loaded = false
-      if decoded_json.is_a? Hash
-        properties_from_hash(decoded_json)
-        super(decoded_json)
-        parse!(decoded_json)
-        @loaded = true
-      end
+      return unless decoded_json.is_a? Hash
+      properties_from_hash(decoded_json)
+      super(decoded_json)
+      parse!(decoded_json)
+      @loaded = true
     end
 
     class << self
