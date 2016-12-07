@@ -21,8 +21,8 @@ module Jiralicious
       # :fc    (optional) fields to load
       #
       def initialize(fc = nil)
-        @fields_current = fc.nil? ? Hash.new : fc
-        @fields_update = Hash.new
+        @fields_current = fc.nil? ? {} : fc
+        @fields_update = {}
       end
 
       ##
@@ -47,7 +47,7 @@ module Jiralicious
       #
       def add_comment(comment)
         unless (@fields_update["comment"].is_a? Array)
-          @fields_update["comment"] = Array.new
+          @fields_update["comment"] = []
         end
         @fields_update["comment"].push({ "add" => { "body" => comment } })
       end
@@ -78,7 +78,7 @@ module Jiralicious
       #
       def append_a(field, value)
         @fields_update[field] = @fields_current[field] if @fields_update[field].nil?
-        @fields_update[field] = Array.new unless (@fields_update[field].is_a? Array)
+        @fields_update[field] = [] unless (@fields_update[field].is_a? Array)
         if value.is_a? String
           @fields_update[field].push(value) unless @fields_update[field].include? value
         else
@@ -96,7 +96,7 @@ module Jiralicious
       #
       def append_h(field, hash)
         @fields_update[field] = @fields_current[field] if @fields_update[field].nil?
-        @fields_update[field] = Hash.new unless (@fields_update[field].is_a? Hash)
+        @fields_update[field] = {} unless (@fields_update[field].is_a? Hash)
         @fields_update[field].merge!(hash)
       end
 
@@ -174,7 +174,7 @@ module Jiralicious
       # for Jira to perform an update request.
       #
       def format_for_update
-        up = Hash.new
+        up = {}
         @fields_update.each do |k, v|
           if k == "comment"
             up[k] = v
