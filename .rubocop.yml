@@ -1,0 +1,3 @@
+AllCops:
+  DisplayCopNames: true
+  DisabledByDefault: true
