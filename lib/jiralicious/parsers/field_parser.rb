@@ -16,7 +16,9 @@ module Jiralicious
       # :fields    (required)    fields to be parsed
       #
       def parse!(fields)
-        unless fields.is_a?(Hash)
+        begin
+          fields = fields.to_h unless fields.is_a?(Hash)
+        rescue
           raise ArgumentError
         end
         @jiralicious_field_parser_data = {}
