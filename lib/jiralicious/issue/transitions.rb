@@ -7,7 +7,6 @@ module Jiralicious
     # associated with an Issue.
     #
     class Transitions < Jiralicious::Base
-
       # Contains the meta data to process a Transaction
       attr_accessor :meta
 

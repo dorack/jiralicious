@@ -6,7 +6,6 @@ module Jiralicious
   # to properly manage the Hashie::Trash object within the Jiralicious framework.
   #
   class Base < Hashie::Trash
-
     ##
     # Includes functionality from FieldParser
     #

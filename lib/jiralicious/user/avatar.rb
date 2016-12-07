@@ -5,7 +5,6 @@ module Jiralicious
     # Avatars in the Project class.
     #
     class Avatar < Jiralicious::Base
-
       ##
       # Initialization Method
       #

@@ -5,7 +5,6 @@ module Jiralicious
   # managing Projects within Jira through the Rest API.
   #
   class Project < Jiralicious::Base
-
     # Contains the Fields Class
     attr_accessor :components
     # Contains the Fields Class

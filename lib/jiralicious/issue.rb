@@ -7,7 +7,6 @@ module Jiralicious
   # several different aspects of managing the issues.
   #
   class Issue < Jiralicious::Base
-
     # Provides access to the Jira Key field
     property :jira_key, :from => :key
     # Provides access to the expand fields

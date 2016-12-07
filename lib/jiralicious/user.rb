@@ -6,7 +6,6 @@ module Jiralicious
   # API.
   #
   class User < Jiralicious::Base
-
     ##
     # Initialization Method
     #

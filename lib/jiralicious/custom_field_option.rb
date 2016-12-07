@@ -6,7 +6,6 @@ module Jiralicious
   # be used to validate options prior to updating the issue.
   #
   class CustomFieldOption < Jiralicious::Base
-
     ##
     # Initialization Method
     #
