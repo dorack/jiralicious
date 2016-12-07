@@ -6,7 +6,7 @@ module Jiralicious
   #
   module Configuration
     # Array of available attributes
-    VALID_OPTIONS = [:username, :password, :uri, :api_version, :auth_type, :project, :oauth_secret, :oauth_secret_filename, :oauth_pass_phrase, :oauth_consumer_key, :config_path]
+    VALID_OPTIONS = [:username, :password, :uri, :api_version, :auth_type, :project, :oauth_secret, :oauth_secret_filename, :oauth_pass_phrase, :oauth_consumer_key, :config_path].freeze
     # Default user name set prior to login attempt
     DEFAULT_USERNAME = nil
     # Default password set prior to login attempt
@@ -16,7 +16,7 @@ module Jiralicious
     # Default URI set prior to login attempt
     DEFAULT_URI = nil
     # Default API Version can be set any valid version or "latest"
-    DEFAULT_API_VERSION = "latest"
+    DEFAULT_API_VERSION = "latest".freeze
 
     ##
     # Enables block configuration mode
