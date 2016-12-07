@@ -40,7 +40,7 @@ module Jiralicious
     #
     def initialize(decoded_json = nil, default = nil)
       @loaded = false
-      unless (decoded_json.nil?)
+      unless decoded_json.nil?
         unless decoded_json.include? "fields"
           decoded_json = { "fields" => decoded_json }
         end

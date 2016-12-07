@@ -21,7 +21,7 @@ module Jiralicious
       # :fc    (optional) fields to load
       #
       def initialize(fc = nil)
-        @fields_current = (fc.nil?) ? Hash.new : fc
+        @fields_current = fc.nil? ? Hash.new : fc
         @fields_update = Hash.new
       end
 
@@ -61,7 +61,7 @@ module Jiralicious
       # :value   (required)    value text
       #
       def append_s(field, value)
-        if (@fields_update[field].nil?)
+        if @fields_update[field].nil?
           @fields_update[field] = @fields_current[field] unless @fields_current.nil?
           @fields_update[field] ||= ""
         end
@@ -77,7 +77,7 @@ module Jiralicious
       # :value   (required)    value array
       #
       def append_a(field, value)
-        @fields_update[field] = @fields_current[field] if (@fields_update[field].nil?)
+        @fields_update[field] = @fields_current[field] if @fields_update[field].nil?
         @fields_update[field] = Array.new unless (@fields_update[field].is_a? Array)
         if value.is_a? String
           @fields_update[field].push(value) unless @fields_update[field].include? value
@@ -95,7 +95,7 @@ module Jiralicious
       # :value   (required)    value hash
       #
       def append_h(field, hash)
-        @fields_update[field] = @fields_current[field] if (@fields_update[field].nil?)
+        @fields_update[field] = @fields_current[field] if @fields_update[field].nil?
         @fields_update[field] = Hash.new unless (@fields_update[field].is_a? Hash)
         @fields_update[field].merge!(hash)
       end

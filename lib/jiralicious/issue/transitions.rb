@@ -128,7 +128,7 @@ module Jiralicious
           response.parsed_response["transitions"].each do |t|
             t["jira_key"] = key
           end
-          return (options[:return].nil?) ? new(response.parsed_response["transitions"], key) : response
+          return options[:return].nil? ? new(response.parsed_response["transitions"], key) : response
         end
 
         alias :find_all :find
