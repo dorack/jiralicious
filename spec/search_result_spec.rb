@@ -17,7 +17,7 @@ describe Jiralicious::SearchResult do
       :body => watchers_json)
   end
 
-  let(:search_data) {
+  let(:search_data) do
     {
       "startAt" => 0,
       "maxResults" => 50,
@@ -27,7 +27,7 @@ describe Jiralicious::SearchResult do
           "key" =>  "EX-1"
         }]
     }
-  }
+  end
   let(:search_result) { Jiralicious::SearchResult.new(search_data) }
 
   it "assigns an array to back the search results" do

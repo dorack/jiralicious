@@ -35,9 +35,9 @@ describe Jiralicious, "search" do
     end
 
     it "raises an exception" do
-      l = lambda {
+      l = lambda do
         results = Jiralicious.search("key = HSP-1")
-      }
+      end
       expect(l).to raise_error(Jiralicious::JqlError)
     end
   end

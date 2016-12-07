@@ -30,13 +30,13 @@ describe Jiralicious::Issue, "finding" do
   end
 
   it "raises an exception when the issue can't be found or can't be viewed" do
-    l = lambda {
+    l = lambda do
       FakeWeb.register_uri(:get,
         "#{Jiralicious.rest_path}/issue/EX-1",
         :body => '{"errorMessages": ["error"]}',
         :status => ["404" "Not Found"])
       Jiralicious::Issue.find("EX-1")
-    }
+    end
     expect(l).to raise_error(Jiralicious::IssueNotFound)
   end
 
@@ -364,10 +364,10 @@ describe Jiralicious::Issue, "transitions" do
       "#{Jiralicious.rest_path}/issue/EX-1/transitions",
       :status => "400",
       :body => %q{{"errorMessages":["Workflow operation is not valid"],"errors":{}}})
-    l = lambda {
+    l = lambda do
       result = Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
         { "transition" => "invalid" })
-    }
+    end
     expect(l).to raise_error(Jiralicious::TransitionError)
   end
 
@@ -376,10 +376,10 @@ describe Jiralicious::Issue, "transitions" do
       "#{Jiralicious.rest_path}/issue/EX-1/transitions",
       :status => "404",
       :body => %q{{"errorMessages":["Issue Does Not Exist"],"errors":{}}})
-    l = lambda {
+    l = lambda do
       result = Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
         { "transition" => "invalid" })
-    }
+    end
     expect(l).to raise_error(Jiralicious::IssueNotFound)
   end
 end
