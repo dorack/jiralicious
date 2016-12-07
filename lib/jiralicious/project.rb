@@ -84,7 +84,7 @@ module Jiralicious
     #
     attr_accessor :issues
     def issues
-      if @issues == nil
+      if @issues.nil?
         @issues = self.class.issue_list(self.key)
       end
       return @issues
