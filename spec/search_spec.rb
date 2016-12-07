@@ -24,7 +24,7 @@ describe Jiralicious, "search" do
 
     it "instantiates a search result" do
       results = Jiralicious.search("key = HSP-1")
-      results.should be_instance_of(Jiralicious::SearchResult)
+      expect(results).to be_instance_of(Jiralicious::SearchResult)
     end
   end
 
@@ -37,9 +37,10 @@ describe Jiralicious, "search" do
     end
 
     it "raises an exception" do
-      lambda {
+      l = lambda {
         results = Jiralicious.search("key = HSP-1")
-      }.should raise_error(Jiralicious::JqlError)
+      }
+      expect(l).to raise_error(Jiralicious::JqlError)
     end
   end
 end

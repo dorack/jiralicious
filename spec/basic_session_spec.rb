@@ -15,7 +15,7 @@ describe  "performing a request" do
   let(:session) { Jiralicious::BasicSession.new }
 
   it "sets the basic auth info beforehand" do
-    Jiralicious::BasicSession.should_receive(:basic_auth).with("jstewart", "topsecret")
+    expect(Jiralicious::BasicSession).to receive(:basic_auth).with("jstewart", "topsecret")
     session.request(:get, '/ok')
   end
 end

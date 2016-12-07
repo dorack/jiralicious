@@ -26,17 +26,17 @@ describe Jiralicious, "avatar" do
   end
 
   it "obtain system avatar list" do
-    avatar = Jiralicious::Avatar.system('user')
-	avatar.should be_instance_of(Jiralicious::Avatar)
-	avatar.system.count.should == 2
-    avatar.system[0].id.should == '10100'
-	avatar.system[1].isSystemAvatar.should == true
+    avatar = Jiralicious::Avatar.system("user")
+    expect(avatar).to be_instance_of(Jiralicious::Avatar)
+    expect(avatar.system.count).to eq(2)
+    expect(avatar.system[0].id).to eq("10100")
+    expect(avatar.system[1].isSystemAvatar).to eq(true)
   end
 
   it "sends new avatar" do
     file = "#{File.dirname(__FILE__)}/fixtures/avatar_test.png"
     avatar = Jiralicious::Avatar.temporary('user', {:filename => file, :size => 4035})
-	avatar.needsCropping.should == true
+    expect(avatar.needsCropping).to eq(true)
   end
 
   it "crops the current avatar" do
@@ -44,7 +44,7 @@ describe Jiralicious, "avatar" do
 			 :cropperOffsetX => 50,
 			 :cropperOffsety => 50,
 			 :needsCropping => false})
-	response.response.class.should == Net::HTTPOK
+    expect(response.response.class).to eq(Net::HTTPOK)
   end
 
 end

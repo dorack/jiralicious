@@ -40,39 +40,39 @@ describe Jiralicious, "Project Management Class: " do
 
   it "finds all projects" do
     projects = Jiralicious::Project.all
-    projects.should be_instance_of(Jiralicious::Project)
-    projects.count.should == 2
-    projects.EX.id.should == "10000"
+    expect(projects).to be_instance_of(Jiralicious::Project)
+    expect(projects.count).to eq(2)
+    expect(projects.EX.id).to eq("10000")
   end
 
   it "finds project issue list class level" do
     issues = Jiralicious::Project.issue_list("EX")
-    issues.should be_instance_of(Jiralicious::Issue)
-    issues.count.should == 2
-    issues.EX_1['id'].should == "10000"
+    expect(issues).to be_instance_of(Jiralicious::Issue)
+    expect(issues.count).to eq(2)
+    expect(issues.EX_1["id"]).to eq("10000")
   end
 
   it "finds project issue list instance level" do
     project = Jiralicious::Project.find("EX")
     issues = project.issues
-    issues.should be_instance_of(Jiralicious::Issue)
-    issues.count.should == 2
-    issues.EX_1['id'].should == "10000"
+    expect(issues).to be_instance_of(Jiralicious::Issue)
+    expect(issues.count).to eq(2)
+    expect(issues.EX_1["id"]).to eq("10000")
   end
 
   it "finds project componets" do
     components = Jiralicious::Project.components("EX")
-    components.count.should == 2
-    components.id_10000.name.should == "Component 1"
-    components.id_10050.name.should == "PXA"
+    expect(components.count).to eq(2)
+    expect(components.id_10000.name).to eq("Component 1")
+    expect(components.id_10050.name).to eq("PXA")
   end
 
   it "finds project versions" do
     versions = Jiralicious::Project.versions("EX")
-    versions.count.should == 2
-    versions.id_10000.name.should == "New Version 1"
-    versions.id_10000.overdue.should == true
-    versions.id_10010.name.should == "Next Version"
-    versions.id_10010.overdue.should == false
+    expect(versions.count).to eq(2)
+    expect(versions.id_10000.name).to eq("New Version 1")
+    expect(versions.id_10000.overdue).to eq(true)
+    expect(versions.id_10010.name).to eq("Next Version")
+    expect(versions.id_10010.overdue).to eq(false)
   end
 end

@@ -26,18 +26,18 @@ describe Jiralicious, "search" do
 
   it "finds by issue key" do
     watchers = Jiralicious::Issue::Watchers.find_by_key("EX-1")
-    watchers.should be_instance_of(Jiralicious::Issue::Watchers)
-    watchers.watchers.count.should == 1
-    watchers.watchers[0]['name'].should == "fred"
+    expect(watchers).to be_instance_of(Jiralicious::Issue::Watchers)
+    expect(watchers.watchers.count).to eq(1)
+    expect(watchers.watchers[0]['name']).to eq("fred")
   end
 
   it "adds a new watcher" do
     response = Jiralicious::Issue::Watchers.add("fred", "EX-1")
-    response.response.class.should == Net::HTTPNoContent
+    expect(response.response.class).to eq(Net::HTTPNoContent)
   end
 
   it "removes a watcher" do
     response = Jiralicious::Issue::Watchers.remove("fred", "EX-1")
-    response.response.class.should == Net::HTTPNoContent
+    expect(response.response.class).to eq(Net::HTTPNoContent)
   end
 end

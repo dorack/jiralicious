@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Jiralicious do
   it "creates a session on load" do
-    Jiralicious.session.should_not be_nil
+    expect(Jiralicious.session).to_not be_nil
   end
 
   it "creates a rest path" do
@@ -11,6 +11,6 @@ describe Jiralicious do
       config.uri = "http://localhost:8080"
       config.api_version = "2.0"
     end
-    Jiralicious.rest_path.should == 'http://localhost:8080/rest/api/2.0'
+    expect(Jiralicious.rest_path).to eq("http://localhost:8080/rest/api/2.0")
   end
 end

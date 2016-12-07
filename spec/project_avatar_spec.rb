@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "Project Avatar" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -33,16 +32,16 @@ describe Jiralicious, "Project Avatar" do
 
   it "obtain project avatar list" do
     avatar = Jiralicious::Project::Avatar.avatars('EX')
-	avatar.should be_instance_of(Jiralicious::Project::Avatar)
-	avatar.system.count.should == 2
-    avatar.system[0].id.should == '10100'
-	avatar.system[1].isSystemAvatar.should == true
+    expect(avatar).to be_instance_of(Jiralicious::Project::Avatar)
+    expect(avatar.system.count).to eq(2)
+    expect(avatar.system[0].id).to eq("10100")
+    expect(avatar.system[1].isSystemAvatar).to eq(true)
   end
 
   it "sends new project avatar" do
     file = "#{File.dirname(__FILE__)}/fixtures/avatar_test.png"
     avatar = Jiralicious::Project::Avatar.temporary('EX', {:filename => file, :size => 4035})
-	avatar.needsCropping.should == true
+    expect(avatar.needsCropping).to eq(true)
   end
 
   it "crops the current project avatar" do
@@ -50,17 +49,16 @@ describe Jiralicious, "Project Avatar" do
 			 :cropperOffsetX => 50,
 			 :cropperOffsety => 50,
 			 :needsCropping => false})
-	response.response.class.should == Net::HTTPOK
+    expect(response.response.class).to eq(Net::HTTPOK)
   end
 
   it "updates current project avatar" do
     response = Jiralicious::Project::Avatar.put('EX')
-	response.response.class.should == Net::HTTPNoContent
+    expect(response.response.class).to eq(Net::HTTPNoContent)
   end
 
   it "updates current project avatar" do
     response = Jiralicious::Project::Avatar.remove('EX', 10100)
-	response.response.class.should == Net::HTTPOK
+    expect(response.response.class).to eq(Net::HTTPOK)
   end
-
 end

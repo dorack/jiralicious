@@ -31,24 +31,29 @@ describe Jiralicious::SearchResult do
   let(:search_result) { Jiralicious::SearchResult.new(search_data) }
 
   it "assigns an array to back the search results" do
-    search_result.instance_variable_get('@issues').
-      should == [ {"self" => "http://www.example.com/jira/rest/api/2.0/jira/rest/api/2.0/issue/EX-1",
-        "key" => "EX-1"} ]
+    expect(search_result.instance_variable_get('@issues')).to eq(
+      [
+        {
+          "self" => "http://www.example.com/jira/rest/api/2.0/jira/rest/api/2.0/issue/EX-1",
+          "key" => "EX-1"
+        }
+      ]
+    )
   end
 
   it "knows it's offset" do
-    search_result.offset.should == 0
+    expect(search_result.offset).to eq(0)
   end
 
   it "knows how many results are returned from the web service" do
-    search_result.num_results.should == 1
+    expect(search_result.num_results).to eq(1)
   end
 
   it "fetches issues" do
-    search_result.issues.first.should be_instance_of(Jiralicious::Issue)
+    expect(search_result.issues.first).to be_instance_of(Jiralicious::Issue)
   end
 
   it "checks the issues raw result" do
-    search_result.issues_raw.class.should == Array
+    expect(search_result.issues_raw.class).to eq(Array)
   end
 end
