@@ -150,7 +150,7 @@ module Jiralicious
         return true
       end
 
-      alias :all :find_all
+      alias all find_all
     end
 
     ##

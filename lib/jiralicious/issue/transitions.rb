@@ -128,7 +128,7 @@ module Jiralicious
           return options[:return].nil? ? new(response.parsed_response["transitions"], key) : response
         end
 
-        alias :find_all :find
+        alias find_all find
       end
 
       ##
