@@ -143,5 +143,4 @@ module JsonResponse
   def version_uic_json
     File.expand_path("version_uic.json", File.dirname(__FILE__) + "/../fixtures")
   end
-
 end
