@@ -26,7 +26,8 @@ Gem::Specification.new do |s|
   else
     s.add_runtime_dependency 'nokogiri', '< 1.6'
   end
-  s.add_development_dependency 'rspec', '~> 2.6'
+  s.add_development_dependency 'pry'
+  s.add_development_dependency 'rspec', '~> 3.5'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'fakeweb', '~> 1.3.0'
 
