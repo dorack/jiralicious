@@ -203,8 +203,8 @@ describe Jiralicious::Issue, "Managing Issues" do
     issue.save
 
     expect(issue.jira_key).to eq("EX-3")
-    expect(issue['fields']['labels']).to eq(["test_label"])
-    expect(issue['fields']['description']).to eq("example bug report updated description ")
+    expect(issue["fields"]["labels"]).to eq(["test_label"])
+    expect(issue["fields"]["description"]).to eq("example bug report updated description ")
   end
 end
 

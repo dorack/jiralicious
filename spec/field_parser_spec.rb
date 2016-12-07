@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'spec_helper'
+require "spec_helper"
 
 class ParserMock
   include Jiralicious::Parsers::FieldParser

@@ -46,10 +46,10 @@ module Jiralicious
       # :comment   (required)    comment text
       #
       def add_comment(comment)
-        if !(@fields_update['comment'].is_a? Array)
-          @fields_update['comment'] = Array.new
+        if !(@fields_update["comment"].is_a? Array)
+          @fields_update["comment"] = Array.new
         end
-        @fields_update['comment'].push({"add" => {"body" => comment}})
+        @fields_update["comment"].push({"add" => {"body" => comment}})
       end
 
       ##

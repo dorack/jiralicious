@@ -26,8 +26,8 @@ module Jiralicious
         @loaded = true
       else
         decoded_json.each do |list|
-          self.class.property :"#{list['key']}"
-          self.merge!({list['key'] => self.class.find(list['key'])})
+          self.class.property :"#{list["key"]}"
+          self.merge!({list["key"] => self.class.find(list["key"])})
         end
       end
     end

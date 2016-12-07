@@ -32,7 +32,7 @@ describe Jiralicious, "Project Avatar" do
   end
 
   it "obtain user avatar list" do
-    avatar = Jiralicious::User::Avatar.avatars('fred')
+    avatar = Jiralicious::User::Avatar.avatars("fred")
     expect(avatar).to be_instance_of(Jiralicious::User::Avatar)
     expect(avatar.system.count).to eq(2)
     expect(avatar.system[0].id).to eq("10100")
@@ -41,12 +41,12 @@ describe Jiralicious, "Project Avatar" do
 
   it "sends new user avatar" do
     file = "#{File.dirname(__FILE__)}/fixtures/avatar_test.png"
-    avatar = Jiralicious::User::Avatar.temporary('fred', {:filename => file, :size => 4035})
+    avatar = Jiralicious::User::Avatar.temporary("fred", {:filename => file, :size => 4035})
     expect(avatar.needsCropping).to eq(true)
   end
 
   it "crops the current user avatar" do
-    response = Jiralicious::User::Avatar.post('fred', {:cropperWidth => 120,
+    response = Jiralicious::User::Avatar.post("fred", {:cropperWidth => 120,
 			 :cropperOffsetX => 50,
 			 :cropperOffsety => 50,
 			 :needsCropping => false})
@@ -54,12 +54,12 @@ describe Jiralicious, "Project Avatar" do
   end
 
   it "updates current user avatar" do
-    response = Jiralicious::User::Avatar.put('fred')
+    response = Jiralicious::User::Avatar.put("fred")
     expect(response.response.class).to eq(Net::HTTPNoContent)
   end
 
   it "updates current user avatar" do
-    response = Jiralicious::User::Avatar.remove('fred', 10100)
+    response = Jiralicious::User::Avatar.remove("fred", 10100)
     expect(response.response.class).to eq(Net::HTTPOK)
   end
 

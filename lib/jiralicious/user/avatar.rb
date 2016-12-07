@@ -35,11 +35,11 @@ module Jiralicious
 					else
 						i = 0;
 						decoded_json.each do |list|
-							if !list['id'].nil?
-								if numeric? list['id']
-									id =  :"id_#{list['id']}"
+							if !list["id"].nil?
+								if numeric? list["id"]
+									id =  :"id_#{list["id"]}"
 								else
-									id = :"#{list['id']}"
+									id = :"#{list["id"]}"
 								end
 							else
 								id = :"_#{i}"
@@ -97,7 +97,7 @@ module Jiralicious
 				#
 				def temporary(username, options = {})
 					options.merge!({:username => username})
-					response = fetch({:method => :post, :parent_uri => "#{parent_name}/", :key => 'temporary', :body => options})
+					response = fetch({:method => :post, :parent_uri => "#{parent_name}/", :key => "temporary", :body => options})
 					return self.new(response.parsed_response)
 				end
 

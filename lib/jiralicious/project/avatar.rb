@@ -35,11 +35,11 @@ module Jiralicious
 					else
 						i = 0;
 						decoded_json.each do |list|
-							if !list['id'].nil?
-								if numeric? list['id']
-									id =  :"id_#{list['id']}"
+							if !list["id"].nil?
+								if numeric? list["id"]
+									id =  :"id_#{list["id"]}"
 								else
-									id = :"#{list['id']}"
+									id = :"#{list["id"]}"
 								end
 							else
 								id = :"_#{i}"
@@ -94,7 +94,7 @@ module Jiralicious
 				# :size        (required)    size of the file
 				#
 				def temporary(key, options = {})
-					response = fetch({:method => :post, :parent => true, :parent_key => key, :key => 'temporary', :body => options})
+					response = fetch({:method => :post, :parent => true, :parent_key => key, :key => "temporary", :body => options})
 					return self.new(response.parsed_response)
 				end
 

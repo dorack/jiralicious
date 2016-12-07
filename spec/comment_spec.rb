@@ -49,7 +49,7 @@ describe Jiralicious, "search" do
   it "posts a new comment" do
     response = Jiralicious::Issue::Comment.add({:body => "this is a test"}, "EX-1")
     expect(response.class).to eq(HTTParty::Response)
-    expect(response.parsed_response['comments'][0]['id'].to_f).to be > 0
+    expect(response.parsed_response["comments"][0]["id"].to_f).to be > 0
   end
 
   it "updates a comment" do

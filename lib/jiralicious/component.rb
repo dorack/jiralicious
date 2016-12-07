@@ -26,7 +26,7 @@ module Jiralicious
       #
       def related_issue_counts(id)
         response = fetch({:key => "#{id}/relatedIssueCounts"})
-        response.parsed_response['id'] = id
+        response.parsed_response["id"] = id
         Field.new(response.parsed_response)
       end
 

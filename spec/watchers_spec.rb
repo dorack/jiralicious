@@ -28,7 +28,7 @@ describe Jiralicious, "search" do
     watchers = Jiralicious::Issue::Watchers.find_by_key("EX-1")
     expect(watchers).to be_instance_of(Jiralicious::Issue::Watchers)
     expect(watchers.watchers.count).to eq(1)
-    expect(watchers.watchers[0]['name']).to eq("fred")
+    expect(watchers.watchers[0]["name"]).to eq("fred")
   end
 
   it "adds a new watcher" do

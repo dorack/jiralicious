@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'jiralicious/configuration'
+require "jiralicious/configuration"
 
 module Jiralicious
   ##
@@ -12,7 +12,7 @@ module Jiralicious
     # Sets the default format to JSON for send and return
     format        :json
     # Sets the default headers to application/json for send and return
-    headers       'Content-Type' => 'application/json'
+    headers       "Content-Type" => "application/json"
 
     ##
     # Main access method to request data from the Jira API
@@ -51,7 +51,7 @@ module Jiralicious
         else
           message = response.body
           if message.is_a?(Hash)
-            message = message['errorMessages'].join('\n')
+            message = message["errorMessages"].join('\n')
           end
           Jiralicious::JiraError.new(message)
         end

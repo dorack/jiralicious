@@ -70,14 +70,14 @@ module Jiralicious
       # Generates the endpoint_name based on the current inheritance class.
       #
       def endpoint_name
-        self.name.split('::').last.downcase
+        self.name.split("::").last.downcase
       end
 
       ##
       # Generates the parent_name based on the current inheritance class.
       #
       def parent_name
-        arr = self.name.split('::')
+        arr = self.name.split("::")
         arr[arr.length-2].downcase
       end
 

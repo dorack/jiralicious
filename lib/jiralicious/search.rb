@@ -30,7 +30,7 @@ module Jiralicious
       if response.code == 200
         Jiralicious::SearchResult.new(response)
       else
-        raise Jiralicious::JqlError.new(response['errorMessages'].join('\n'))
+        raise Jiralicious::JqlError.new(response["errorMessages"].join('\n'))
       end
     end
 

@@ -42,13 +42,13 @@ module Jiralicious
     def initialize(decoded_json = nil, default = nil)
       @loaded = false
       if (!decoded_json.nil?)
-        if !decoded_json.include? 'fields'
-          decoded_json = {'fields' => decoded_json}
+        if !decoded_json.include? "fields"
+          decoded_json = {"fields" => decoded_json}
         end
         super(decoded_json)
         parse!(decoded_json["fields"])
         if default.nil?
-          @fields = Fields.new(self['fields']) if self['fields']
+          @fields = Fields.new(self["fields"]) if self["fields"]
           if self.jira_key
             @comments = Comment.find_by_key(self.jira_key)
             @watchers = Watchers.find_by_key(self.jira_key)
@@ -80,8 +80,8 @@ module Jiralicious
         self[:"#{k}"] = v
       end
       if default.nil?
-        parse!(self['fields'])
-        @fields = Fields.new(self['fields']) if self['fields']
+        parse!(self["fields"])
+        @fields = Fields.new(self["fields"]) if self["fields"]
         @comments = Comment.find_by_key(self.jira_key) if self.jira_key
         @watchers = Watchers.find_by_key(self.jira_key) if self.jira_key
         @loaded = true if self.jira_key
@@ -256,7 +256,7 @@ module Jiralicious
         self.class.update(@fields.format_for_update, self.jira_key)
       else
         response = self.class.create(@fields.format_for_create)
-        self.jira_key = response.parsed_response['key']
+        self.jira_key = response.parsed_response["key"]
       end
       return self.jira_key
     end

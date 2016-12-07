@@ -37,7 +37,7 @@ module Jiralicious
       #
       def find(id, options = {})
         response = fetch({:key => id})
-        response.parsed_response['id'] = id
+        response.parsed_response["id"] = id
         new(response.parsed_response)
       end
     end

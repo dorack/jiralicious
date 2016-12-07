@@ -57,7 +57,7 @@ module Jiralicious
         end
       end
 
-      self.request(:post, '/rest/auth/latest/session',
+      self.request(:post, "/rest/auth/latest/session",
         :body => { :username => Jiralicious.username,
           :password => Jiralicious.password}.to_json,
         :handler => handler)
@@ -80,7 +80,7 @@ module Jiralicious
         end
       end
 
-      request(:delete, '/rest/auth/latest/session', :handler => handler)
+      request(:delete, "/rest/auth/latest/session", :handler => handler)
     end
 
     private

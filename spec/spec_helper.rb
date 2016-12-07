@@ -1,8 +1,8 @@
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'rspec'
-require 'fakeweb'
-require 'jiralicious'
+require "rspec"
+require "fakeweb"
+require "jiralicious"
 
 FakeWeb.allow_net_connect = false
 

@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'ostruct'
+require "ostruct"
 module Jiralicious
   ##
   # Base configuration module for Jiralicious

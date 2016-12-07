@@ -31,7 +31,7 @@ describe Jiralicious::SearchResult do
   let(:search_result) { Jiralicious::SearchResult.new(search_data) }
 
   it "assigns an array to back the search results" do
-    expect(search_result.instance_variable_get('@issues')).to eq(
+    expect(search_result.instance_variable_get("@issues")).to eq(
       [
         {
           "self" => "http://www.example.com/jira/rest/api/2.0/jira/rest/api/2.0/issue/EX-1",

@@ -8,7 +8,7 @@ describe  "performing a request" do
     end
 
     FakeWeb.register_uri(:get,
-      Jiralicious.uri + '/ok',
+      Jiralicious.uri + "/ok",
       :status => "200")
   end
 
@@ -16,6 +16,6 @@ describe  "performing a request" do
 
   it "sets the basic auth info beforehand" do
     expect(Jiralicious::BasicSession).to receive(:basic_auth).with("jstewart", "topsecret")
-    session.request(:get, '/ok')
+    session.request(:get, "/ok")
   end
 end
