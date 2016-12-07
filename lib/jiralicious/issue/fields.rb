@@ -46,7 +46,7 @@ module Jiralicious
       # :comment   (required)    comment text
       #
       def add_comment(comment)
-        if !(@fields_update["comment"].is_a? Array)
+        unless (@fields_update["comment"].is_a? Array)
           @fields_update["comment"] = Array.new
         end
         @fields_update["comment"].push({ "add" => { "body" => comment } })
@@ -78,7 +78,7 @@ module Jiralicious
       #
       def append_a(field, value)
         @fields_update[field] = @fields_current[field] if (@fields_update[field] == nil)
-        @fields_update[field] = Array.new if !(@fields_update[field].is_a? Array)
+        @fields_update[field] = Array.new unless (@fields_update[field].is_a? Array)
         if value.is_a? String
           @fields_update[field].push(value) unless @fields_update[field].include? value
         else
@@ -96,7 +96,7 @@ module Jiralicious
       #
       def append_h(field, hash)
         @fields_update[field] = @fields_current[field] if (@fields_update[field] == nil)
-        @fields_update[field] = Hash.new if !(@fields_update[field].is_a? Hash)
+        @fields_update[field] = Hash.new unless (@fields_update[field].is_a? Hash)
         @fields_update[field].merge!(hash)
       end
 

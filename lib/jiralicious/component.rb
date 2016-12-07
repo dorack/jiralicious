@@ -40,7 +40,7 @@ module Jiralicious
       #
       def remove(remove_id, target_id = nil)
         body = {}
-        if !target_id.nil?
+        unless target_id.nil?
           body.merge!("movIssuesTo" => target_id)
         end
         fetch({ :method => :delete, :key => remove_id, :body_to_params => true, :body => body }).parsed_response
