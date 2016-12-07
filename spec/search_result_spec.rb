@@ -22,10 +22,12 @@ describe Jiralicious::SearchResult do
       "startAt" => 0,
       "maxResults" => 50,
       "total" =>  1,
-      "issues" => [{
+      "issues" => [
+        {
           "self" => "http://www.example.com/jira/rest/api/2.0/jira/rest/api/2.0/issue/EX-1",
           "key" =>  "EX-1"
-        }]
+        }
+      ]
     }
   end
   let(:search_result) { Jiralicious::SearchResult.new(search_data) }
