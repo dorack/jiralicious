@@ -34,7 +34,7 @@ module Jiralicious
           end
           @loaded = true
         else
-          i = 0;
+          i = 0
           decoded_json.each do |list|
             if !list["id"].nil?
               if numeric? list["id"]
