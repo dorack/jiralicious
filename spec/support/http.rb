@@ -1,6 +1,6 @@
 module LoginHelper
   def register_login
-    response = %Q|
+    response = %|
     {
       "session": {
       "name": "JSESSIONID",

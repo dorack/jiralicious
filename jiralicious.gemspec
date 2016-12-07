@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.homepage = "http://github.com/jstewart/jiralicious"
   s.license = "MIT"
-  s.summary = %Q{A Ruby library for interacting with JIRA's REST API}
-  s.description = %Q{A Ruby library for interacting with JIRA's REST API}
+  s.summary = %(A Ruby library for interacting with JIRA's REST API)
+  s.description = %(A Ruby library for interacting with JIRA's REST API)
   s.email = "jstewart@fusionary.com"
   s.authors = ["Jason Stewart"]
   s.add_runtime_dependency "crack", "~> 0.1.8"

@@ -363,7 +363,7 @@ describe Jiralicious::Issue, "transitions" do
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/issue/EX-1/transitions",
       :status => "400",
-      :body => %q{{"errorMessages":["Workflow operation is not valid"],"errors":{}}})
+      :body => '{"errorMessages":["Workflow operation is not valid"],"errors":{}}')
     l = lambda do
       result = Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
         { "transition" => "invalid" })
@@ -375,7 +375,7 @@ describe Jiralicious::Issue, "transitions" do
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/issue/EX-1/transitions",
       :status => "404",
-      :body => %q{{"errorMessages":["Issue Does Not Exist"],"errors":{}}})
+      :body => '{"errorMessages":["Issue Does Not Exist"],"errors":{}}')
     l = lambda do
       result = Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
         { "transition" => "invalid" })
