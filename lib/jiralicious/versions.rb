@@ -135,7 +135,7 @@ module Jiralicious
     #
     def update(details)
       details.each do |k, v|
-        self.send("#{k.to_s}=", v)
+        self.send("#{k}=", v)
       end
       self.class.update(self.version_key, details)
     end

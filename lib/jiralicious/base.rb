@@ -27,7 +27,7 @@ module Jiralicious
     def properties_from_hash(hash)
       hash.inject({}) do |newhash, (k, v)|
         k = k.gsub("-", "_")
-        k = "_#{k.to_s}" if k =~ /^\d/
+        k = "_#{k}" if k =~ /^\d/
         self.class.property :"#{k}"
         newhash[k] = v
         newhash

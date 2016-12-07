@@ -93,7 +93,7 @@ module Jiralicious
     #
     def update(details)
       details.each do |k, v|
-        self.send("#{k.to_s}=", v)
+        self.send("#{k}=", v)
       end
       self.class.update(self.component_key, details)
     end
