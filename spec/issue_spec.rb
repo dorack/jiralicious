@@ -139,7 +139,9 @@ describe Jiralicious::Issue, "Managing Issues" do
   end
 
   it "creates a new issue thgrough load with reload" do
-    hash = { "fields" => { "project" => { "id" => "10000" },
+    hash = {
+      "fields" => {
+        "project" => { "id" => "10000" },
         "summary" => "this is a test of creating a scratch ticket",
         "issuetype" => { "id" => "7" },
         "assignee" => { "name" => "stanley.handschuh" },
@@ -147,7 +149,8 @@ describe Jiralicious::Issue, "Managing Issues" do
         "labels" => ["new_label_p"],
         "environment" => "example of environment",
         "description" => "example of the description extending"
-      } }
+      }
+    }
     issue = Jiralicious::Issue.new
     issue.load(hash, true)
     issue.save!
@@ -158,7 +161,9 @@ describe Jiralicious::Issue, "Managing Issues" do
   end
 
   it "creates a new issue thgrough load without reload" do
-    hash = { "fields" => { "project" => { "id" => "10000" },
+    hash = {
+      "fields" => {
+        "project" => { "id" => "10000" },
         "summary" => "this is a test of creating a scratch ticket",
         "issuetype" => { "id" => "7" },
         "assignee" => { "name" => "stanley.handschuh" },
@@ -166,7 +171,8 @@ describe Jiralicious::Issue, "Managing Issues" do
         "labels" => ["new_label_p"],
         "environment" => "example of environment",
         "description" => "example of the description extending"
-      } }
+      }
+    }
     issue = Jiralicious::Issue.new
     issue.load(hash)
     issue.save!
@@ -177,15 +183,16 @@ describe Jiralicious::Issue, "Managing Issues" do
   end
 
   it "creates a new issue through new" do
-    hash = { "project" => { "id" => "10000" },
-        "summary" => "this is a test of creating a scratch ticket",
-        "issuetype" => { "id" => "7" },
-        "assignee" => { "name" => "stanley.handschuh" },
-        "priority" => { "id" => "1" },
-        "labels" => ["new_label_p"],
-        "environment" => "example of environment",
-        "description" => "example of the description extending"
-      }
+    hash = {
+      "project" => { "id" => "10000" },
+      "summary" => "this is a test of creating a scratch ticket",
+      "issuetype" => { "id" => "7" },
+      "assignee" => { "name" => "stanley.handschuh" },
+      "priority" => { "id" => "1" },
+      "labels" => ["new_label_p"],
+      "environment" => "example of environment",
+      "description" => "example of the description extending"
+    }
     issue = Jiralicious::Issue.new(hash)
     issue.save!
 
