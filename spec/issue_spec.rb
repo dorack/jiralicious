@@ -390,7 +390,7 @@ describe Jiralicious::Issue, "transitions" do
       config.username = "jstewart"
       config.password = "topsecret"
       config.uri = "http://jstewart:topsecret@localhost"
-    config.auth_type = :basic
+      config.auth_type = :basic
       config.api_version = "latest"
     end
   end

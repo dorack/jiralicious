@@ -48,7 +48,7 @@ module Jiralicious
             i += 1
           end
           self.class.property id
-         self[id] = self.class.new(list)
+          self[id] = self.class.new(list)
         end
       end
     end
