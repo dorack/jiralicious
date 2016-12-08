@@ -124,7 +124,7 @@ module Jiralicious
       # the child class to provide additional error handling.
       #
       def handler
-        Proc.new do |response|
+        proc do |response|
           case response.code
           when 200..204
             response

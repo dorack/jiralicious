@@ -26,7 +26,7 @@ module Jiralicious
       fields: options[:fields]
     }.to_json
 
-    handler = Proc.new do |response|
+    handler = proc do |response|
       if response.code == 200 # rubocop:disable Style/GuardClause
         Jiralicious::SearchResult.new(response)
       else

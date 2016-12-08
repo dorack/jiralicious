@@ -38,7 +38,7 @@ module Jiralicious
     # Authenticates the login
     def login
       @authenticating = true
-      handler = Proc.new do |response|
+      handler = proc do |response|
         if response.code == 200
           @session = response["session"]
           @login_info = response["loginInfo"]
@@ -69,7 +69,7 @@ module Jiralicious
 
     # Logs out of the API
     def logout
-      handler = Proc.new do
+      handler = proc do
         if response.code == 204
           clear_session
         else
