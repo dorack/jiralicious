@@ -26,7 +26,7 @@ module Jiralicious
     end
 
     # Provides access to the array of attributes
-    attr_accessor *VALID_OPTIONS
+    attr_accessor(*VALID_OPTIONS)
 
     ##
     # Reset when extended into class
