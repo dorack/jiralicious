@@ -76,8 +76,8 @@ module Jiralicious
       #
       # :maxResults (optional)    Integer
       #
-      def assignable_multiProjectSearch(projectKeys, options = {})
-        options.merge!(projectKeys: projectKeys.upcase)
+      def assignable_multiProjectSearch(project_keys, options = {})
+        options.merge!(projectKeys: project_keys.upcase)
         response = fetch(method: :get, key: "assignable/multiProjectSearch", body_to_params: true, body: options)
         return self.new(response.parsed_response)
       end
