@@ -218,7 +218,9 @@ module Jiralicious
     # :object    (required)    object to be tested
     #
     def numeric?(object)
-      true if Float(object) rescue false
+      true if Float(object)
+    rescue
+      false
     end
   end
 end
