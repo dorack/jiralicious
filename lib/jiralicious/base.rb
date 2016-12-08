@@ -25,7 +25,7 @@ module Jiralicious
     # :hash    (required)    hash to be added to properties
     #
     def properties_from_hash(hash)
-      hash.inject({}) do |newhash, (k, v)|
+      hash.each_with_object({}) do |(k, v), newhash|
         k = k.tr("-", "_")
         k = "_#{k}" if k =~ /^\d/
         self.class.property :"#{k}"
