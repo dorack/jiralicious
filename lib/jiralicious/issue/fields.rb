@@ -29,14 +29,14 @@ module Jiralicious
       # Returns the count of fields being updated.
       #
       def count
-        return @fields_update.count
+        @fields_update.count
       end
 
       ##
       # Returns the length of fields being updated.
       #
       def length
-        return @fields_update.length
+        @fields_update.length
       end
 
       ##
@@ -160,14 +160,14 @@ module Jiralicious
       # Returns the current fields object
       #
       def current
-        return @fields_current
+        @fields_current
       end
 
       ##
       # Returns the updated fields object
       #
       def updated
-        return @fields_update
+        @fields_update
       end
 
       ##
@@ -183,7 +183,7 @@ module Jiralicious
             up[k] = [{ "set" => v }]
           end
         end
-        return { "update" => up }
+        { "update" => up }
       end
 
       ##
@@ -191,7 +191,7 @@ module Jiralicious
       # for Jira to perform an create request.
       #
       def format_for_create
-        return { "fields" => @fields_update }
+        { "fields" => @fields_update }
       end
     end
   end

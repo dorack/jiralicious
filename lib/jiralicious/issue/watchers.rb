@@ -33,7 +33,7 @@ module Jiralicious
           response = fetch(parent: parent_name, parent_key: key)
           a = new(response)
           a.jira_key = key
-          return a
+          a
         end
 
         ##

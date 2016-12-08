@@ -26,7 +26,7 @@ module Jiralicious
       else
         decoded_json.each do |list|
           self.class.property :"#{list["key"]}"
-          self.merge!(list["key"] => self.class.find(list["key"]))
+          merge!(list["key"] => self.class.find(list["key"]))
         end
       end
     end
@@ -83,15 +83,15 @@ module Jiralicious
     #
     attr_accessor :issues
     def issues
-      @issues = self.class.issue_list(self.key) if @issues.nil?
-      return @issues
+      @issues = self.class.issue_list(key) if @issues.nil?
+      @issues
     end
 
     ##
     # Retrieves the components associated with the project
     #
     def components
-      @components = self.class.components(self.key) if @components.nil?
+      @components = self.class.components(key) if @components.nil?
       @components
     end
 
@@ -103,7 +103,7 @@ module Jiralicious
     #
     def versions(expand = {})
       if @versions.nil? || !expand.empty?
-        @versions = self.class.verions(self.key, expand)
+        @versions = self.class.verions(key, expand)
       end
       @versions
     end

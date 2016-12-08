@@ -18,7 +18,7 @@ module Jiralicious
           decoded_json = properties_from_hash(decoded_json)
           super(decoded_json)
           parse!(decoded_json)
-          self.each do |k, v|
+          each do |k, v|
             if v.is_a? Hash
               self[k] = self.class.new(v)
             elsif v.is_a? Array
@@ -64,7 +64,7 @@ module Jiralicious
         # :needsCropping     (optional)    boolean if it needs cropping
         #
         def post(username, options = {})
-          options.merge!(username: username)
+          options[:username] = username
           fetch(method: :post, parent_uri: "#{parent_name}/", body: options)
         end
 
@@ -77,7 +77,7 @@ module Jiralicious
         # :options    (optional)    not documented
         #
         def put(username, options = {})
-          options.merge!(username: username)
+          options[:username] = username
           fetch(method: :put, parent_uri: "#{parent_name}/", body: options)
         end
 
@@ -92,9 +92,9 @@ module Jiralicious
         # :size        (optional)    size of the file
         #
         def temporary(username, options = {})
-          options.merge!(username: username)
+          options[:username] = username
           response = fetch(method: :post, parent_uri: "#{parent_name}/", key: "temporary", body: options)
-          return self.new(response.parsed_response)
+          new(response.parsed_response)
         end
 
         ##
@@ -116,9 +116,9 @@ module Jiralicious
         # :username    (required)    user name
         #
         def avatars(username, options = {})
-          options.merge!(username: username)
+          options[:username] = username
           response = fetch(method: :get, body_to_params: true, url: "#{Jiralicious.rest_path}/#{parent_name}/#{endpoint_name}s", body: options)
-          return self.new(response.parsed_response)
+          new(response.parsed_response)
         end
       end
     end

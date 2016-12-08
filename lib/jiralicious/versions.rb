@@ -92,7 +92,7 @@ module Jiralicious
     # Finds all versions based on the provided Issue Key
     #
     def find
-      self.class.find(self.version_key)
+      self.class.find(version_key)
     end
 
     ##
@@ -107,7 +107,7 @@ module Jiralicious
     #      A version to place this version after. The value should be the self link of another version
     #
     def move(options = {})
-      self.class.move(self.version_key, options)
+      self.class.move(version_key, options)
     end
 
     ##
@@ -117,14 +117,14 @@ module Jiralicious
     # :options      (optional)     Hash of options
     #
     def remove(options = {})
-      self.class.remove(self.version_key, options)
+      self.class.remove(version_key, options)
     end
 
     ##
     # Returns the number of Issues associated with the Version
     #
     def related_issue_counts
-      self.class.related_issue_counts(self.version_key)
+      self.class.related_issue_counts(version_key)
     end
 
     ##
@@ -135,16 +135,16 @@ module Jiralicious
     #
     def update(details)
       details.each do |k, v|
-        self.send("#{k}=", v)
+        send("#{k}=", v)
       end
-      self.class.update(self.version_key, details)
+      self.class.update(version_key, details)
     end
 
     ##
     # Returns the number of Unresolved Issues associated with the Version
     #
     def unresolved_issue_count
-      self.class.unresolved_issue_count(self.version_key).issuesUnresolvedCount
+      self.class.unresolved_issue_count(version_key).issuesUnresolvedCount
     end
   end
 end

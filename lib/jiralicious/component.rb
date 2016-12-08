@@ -40,7 +40,7 @@ module Jiralicious
       #
       def remove(remove_id, target_id = nil)
         body = {}
-        body.merge!("movIssuesTo" => target_id) unless target_id.nil?
+        body["movIssuesTo"] = target_id unless target_id.nil?
         fetch(method: :delete, key: remove_id, body_to_params: true, body: body).parsed_response
       end
 
@@ -62,7 +62,7 @@ module Jiralicious
     # Finds all watchers based on the provided Issue Key
     #
     def find
-      self.class.find_by_id(self.component_key)
+      self.class.find_by_id(component_key)
     end
 
     ##
@@ -72,7 +72,7 @@ module Jiralicious
     # :id    (required)    Component to count
     #
     def related_issue_counts
-      self.class.related_issue_counts(self.component_key).issueCount
+      self.class.related_issue_counts(component_key).issueCount
     end
 
     ##
@@ -82,7 +82,7 @@ module Jiralicious
     # :target_id    (optional)    Component to move issues to
     #
     def remove(target = nil)
-      self.class.remove(self.component_key, target)
+      self.class.remove(component_key, target)
     end
 
     ##
@@ -93,9 +93,9 @@ module Jiralicious
     #
     def update(details)
       details.each do |k, v|
-        self.send("#{k}=", v)
+        send("#{k}=", v)
       end
-      self.class.update(self.component_key, details)
+      self.class.update(component_key, details)
     end
   end
 end

@@ -20,9 +20,9 @@ module Jiralicious
         properties_from_hash(decoded_json)
         super(decoded_json)
         parse!(decoded_json)
-        return unless self.respond_to?("comments") && self.comments.is_a?(Array)
+        return unless respond_to?("comments") && comments.is_a?(Array)
         a = {}
-        self.comments.each do |comment|
+        comments.each do |comment|
           a["_#{comment['id']}"] = Comment.new(comment)
         end
         self.comments = a
@@ -40,7 +40,7 @@ module Jiralicious
           response = fetch(parent: parent_name, parent_key: key)
           a = new(response)
           a.jira_key = key
-          return a
+          a
         end
 
         ##
@@ -56,7 +56,7 @@ module Jiralicious
           response = fetch(parent: parent_name, parent_key: key, key: id)
           a = new(response)
           a.jira_key = key
-          return a
+          a
         end
 
         ##
@@ -132,7 +132,7 @@ module Jiralicious
       # :comment    (required)    comment text
       #
       def edit(comment)
-        self.class.edit(comment, @jira_key, self.id)
+        self.class.edit(comment, @jira_key, id)
       end
 
       ##

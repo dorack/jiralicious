@@ -17,7 +17,7 @@ module Jiralicious
 
     # Provides login information on every request
     def before_request
-      self.login if require_login? && !@authenticating
+      login if require_login? && !@authenticating
     end
 
     # Handles the response from the request
@@ -42,7 +42,7 @@ module Jiralicious
         if response.code == 200
           @session = response["session"]
           @login_info = response["loginInfo"]
-          self.class.cookies(self.session["name"] => self.session["value"])
+          self.class.cookies(session["name"] => session["value"])
         else
           clear_session
           case response.code
@@ -57,7 +57,7 @@ module Jiralicious
         end
       end
 
-      self.request(
+      request(
         :post, "/rest/auth/latest/session",
         body: {
           username: Jiralicious.username,

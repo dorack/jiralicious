@@ -34,7 +34,7 @@ module Jiralicious
         site: "http://rome:8080"
       }
       if token.nil? || secret.nil?
-        consumer = OAuth::Consumer.new(Jiralicious.oauth_consumer_key, OpenSSL::PKey::RSA.new(get_secret, Jiralicious.oauth_pass_phrase.to_s), self.option)
+        consumer = OAuth::Consumer.new(Jiralicious.oauth_consumer_key, OpenSSL::PKey::RSA.new(get_secret, Jiralicious.oauth_pass_phrase.to_s), option)
         request_token = consumer.get_request_token
         ## request access confirmation ##
         bs = Jiralicious::BasicSession.new

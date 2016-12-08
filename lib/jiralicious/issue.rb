@@ -48,10 +48,10 @@ module Jiralicious
         parse!(decoded_json["fields"])
         if default.nil?
           @fields = Fields.new(self["fields"]) if self["fields"]
-          if self.jira_key
-            @comments = Comment.find_by_key(self.jira_key)
-            @watchers = Watchers.find_by_key(self.jira_key)
-            @transitions = Transitions.new(self.jira_key)
+          if jira_key
+            @comments = Comment.find_by_key(jira_key)
+            @watchers = Watchers.find_by_key(jira_key)
+            @transitions = Transitions.new(jira_key)
             @loaded = true
           end
         end
@@ -81,9 +81,9 @@ module Jiralicious
       if default.nil?
         parse!(self["fields"])
         @fields = Fields.new(self["fields"]) if self["fields"]
-        @comments = Comment.find_by_key(self.jira_key) if self.jira_key
-        @watchers = Watchers.find_by_key(self.jira_key) if self.jira_key
-        @loaded = true if self.jira_key
+        @comments = Comment.find_by_key(jira_key) if jira_key
+        @watchers = Watchers.find_by_key(jira_key) if jira_key
+        @loaded = true if jira_key
       else
         parse!(decoded_hash)
       end
@@ -94,7 +94,7 @@ module Jiralicious
     # information. This method is used in lazy loading methods.
     #
     def reload
-      load(self.class.find(self.jira_key, reload: true).parsed_response)
+      load(self.class.find(jira_key, reload: true).parsed_response)
     end
 
     class << self
@@ -164,7 +164,7 @@ module Jiralicious
       #
       def createmeta(projectkeys, issuetypeids = nil)
         response = fetch(body_to_params: true, key: "createmeta", body: { expand: "projects.issuetypes.fields.", projectKeys: projectkeys, issuetypeIds: issuetypeids })
-        return Field.new(response.parsed_response)
+        Field.new(response.parsed_response)
       end
 
       ##
@@ -214,7 +214,7 @@ module Jiralicious
     # :name    (required)    name of assignee
     #
     def set_assignee(name)
-      self.class.assignee(name, self.jira_key)
+      self.class.assignee(name, jira_key)
     end
 
     ##
@@ -224,7 +224,7 @@ module Jiralicious
     # :options    (optional)    passed on
     #
     def remove(options = {})
-      self.class.remove(self.jira_key, options)
+      self.class.remove(jira_key, options)
     end
 
     ##
@@ -233,7 +233,7 @@ module Jiralicious
     #
     def createmeta
       if @createmeta.nil?
-        @createmeta = self.class.createmeta(self.jira_key.split("-")[0])
+        @createmeta = self.class.createmeta(jira_key.split("-")[0])
       end
       @createmeta
     end
@@ -243,7 +243,7 @@ module Jiralicious
     # to validate or filter create requests to minimize errors.
     #
     def editmeta
-      @editmeta = self.class.editmeta(self.jira_key) if @editmeta.nil?
+      @editmeta = self.class.editmeta(jira_key) if @editmeta.nil?
       @editmeta
     end
 
@@ -252,12 +252,12 @@ module Jiralicious
     #
     def save
       if loaded?
-        self.class.update(@fields.format_for_update, self.jira_key)
+        self.class.update(@fields.format_for_update, jira_key)
       else
         response = self.class.create(@fields.format_for_create)
         self.jira_key = response.parsed_response["key"]
       end
-      return self.jira_key
+      jira_key
     end
 
     ##

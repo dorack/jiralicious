@@ -69,14 +69,14 @@ module Jiralicious
       # Generates the endpoint_name based on the current inheritance class.
       #
       def endpoint_name
-        self.name.split("::").last.downcase
+        name.split("::").last.downcase
       end
 
       ##
       # Generates the parent_name based on the current inheritance class.
       #
       def parent_name
-        arr = self.name.split("::")
+        arr = name.split("::")
         arr[arr.length - 2].downcase
       end
 
@@ -147,7 +147,7 @@ module Jiralicious
           raise Jiralicious::JiraError.new("The key #{key} is invalid") unless no_throw
           return false
         end
-        return true
+        true
       end
 
       alias all find_all
@@ -181,7 +181,7 @@ module Jiralicious
     # to determine if the object is loaded and ready for usage.
     #
     def loaded?
-      !!self.loaded
+      !!loaded
     end
 
     ##
@@ -205,7 +205,7 @@ module Jiralicious
       if !loaded?
         self.loaded = true
         reload
-        self.send(meth, *args, &block)
+        send(meth, *args, &block)
       else
         super
       end

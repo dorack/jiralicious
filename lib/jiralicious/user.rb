@@ -19,7 +19,7 @@ module Jiralicious
         decoded_json = properties_from_hash(decoded_json)
         super(decoded_json)
         parse!(decoded_json)
-        self.each do |k, v|
+        each do |k, v|
           if v.is_a? Hash
             self[k] = self.class.new(v)
           elsif v.is_a? Array
@@ -61,7 +61,7 @@ module Jiralicious
       #
       def find(username)
         response = fetch(url: "#{Jiralicious.rest_path}/#{endpoint_name}", method: :get, body_to_params: true, body: { username: username })
-        return self.new(response.parsed_response)
+        new(response.parsed_response)
       end
 
       ##
@@ -77,9 +77,9 @@ module Jiralicious
       # :maxResults (optional)    Integer
       #
       def assignable_multiProjectSearch(project_keys, options = {})
-        options.merge!(projectKeys: project_keys.upcase)
+        options[:projectKeys] = project_keys.upcase
         response = fetch(method: :get, key: "assignable/multiProjectSearch", body_to_params: true, body: options)
-        return self.new(response.parsed_response)
+        new(response.parsed_response)
       end
 
       ##
@@ -105,7 +105,7 @@ module Jiralicious
         options[:project] = options[:project].upcase unless options[:project].nil?
         options[:issueKey] = options[:issueKey].upcase unless options[:issueKey].nil?
         response = fetch(method: :get, key: "assignable/search", body_to_params: true, body: options)
-        return self.new(response.parsed_response)
+        new(response.parsed_response)
       end
 
       ##
@@ -121,9 +121,9 @@ module Jiralicious
       # :exclude       (optional)    Users to exclude
       #
       def picker(query, options = {})
-        options.merge!(query: query)
+        options[:query] = query
         response = fetch(method: :get, key: "picker", body_to_params: true, body: options)
-        return self.new(response.parsed_response)
+        new(response.parsed_response)
       end
 
       ##
@@ -141,9 +141,9 @@ module Jiralicious
       # :includeInactive    (optional)    Boolean, default true
       #
       def search(username, options = {})
-        options.merge!(username: username)
+        options[:username] = username
         response = fetch(method: :get, key: "search", body_to_params: true, body: options)
-        return self.new(response.parsed_response)
+        new(response.parsed_response)
       end
     end
   end

@@ -23,7 +23,7 @@ module Jiralicious
         decoded_json = properties_from_hash(decoded_json)
         super(decoded_json)
         parse!(decoded_json)
-        self.each do |k, v|
+        each do |k, v|
           if v.is_a? Hash
             self[k] = self.class.new(v)
           elsif v.is_a? Array
