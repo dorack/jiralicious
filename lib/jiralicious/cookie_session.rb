@@ -65,7 +65,7 @@ module Jiralicious
 
     # Logs out of the API
     def logout
-      handler = Proc.new do |request|
+      handler = Proc.new do
         if response.code == 204
           clear_session
         else

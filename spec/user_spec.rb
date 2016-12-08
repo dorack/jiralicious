@@ -56,7 +56,7 @@ describe Jiralicious::User, "finding" do
     user = Jiralicious::User.assignable_multiProjectSearch("EX")
     expect(user).to be_instance_of(Jiralicious::User)
     expect(user.length).to eq(2)
-    user.each do |k, u|
+    user.each do |_k, u|
       expect(u.emailAddress).to match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
       expect(u.active).to eq(false)
     end
@@ -66,7 +66,7 @@ describe Jiralicious::User, "finding" do
     user = Jiralicious::User.assignable_search(project: "EX")
     expect(user).to be_instance_of(Jiralicious::User)
     expect(user.length).to eq(2)
-    user.each do |k, u|
+    user.each do |_k, u|
       expect(u.emailAddress).to match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
       expect(u.active).to eq(false)
     end
