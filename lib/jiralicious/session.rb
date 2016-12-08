@@ -23,11 +23,11 @@ module Jiralicious
     # :options   (required)    request specific options
     #
     def request(method, *options)
-      if options.last.is_a?(Hash) && options.last[:handler]
-        response_handler = options.last.delete(:handler)
-      else
-        response_handler = handler
-      end
+      response_handler = if options.last.is_a?(Hash) && options.last[:handler]
+                           options.last.delete(:handler)
+                         else
+                           handler
+                         end
 
       self.class.base_uri Jiralicious.uri
       before_request if respond_to?(:before_request)

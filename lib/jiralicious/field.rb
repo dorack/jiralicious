@@ -38,11 +38,11 @@ module Jiralicious
         i = 0
         decoded_json.each do |list|
           if !list["id"].nil?
-            if numeric? list["id"]
-              id = :"id_#{list["id"]}"
-            else
-              id = :"#{list["id"]}"
-            end
+            id = if numeric? list["id"]
+                   :"id_#{list["id"]}"
+                 else
+                   :"#{list["id"]}"
+                 end
           else
             id = :"_#{i}"
             i += 1

@@ -106,11 +106,11 @@ module Jiralicious
       def fetch(options = {})
         options[:method] = :get unless [:get, :post, :put, :delete].include?(options[:method])
         options[:parent_uri] = "#{parent_name}/#{options[:parent_key]}/" unless options[:parent].nil?
-        if !options[:body_override]
-          options[:body_uri] = options[:body].is_a?(Hash) ? options[:body] : { body: options[:body] }
-        else
-          options[:body_uri] = options[:body]
-        end
+        options[:body_uri] = if !options[:body_override]
+                               options[:body].is_a?(Hash) ? options[:body] : { body: options[:body] }
+                             else
+                               options[:body]
+                             end
         if options[:body_to_params]
           options[:params_uri] = "?#{options[:body].to_params}" unless options[:body].nil? || options[:body].empty?
           options[:body_uri] = nil

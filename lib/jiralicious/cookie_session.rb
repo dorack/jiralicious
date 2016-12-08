@@ -23,7 +23,7 @@ module Jiralicious
     # Handles the response from the request
     def after_request(response)
       unless @authenticating
-        if captcha_required(response)
+        if captcha_required(response) # rubocop:disable Style/GuardClause
           raise Jiralicious::CaptchaRequired, "Captacha is required. Try logging into Jira via the web interface"
         elsif cookie_invalid(response)
           # Can usually be fixed by logging in again

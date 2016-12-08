@@ -177,11 +177,11 @@ module Jiralicious
       def format_for_update
         up = {}
         @fields_update.each do |k, v|
-          if k == "comment"
-            up[k] = v
-          else
-            up[k] = [{ "set" => v }]
-          end
+          up[k] = if k == "comment"
+                    v
+                  else
+                    [{ "set" => v }]
+                  end
         end
         { "update" => up }
       end
