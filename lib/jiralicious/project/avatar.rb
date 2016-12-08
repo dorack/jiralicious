@@ -64,7 +64,7 @@ module Jiralicious
         # :needsCropping     (optional)    boolean if it needs cropping
         #
         def post(key, options = {})
-          response = fetch(method: :post, parent: true, parent_key: key, body: options)
+          fetch(method: :post, parent: true, parent_key: key, body: options)
         end
 
         ##
@@ -76,7 +76,7 @@ module Jiralicious
         # :options    (optional)    not documented
         #
         def put(key, options = {})
-          response = fetch(method: :put, parent: true, parent_key: key, body: options)
+          fetch(method: :put, parent: true, parent_key: key, body: options)
         end
 
         ##
@@ -103,7 +103,7 @@ module Jiralicious
         # :id     (required)    avatar id
         #
         def remove(key, id)
-          response = fetch(method: :delete, body_to_params: true, parent: true, parent_key: key, key: id.to_s)
+          fetch(method: :delete, body_to_params: true, parent: true, parent_key: key, key: id.to_s)
         end
 
         ##

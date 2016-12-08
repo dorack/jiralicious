@@ -89,7 +89,7 @@ module Jiralicious
       # :needsCropping      (optional)    Boolean if needs cropping
       #
       def temporary_crop(key, options = {})
-        response = fetch(method: :post, key: "#{key}/temporaryCrop", body: options)
+        fetch(method: :post, key: "#{key}/temporaryCrop", body: options)
       end
     end
   end

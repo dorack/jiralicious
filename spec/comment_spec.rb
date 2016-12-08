@@ -53,6 +53,7 @@ describe Jiralicious, "search" do
 
   it "updates a comment" do
     response = Jiralicious::Issue::Comment.edit("this is a test", "EX-1", "10000")
+    expect(response.response.class).to eq(Net::HTTPOK)
   end
 
   it "deletes a comment" do

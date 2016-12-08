@@ -372,7 +372,7 @@ describe Jiralicious::Issue, "transitions" do
       status: "400",
       body: '{"errorMessages":["Workflow operation is not valid"],"errors":{}}')
     l = lambda do
-      result = Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
+      Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
         "transition" => "invalid")
     end
     expect(l).to raise_error(Jiralicious::TransitionError)
@@ -384,7 +384,7 @@ describe Jiralicious::Issue, "transitions" do
       status: "404",
       body: '{"errorMessages":["Issue Does Not Exist"],"errors":{}}')
     l = lambda do
-      result = Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
+      Jiralicious::Issue.transition("#{Jiralicious.rest_path}/issue/EX-1/transitions",
         "transition" => "invalid")
     end
     expect(l).to raise_error(Jiralicious::IssueNotFound)

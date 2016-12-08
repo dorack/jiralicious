@@ -65,7 +65,7 @@ module Jiralicious
         #
         def post(username, options = {})
           options.merge!(username: username)
-          response = fetch(method: :post, parent_uri: "#{parent_name}/", body: options)
+          fetch(method: :post, parent_uri: "#{parent_name}/", body: options)
         end
 
         ##
@@ -78,7 +78,7 @@ module Jiralicious
         #
         def put(username, options = {})
           options.merge!(username: username)
-          response = fetch(method: :put, parent_uri: "#{parent_name}/", body: options)
+          fetch(method: :put, parent_uri: "#{parent_name}/", body: options)
         end
 
         ##
@@ -106,7 +106,7 @@ module Jiralicious
         # :id          (required)    avatar id
         #
         def remove(username, id)
-          response = fetch(method: :delete, body_to_params: true, parent_uri: "#{parent_name}/", key: id.to_s, body: { username: username })
+          fetch(method: :delete, body_to_params: true, parent_uri: "#{parent_name}/", key: id.to_s, body: { username: username })
         end
 
         ##
