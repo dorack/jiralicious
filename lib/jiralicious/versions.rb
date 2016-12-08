@@ -4,7 +4,7 @@ module Jiralicious
     ##
     # Holds the version Key
     #
-    property :version_key, :from => :id
+    property :version_key, from: :id
 
     class << self
       ##
@@ -14,7 +14,7 @@ module Jiralicious
       # :details     (required)    Version details to be created
       #
       def create(details)
-        response = fetch({ :method => :post, :body => details })
+        response = fetch(method: :post, body: details)
         new(response.parsed_response)
       end
 
@@ -35,7 +35,7 @@ module Jiralicious
         if options.include?(:position)
           options[:position] = options[:position].downcase.capitalize
         end
-        fetch({ :method => :post, :key => "#{key}/move", :body => options })
+        fetch(method: :post, key: "#{key}/move", body: options)
       end
 
       ##
@@ -47,7 +47,7 @@ module Jiralicious
       # :options      (optional)     Hash of options
       #
       def remove(key, options = {})
-        fetch({ :method => :delete, :key => key, :body_to_params => true, :body => options }).parsed_response
+        fetch(method: :delete, key: key, body_to_params: true, body: options).parsed_response
       end
 
       ##
@@ -57,7 +57,7 @@ module Jiralicious
       # :id    (required)    Version to count
       #
       def related_issue_counts(id)
-        response = fetch({ :key => "#{id}/relatedIssueCounts" })
+        response = fetch(key: "#{id}/relatedIssueCounts")
         response.parsed_response["key"] = id
         Field.new(response.parsed_response)
       end
@@ -71,7 +71,7 @@ module Jiralicious
       # :details     (required)    Details of the version to be updated
       #
       def update(id, details)
-        response = fetch({ :method => :put, :key => id, :body => details })
+        response = fetch(method: :put, key: id, body: details)
         new(response.parsed_response)
       end
 
@@ -82,7 +82,7 @@ module Jiralicious
       # :id    (required)    Version to count
       #
       def unresolved_issue_count(id)
-        response = fetch({ :key => "#{id}/unresolvedIssueCount" })
+        response = fetch(key: "#{id}/unresolvedIssueCount")
         response.parsed_response["key"] = id
         Field.new(response.parsed_response)
       end

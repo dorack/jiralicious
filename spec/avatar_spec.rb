@@ -13,15 +13,15 @@ describe Jiralicious, "avatar" do
 
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/avatar/user/system",
-      :status => "200",
-      :body => avatar_list_json)
+      status: "200",
+      body: avatar_list_json)
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/avatar/user/temporary",
-      :status => "200",
-      :body => avatar_temp_json)
+      status: "200",
+      body: avatar_temp_json)
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/avatar/user/temporaryCrop",
-      :status => "200")
+      status: "200")
   end
 
   it "obtain system avatar list" do
@@ -34,15 +34,15 @@ describe Jiralicious, "avatar" do
 
   it "sends new avatar" do
     file = "#{File.dirname(__FILE__)}/fixtures/avatar_test.png"
-    avatar = Jiralicious::Avatar.temporary("user", { :filename => file, :size => 4035 })
+    avatar = Jiralicious::Avatar.temporary("user", filename: file, size: 4035)
     expect(avatar.needsCropping).to eq(true)
   end
 
   it "crops the current avatar" do
-    response = Jiralicious::Avatar.temporary_crop("user", { :cropperWidth => 120,
-       :cropperOffsetX => 50,
-       :cropperOffsety => 50,
-       :needsCropping => false })
+    response = Jiralicious::Avatar.temporary_crop("user", cropperWidth: 120,
+                                                          cropperOffsetX: 50,
+                                                          cropperOffsety: 50,
+                                                          needsCropping: false)
     expect(response.response.class).to eq(Net::HTTPOK)
   end
 end

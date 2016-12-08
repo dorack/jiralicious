@@ -15,7 +15,7 @@ module LoginHelper
     })
     FakeWeb.register_uri(:post,
       Jiralicious.uri + "/rest/auth/latest/session",
-      :body => response)
+      body: response)
   end
 end
 

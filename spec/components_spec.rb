@@ -13,24 +13,24 @@ describe Jiralicious, "Project Components Class: " do
 
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/component/",
-      :status => "200",
-      :body => component_json)
+      status: "200",
+      body: component_json)
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/component/10000",
-      :status => "200",
-      :body => component_json)
+      status: "200",
+      body: component_json)
     FakeWeb.register_uri(:delete,
       "#{Jiralicious.rest_path}/component/10000",
-      :status => "200",
-      :body => nil)
+      status: "200",
+      body: nil)
     FakeWeb.register_uri(:put,
       "#{Jiralicious.rest_path}/component/10000",
-      :status => "200",
-      :body => component_updated_json)
+      status: "200",
+      body: component_updated_json)
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/component/10000/relatedIssueCounts",
-      :status => "200",
-      :body => component_ric_json)
+      status: "200",
+      body: component_ric_json)
   end
 
   it "find a component" do
@@ -42,7 +42,7 @@ describe Jiralicious, "Project Components Class: " do
   end
 
   it "create a new component" do
-    component = Jiralicious::Component.create({ :name => "Component 1", :description => "This is a JIRA component", :leadUserName => "fred", :assigneeType => "PROJECT_LEAD", :isAssigneeTypeValid => false, :project => "DEMO" })
+    component = Jiralicious::Component.create(name: "Component 1", description: "This is a JIRA component", leadUserName: "fred", assigneeType: "PROJECT_LEAD", isAssigneeTypeValid: false, project: "DEMO")
     expect(component.component_key).to eq("10000")
     expect(component.name).to eq("Component 1")
     expect(component.lead.name).to eq("fred")
@@ -51,7 +51,7 @@ describe Jiralicious, "Project Components Class: " do
   end
 
   it "update a component" do
-    component = Jiralicious::Component.update(10000, { :name => "Component 2", :description => "This is a JIRA component. Updated Component.", :leadUserName => "fred", :assigneeType => "PROJECT_LEAD", :isAssigneeTypeValid => false, :project => "DEMO" })
+    component = Jiralicious::Component.update(10000, name: "Component 2", description: "This is a JIRA component. Updated Component.", leadUserName: "fred", assigneeType: "PROJECT_LEAD", isAssigneeTypeValid: false, project: "DEMO")
     expect(component.component_key).to eq("10000")
     expect(component.name).to eq("Component 2")
     expect(component.lead.name).to eq("fred")

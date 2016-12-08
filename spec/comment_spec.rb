@@ -13,23 +13,23 @@ describe Jiralicious, "search" do
 
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/",
-      :status => "200",
-      :body => comment_json)
+      status: "200",
+      body: comment_json)
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/",
-      :status => "201",
-      :body => comment_json)
+      status: "201",
+      body: comment_json)
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/10000",
-      :status => "200",
-      :body => comment_single_json)
+      status: "200",
+      body: comment_single_json)
     FakeWeb.register_uri(:put,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/10000",
-      :status => "200",
-      :body => comment_single_json)
+      status: "200",
+      body: comment_single_json)
     FakeWeb.register_uri(:delete,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/10000",
-      :status => "204")
+      status: "204")
   end
 
   it "finds by issue key" do
@@ -46,7 +46,7 @@ describe Jiralicious, "search" do
   end
 
   it "posts a new comment" do
-    response = Jiralicious::Issue::Comment.add({ :body => "this is a test" }, "EX-1")
+    response = Jiralicious::Issue::Comment.add({ body: "this is a test" }, "EX-1")
     expect(response.class).to eq(HTTParty::Response)
     expect(response.parsed_response["comments"][0]["id"].to_f).to be > 0
   end

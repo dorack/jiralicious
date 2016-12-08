@@ -60,7 +60,7 @@ module Jiralicious
       # :username   (required)    Must be correct username, no partials
       #
       def find(username)
-        response = fetch({ :url => "#{Jiralicious.rest_path}/#{endpoint_name}", :method => :get, :body_to_params => true, :body => { :username => username } })
+        response = fetch(url: "#{Jiralicious.rest_path}/#{endpoint_name}", method: :get, body_to_params: true, body: { username: username })
         return self.new(response.parsed_response)
       end
 
@@ -77,8 +77,8 @@ module Jiralicious
       # :maxResults (optional)    Integer
       #
       def assignable_multiProjectSearch(projectKeys, options = {})
-        options.merge!({ :projectKeys => projectKeys.upcase })
-        response = fetch({ :method => :get, :key => "assignable/multiProjectSearch", :body_to_params => true, :body => options })
+        options.merge!(projectKeys: projectKeys.upcase)
+        response = fetch(method: :get, key: "assignable/multiProjectSearch", body_to_params: true, body: options)
         return self.new(response.parsed_response)
       end
 
@@ -104,7 +104,7 @@ module Jiralicious
       def assignable_search(options = {})
         options[:project] = options[:project].upcase unless options[:project].nil?
         options[:issueKey] = options[:issueKey].upcase unless options[:issueKey].nil?
-        response = fetch({ :method => :get, :key => "assignable/search", :body_to_params => true, :body => options })
+        response = fetch(method: :get, key: "assignable/search", body_to_params: true, body: options)
         return self.new(response.parsed_response)
       end
 
@@ -121,8 +121,8 @@ module Jiralicious
       # :exclude       (optional)    Users to exclude
       #
       def picker(query, options = {})
-        options.merge!({ :query => query })
-        response = fetch({ :method => :get, :key => "picker", :body_to_params => true, :body => options })
+        options.merge!(query: query)
+        response = fetch(method: :get, key: "picker", body_to_params: true, body: options)
         return self.new(response.parsed_response)
       end
 
@@ -141,8 +141,8 @@ module Jiralicious
       # :includeInactive    (optional)    Boolean, default true
       #
       def search(username, options = {})
-        options.merge!({ :username => username })
-        response = fetch({ :method => :get, :key => "search", :body_to_params => true, :body => options })
+        options.merge!(username: username)
+        response = fetch(method: :get, key: "search", body_to_params: true, body: options)
         return self.new(response.parsed_response)
       end
     end

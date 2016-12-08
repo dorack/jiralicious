@@ -4,7 +4,7 @@ module Jiralicious
     ##
     # Holds the Component Key
     #
-    property :component_key, :from => :id
+    property :component_key, from: :id
 
     class << self
       ##
@@ -14,7 +14,7 @@ module Jiralicious
       # :details     (required)    Component details to be created
       #
       def create(details)
-        response = fetch({ :method => :post, :body => details })
+        response = fetch(method: :post, body: details)
         new(response.parsed_response)
       end
 
@@ -25,7 +25,7 @@ module Jiralicious
       # :id    (required)    Component to count
       #
       def related_issue_counts(id)
-        response = fetch({ :key => "#{id}/relatedIssueCounts" })
+        response = fetch(key: "#{id}/relatedIssueCounts")
         response.parsed_response["id"] = id
         Field.new(response.parsed_response)
       end
@@ -41,7 +41,7 @@ module Jiralicious
       def remove(remove_id, target_id = nil)
         body = {}
         body.merge!("movIssuesTo" => target_id) unless target_id.nil?
-        fetch({ :method => :delete, :key => remove_id, :body_to_params => true, :body => body }).parsed_response
+        fetch(method: :delete, key: remove_id, body_to_params: true, body: body).parsed_response
       end
 
       ##
@@ -53,7 +53,7 @@ module Jiralicious
       # :details     (required)    Details of the component to be updated
       #
       def update(id, details)
-        response = fetch({ :method => :put, :key => id, :body => details })
+        response = fetch(method: :put, key: id, body: details)
         new(response.parsed_response)
       end
     end

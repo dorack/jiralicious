@@ -16,8 +16,8 @@ describe Jiralicious, "search" do
     before :each do
       FakeWeb.register_uri(:post,
         "#{Jiralicious.rest_path}/search",
-        :status => "200",
-        :body => search_json)
+        status: "200",
+        body: search_json)
     end
 
     it "instantiates a search result" do
@@ -30,8 +30,8 @@ describe Jiralicious, "search" do
     before :each do
       FakeWeb.register_uri(:post,
         "#{Jiralicious.rest_path}/search",
-        :body => '{"errorMessages": ["error"]}',
-        :status => "400")
+        body: '{"errorMessages": ["error"]}',
+        status: "400")
     end
 
     it "raises an exception" do

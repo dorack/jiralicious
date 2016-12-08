@@ -13,21 +13,21 @@ describe Jiralicious, "Project Avatar" do
 
     FakeWeb.register_uri(:put,
       "#{Jiralicious.rest_path}/user/avatar/",
-      :status => "204")
+      status: "204")
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/user/avatar/",
-      :status => "200")
+      status: "200")
     FakeWeb.register_uri(:delete,
       "#{Jiralicious.rest_path}/user/avatar/10100?username=fred",
-      :status => "200")
+      status: "200")
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/user/avatars?username=fred",
-      :status => "200",
-      :body => avatar_list_json)
+      status: "200",
+      body: avatar_list_json)
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/user/avatar/temporary",
-      :status => "200",
-      :body => avatar_temp_json)
+      status: "200",
+      body: avatar_temp_json)
   end
 
   it "obtain user avatar list" do
@@ -40,15 +40,15 @@ describe Jiralicious, "Project Avatar" do
 
   it "sends new user avatar" do
     file = "#{File.dirname(__FILE__)}/fixtures/avatar_test.png"
-    avatar = Jiralicious::User::Avatar.temporary("fred", { :filename => file, :size => 4035 })
+    avatar = Jiralicious::User::Avatar.temporary("fred", filename: file, size: 4035)
     expect(avatar.needsCropping).to eq(true)
   end
 
   it "crops the current user avatar" do
-    response = Jiralicious::User::Avatar.post("fred", { :cropperWidth => 120,
-       :cropperOffsetX => 50,
-       :cropperOffsety => 50,
-       :needsCropping => false })
+    response = Jiralicious::User::Avatar.post("fred", cropperWidth: 120,
+                                                      cropperOffsetX: 50,
+                                                      cropperOffsety: 50,
+                                                      needsCropping: false)
     expect(response.response.class).to eq(Net::HTTPOK)
   end
 

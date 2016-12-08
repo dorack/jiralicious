@@ -55,7 +55,7 @@ module Jiralicious
       # :key         (required)    avatar type = Project or User
       #
       def system(key, options = {})
-        response = fetch({ :method => :get, :key => "#{key}/system", :body => options })
+        response = fetch(method: :get, key: "#{key}/system", body: options)
         return self.new(response.parsed_response)
       end
 
@@ -70,7 +70,7 @@ module Jiralicious
       # :size        (required)    size of the file
       #
       def temporary(key, options = {})
-        response = fetch({ :method => :post, :key => "#{key}/temporary", :body => options })
+        response = fetch(method: :post, key: "#{key}/temporary", body: options)
         return self.new(response.parsed_response)
       end
 
@@ -89,7 +89,7 @@ module Jiralicious
       # :needsCropping      (optional)    Boolean if needs cropping
       #
       def temporary_crop(key, options = {})
-        response = fetch({ :method => :post, :key => "#{key}/temporaryCrop", :body => options })
+        response = fetch(method: :post, key: "#{key}/temporaryCrop", body: options)
       end
     end
   end

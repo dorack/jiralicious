@@ -9,7 +9,7 @@ describe "performing a request" do
 
     FakeWeb.register_uri(:get,
       Jiralicious.uri + "/ok",
-      :status => "200")
+      status: "200")
   end
 
   let(:session) { Jiralicious::BasicSession.new }

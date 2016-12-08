@@ -64,8 +64,8 @@ module Jiralicious
         # :needsCropping     (optional)    boolean if it needs cropping
         #
         def post(username, options = {})
-          options.merge!({ :username => username })
-          response = fetch({ :method => :post, :parent_uri => "#{parent_name}/", :body => options })
+          options.merge!(username: username)
+          response = fetch(method: :post, parent_uri: "#{parent_name}/", body: options)
         end
 
         ##
@@ -77,8 +77,8 @@ module Jiralicious
         # :options    (optional)    not documented
         #
         def put(username, options = {})
-          options.merge!({ :username => username })
-          response = fetch({ :method => :put, :parent_uri => "#{parent_name}/", :body => options })
+          options.merge!(username: username)
+          response = fetch(method: :put, parent_uri: "#{parent_name}/", body: options)
         end
 
         ##
@@ -92,8 +92,8 @@ module Jiralicious
         # :size        (optional)    size of the file
         #
         def temporary(username, options = {})
-          options.merge!({ :username => username })
-          response = fetch({ :method => :post, :parent_uri => "#{parent_name}/", :key => "temporary", :body => options })
+          options.merge!(username: username)
+          response = fetch(method: :post, parent_uri: "#{parent_name}/", key: "temporary", body: options)
           return self.new(response.parsed_response)
         end
 
@@ -106,7 +106,7 @@ module Jiralicious
         # :id          (required)    avatar id
         #
         def remove(username, id)
-          response = fetch({ :method => :delete, :body_to_params => true, :parent_uri => "#{parent_name}/", :key => id.to_s, :body => { :username => username } })
+          response = fetch(method: :delete, body_to_params: true, parent_uri: "#{parent_name}/", key: id.to_s, body: { username: username })
         end
 
         ##
@@ -116,8 +116,8 @@ module Jiralicious
         # :username    (required)    user name
         #
         def avatars(username, options = {})
-          options.merge!({ :username => username })
-          response = fetch({ :method => :get, :body_to_params => true, :url => "#{Jiralicious.rest_path}/#{parent_name}/#{endpoint_name}s", :body => options })
+          options.merge!(username: username)
+          response = fetch(method: :get, body_to_params: true, url: "#{Jiralicious.rest_path}/#{parent_name}/#{endpoint_name}s", body: options)
           return self.new(response.parsed_response)
         end
       end

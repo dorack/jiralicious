@@ -13,14 +13,14 @@ describe Jiralicious, "search" do
 
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/issue/EX-1/watchers/",
-      :status => "200",
-      :body => watchers_json)
+      status: "200",
+      body: watchers_json)
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/issue/EX-1/watchers/",
-      :status => "204")
+      status: "204")
     FakeWeb.register_uri(:delete,
       "#{Jiralicious.rest_path}/issue/EX-1/watchers/?username=fred",
-      :status => "204")
+      status: "204")
   end
 
   it "finds by issue key" do

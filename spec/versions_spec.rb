@@ -13,28 +13,28 @@ describe Jiralicious, "Project Versions Class: " do
 
     FakeWeb.register_uri(:post,
       "#{Jiralicious.rest_path}/version/",
-      :status => "200",
-      :body => version_json)
+      status: "200",
+      body: version_json)
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/version/10000",
-      :status => "200",
-      :body => version_json)
+      status: "200",
+      body: version_json)
     FakeWeb.register_uri(:delete,
       "#{Jiralicious.rest_path}/version/10000",
-      :status => "200",
-      :body => nil)
+      status: "200",
+      body: nil)
     FakeWeb.register_uri(:put,
       "#{Jiralicious.rest_path}/version/10000",
-      :status => "200",
-      :body => version_updated_json)
+      status: "200",
+      body: version_updated_json)
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/version/10000/relatedIssueCounts",
-      :status => "200",
-      :body => version_ric_json)
+      status: "200",
+      body: version_ric_json)
     FakeWeb.register_uri(:get,
       "#{Jiralicious.rest_path}/version/10000/unresolvedIssueCount",
-      :status => "200",
-      :body => version_uic_json)
+      status: "200",
+      body: version_uic_json)
   end
 
   it "find a version" do
@@ -46,7 +46,7 @@ describe Jiralicious, "Project Versions Class: " do
   end
 
   it "create a new version" do
-    version = Jiralicious::Version.create({ :description => "An excellent version", :name => "Version 1", :archived => false, :released => true, :releaseDate => "2010-07-05", :project => "DEMO" })
+    version = Jiralicious::Version.create(description: "An excellent version", name: "Version 1", archived: false, released: true, releaseDate: "2010-07-05", project: "DEMO")
     expect(version.version_key).to eq("10000")
     expect(version.name).to eq("Version 1")
     expect(version.userReleaseDate).to eq("5/Jul/2010")
@@ -54,7 +54,7 @@ describe Jiralicious, "Project Versions Class: " do
   end
 
   it "update a version" do
-    version = Jiralicious::Version.update(10000, { :name => "Version 2", :description => "This is a JIRA version. Updated Version.", :project => "DEMO" })
+    version = Jiralicious::Version.update(10000, name: "Version 2", description: "This is a JIRA version. Updated Version.", project: "DEMO")
     expect(version.version_key).to eq("10000")
     expect(version.name).to eq("Version 2")
     expect(version.userReleaseDate).to eq("5/Jul/2010")

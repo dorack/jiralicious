@@ -30,7 +30,7 @@ module Jiralicious
         #
         def find_by_key(key)
           issueKey_test(key)
-          response = fetch({ :parent => parent_name, :parent_key => key })
+          response = fetch(parent: parent_name, parent_key: key)
           a = new(response)
           a.jira_key = key
           return a
@@ -46,7 +46,7 @@ module Jiralicious
         #
         def add(name, key)
           issueKey_test(key)
-          fetch({ :method => :post, :body => name, :body_override => true, :parent => parent_name, :parent_key => key })
+          fetch(method: :post, body: name, body_override: true, parent: parent_name, parent_key: key)
         end
 
         ##
@@ -59,7 +59,7 @@ module Jiralicious
         #
         def remove(name, key)
           issueKey_test(key)
-          fetch({ :method => :delete, :body_to_params => true, :body => { :username => name }, :parent => parent_name, :parent_key => key })
+          fetch(method: :delete, body_to_params: true, body: { username: name }, parent: parent_name, parent_key: key)
         end
       end
 

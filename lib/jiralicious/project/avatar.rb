@@ -64,7 +64,7 @@ module Jiralicious
         # :needsCropping     (optional)    boolean if it needs cropping
         #
         def post(key, options = {})
-          response = fetch({ :method => :post, :parent => true, :parent_key => key, :body => options })
+          response = fetch(method: :post, parent: true, parent_key: key, body: options)
         end
 
         ##
@@ -76,7 +76,7 @@ module Jiralicious
         # :options    (optional)    not documented
         #
         def put(key, options = {})
-          response = fetch({ :method => :put, :parent => true, :parent_key => key, :body => options })
+          response = fetch(method: :put, parent: true, parent_key: key, body: options)
         end
 
         ##
@@ -90,7 +90,7 @@ module Jiralicious
         # :size        (required)    size of the file
         #
         def temporary(key, options = {})
-          response = fetch({ :method => :post, :parent => true, :parent_key => key, :key => "temporary", :body => options })
+          response = fetch(method: :post, parent: true, parent_key: key, key: "temporary", body: options)
           return self.new(response.parsed_response)
         end
 
@@ -103,7 +103,7 @@ module Jiralicious
         # :id     (required)    avatar id
         #
         def remove(key, id)
-          response = fetch({ :method => :delete, :body_to_params => true, :parent => true, :parent_key => key, :key => id.to_s })
+          response = fetch(method: :delete, body_to_params: true, parent: true, parent_key: key, key: id.to_s)
         end
 
         ##
@@ -113,7 +113,7 @@ module Jiralicious
         # :key         (required)    project key
         #
         def avatars(key, options = {})
-          response = fetch({ :method => :get, :url => "#{Jiralicious.rest_path}/#{parent_name}/#{key}/#{endpoint_name}s/", :body_to_params => true, :body => options })
+          response = fetch(method: :get, url: "#{Jiralicious.rest_path}/#{parent_name}/#{key}/#{endpoint_name}s/", body_to_params: true, body: options)
           return self.new(response.parsed_response)
         end
       end

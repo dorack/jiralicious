@@ -49,7 +49,7 @@ module Jiralicious
         unless @fields_update["comment"].is_a? Array
           @fields_update["comment"] = []
         end
-        @fields_update["comment"].push({ "add" => { "body" => comment } })
+        @fields_update["comment"].push("add" => { "body" => comment })
       end
 
       ##

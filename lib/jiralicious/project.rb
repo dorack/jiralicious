@@ -26,7 +26,7 @@ module Jiralicious
       else
         decoded_json.each do |list|
           self.class.property :"#{list["key"]}"
-          self.merge!({ list["key"] => self.class.find(list["key"]) })
+          self.merge!(list["key"] => self.class.find(list["key"]))
         end
       end
     end
@@ -41,7 +41,7 @@ module Jiralicious
       # :key    (required)    project key
       #
       def issue_list(key)
-        response = Jiralicious.search("project=#{key}", { :fields => %w(id key) })
+        response = Jiralicious.search("project=#{key}", fields: %w(id key))
         i_out = Issue.new
         response.issues_raw.each do |issue|
           i_out.class.property :"#{issue["key"].gsub("-", "_")}"
@@ -59,7 +59,7 @@ module Jiralicious
       # :key    (required)    project key to generate components
       #
       def components(key)
-        response = fetch({ :key => "#{key}/components" })
+        response = fetch(key: "#{key}/components")
         Field.new(response.parsed_response)
       end
 
@@ -72,7 +72,7 @@ module Jiralicious
       # :expand   (optional)    expansion options.
       #
       def versions(key, expand = {})
-        response = fetch({ :key => "#{key}/versions", :body => expand })
+        response = fetch(key: "#{key}/versions", body: expand)
         Field.new(response.parsed_response)
       end
     end

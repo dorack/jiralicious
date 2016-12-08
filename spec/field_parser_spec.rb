@@ -22,7 +22,7 @@ describe Jiralicious::Parsers::FieldParser do
         "test_field_hash" => { "name" => "test_field_hash", "value" => { "it" => "is a Hash" } },
         "test_field_array" => { "name" => "test_field_array", "value" => ["Not a hash"] },
         "test_field_array_with_hash" => { "name" => "test_field_array_with_hash",
-          "value" => [{ "try" => "this" }] }
+                                          "value" => [{ "try" => "this" }] }
       }
       @parsed_class = ParserMock.new(@parsed_data)
     end

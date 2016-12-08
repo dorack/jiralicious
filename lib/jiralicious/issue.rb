@@ -8,11 +8,11 @@ module Jiralicious
   #
   class Issue < Jiralicious::Base
     # Provides access to the Jira Key field
-    property :jira_key, :from => :key
+    property :jira_key, from: :key
     # Provides access to the expand fields
     property :expand
     # Provides access to the self string
-    property :jira_self, :from => :self
+    property :jira_self, from: :self
     # Provides access to the field list
     property :fields
     # Provides access to transitions
@@ -94,7 +94,7 @@ module Jiralicious
     # information. This method is used in lazy loading methods.
     #
     def reload
-      load(self.class.find(self.jira_key, { :reload => true }).parsed_response)
+      load(self.class.find(self.jira_key, reload: true).parsed_response)
     end
 
     class << self
@@ -108,7 +108,7 @@ module Jiralicious
       #
       def assignee(name, key)
         name = { "name" => name } if name.is_a? String
-        fetch({ :method => :put, :key => "#{key}/assignee", :body => name })
+        fetch(method: :put, key: "#{key}/assignee", body: name)
       end
 
       ##
@@ -119,7 +119,7 @@ module Jiralicious
       # :issue    (required)    issue fields in hash format
       #
       def create(issue)
-        fetch({ :method => :post, :body => issue })
+        fetch(method: :post, body: issue)
       end
 
       ##
@@ -136,7 +136,7 @@ module Jiralicious
       #
       #
       def remove(key, options = {})
-        fetch({ :method => :delete, :body_to_params => true, :key => key, :body => options })
+        fetch(method: :delete, body_to_params: true, key: key, body: options)
       end
 
       ##
@@ -150,7 +150,7 @@ module Jiralicious
       # :key      (required)    issue key to update
       #
       def update(issue, key)
-        fetch({ :method => :put, :key => key, :body => issue })
+        fetch(method: :put, key: key, body: issue)
       end
 
       ##
@@ -163,7 +163,7 @@ module Jiralicious
       # :issuetypeids   (opitonal)    list of issues types for create meta
       #
       def createmeta(projectkeys, issuetypeids = nil)
-        response = fetch({ :body_to_params => true, :key => "createmeta", :body => { :expand => "projects.issuetypes.fields.", :projectKeys => projectkeys, :issuetypeIds => issuetypeids } })
+        response = fetch(body_to_params: true, key: "createmeta", body: { expand: "projects.issuetypes.fields.", projectKeys: projectkeys, issuetypeIds: issuetypeids })
         return Field.new(response.parsed_response)
       end
 
@@ -175,7 +175,7 @@ module Jiralicious
       # :key    (required)    issue key
       #
       def editmeta(key)
-        response = fetch({ :key => "#{key}/editmeta" })
+        response = fetch(key: "#{key}/editmeta")
         response.parsed_response["key"] = key
         Field.new(response.parsed_response)
       end
@@ -187,7 +187,7 @@ module Jiralicious
       # :transitions_url    (required)    full URL
       #
       def get_transitions(transitions_url)
-        Jiralicious.session.request(:get, transitions_url, :handler => handler)
+        Jiralicious.session.request(:get, transitions_url, handler: handler)
       end
 
       ##
@@ -200,8 +200,8 @@ module Jiralicious
       #
       def transition(transitions_url, data)
         Jiralicious.session.request(:post, transitions_url,
-          :handler => handler,
-          :body => data.to_json)
+          handler: handler,
+          body: data.to_json)
       end
     end
 
@@ -262,7 +262,7 @@ module Jiralicious
     # Saves the current Issue and reloads to ensure it is upto date.
     #
     def save!
-      load(self.class.find(save, { :reload => true }).parsed_response)
+      load(self.class.find(save, reload: true).parsed_response)
     end
   end
 end

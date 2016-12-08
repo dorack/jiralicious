@@ -17,7 +17,7 @@ module Jiralicious
     # the gem.
     #
     def after_request(response)
-      @response = HTTParty::Response.new(self, response, lambda { HTTParty::Parser.new(response.body, Jiralicious::Session.format).parse }, :body => response.body)
+      @response = HTTParty::Response.new(self, response, lambda { HTTParty::Parser.new(response.body, Jiralicious::Session.format).parse }, body: response.body)
     end
 
     ##
@@ -27,11 +27,11 @@ module Jiralicious
     #
     def initialize(token = nil, secret = nil)
       self.option = {
-        :signature_method => "RSA-SHA1",
-        :request_token_path => "/plugins/servlet/oauth/request-token",
-        :authorize_path => "/plugins/servlet/oauth/authorize",
-        :access_token_path => "/plugins/servlet/oauth/access-token",
-        :site => "http://rome:8080"
+        signature_method: "RSA-SHA1",
+        request_token_path: "/plugins/servlet/oauth/request-token",
+        authorize_path: "/plugins/servlet/oauth/authorize",
+        access_token_path: "/plugins/servlet/oauth/access-token",
+        site: "http://rome:8080"
       }
       if token.nil? || secret.nil?
         consumer = OAuth::Consumer.new(Jiralicious.oauth_consumer_key, OpenSSL::PKey::RSA.new(get_secret, Jiralicious.oauth_pass_phrase.to_s), self.option)
@@ -45,14 +45,14 @@ module Jiralicious
         a = {}
         bsb.xpath("//input").each do |input|
           if input.get_attribute("name") != "deny" && !input.get_attribute("name").nil?
-            a.merge!({ input.get_attribute("name").to_sym => input.get_attribute("value") })
+            a.merge!(input.get_attribute("name").to_sym => input.get_attribute("value"))
           end
         end
         urip = "#{request_token.authorize_url.split('?')[0]}?#{build_body(a)}"
         bsr = bs.request(bsb.xpath("//form")[0].get_attribute("method").downcase.to_sym, urip)
         ## Parse response for access ##
         bss = bsr.message.split("&#39;") # brute force method don't know a better way to do this
-        crt = request_token.consumer.token_request(request_token.consumer.http_method, (request_token.consumer.access_token_url? ? request_token.consumer.access_token_url : request_token.consumer.access_token_path), request_token, { :oauth_verifier => bss[3] })
+        crt = request_token.consumer.token_request(request_token.consumer.http_method, (request_token.consumer.access_token_url? ? request_token.consumer.access_token_url : request_token.consumer.access_token_path), request_token, oauth_verifier: bss[3])
         super(request_token.consumer, crt[:oauth_token], crt[:oauth_token_secret])
         self.params = crt
       else

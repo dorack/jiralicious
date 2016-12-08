@@ -42,7 +42,7 @@ module Jiralicious
         if response.code == 200
           @session = response["session"]
           @login_info = response["loginInfo"]
-          self.class.cookies({ self.session["name"] => self.session["value"] })
+          self.class.cookies(self.session["name"] => self.session["value"])
         else
           clear_session
           case response.code
@@ -58,9 +58,9 @@ module Jiralicious
       end
 
       self.request(:post, "/rest/auth/latest/session",
-        :body => { :username => Jiralicious.username,
-          :password => Jiralicious.password }.to_json,
-        :handler => handler)
+        body: { username: Jiralicious.username,
+                password: Jiralicious.password }.to_json,
+        handler: handler)
     end
 
     # Logs out of the API
@@ -79,7 +79,7 @@ module Jiralicious
         end
       end
 
-      request(:delete, "/rest/auth/latest/session", :handler => handler)
+      request(:delete, "/rest/auth/latest/session", handler: handler)
     end
 
     private
