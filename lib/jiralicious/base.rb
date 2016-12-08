@@ -12,6 +12,14 @@ module Jiralicious
     include Jiralicious::Parsers::FieldParser
 
     ##
+    #
+    # Includes IndifferentAccess for Hashie::Dash and Trash
+    # This maintains backwards compatability when updating Hashie >= 2.2
+    # See https://github.com/intridea/hashie/blob/master/UPGRADING.md
+    #
+    include Hashie::Extensions::Dash::IndifferentAccess
+
+    ##
     # Used to identify if the class has been loaded
     #
     attr_accessor :loaded
