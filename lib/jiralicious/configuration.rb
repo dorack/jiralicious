@@ -85,15 +85,15 @@ module Jiralicious
     def load_yml(yml_file, mode = nil)
       if File.exist?(yml_file)
         yml_cfg = OpenStruct.new(YAML.load_file(yml_file))
-      if mode.nil? || mode =~ /production/i
-        yml_cfg.jira.each do |k, v|
-          instance_variable_set("@#{k}", v)
+        if mode.nil? || mode =~ /production/i
+          yml_cfg.jira.each do |k, v|
+            instance_variable_set("@#{k}", v)
+          end
+        else
+          yml_cfg.send(mode).each do |k, v|
+            instance_variable_set("@#{k}", v)
+          end
         end
-      else
-        yml_cfg.send(mode).each do |k, v|
-        instance_variable_set("@#{k}", v)
-      end
-    end
       else
         reset
       end
