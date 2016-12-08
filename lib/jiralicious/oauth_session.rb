@@ -17,7 +17,7 @@ module Jiralicious
     # the gem.
     #
     def after_request(response)
-      @response = HTTParty::Response.new(self, response, lambda { HTTParty::Parser.new(response.body, Jiralicious::Session.format).parse }, body: response.body)
+      @response = HTTParty::Response.new(self, response, -> { HTTParty::Parser.new(response.body, Jiralicious::Session.format).parse }, body: response.body)
     end
 
     ##

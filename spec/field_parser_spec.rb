@@ -28,7 +28,7 @@ describe Jiralicious::Parsers::FieldParser do
     end
 
     it "raises an error when a hash is not passed in" do
-      expect(lambda { ParserMock.new }).to raise_error(ArgumentError)
+      expect(-> { ParserMock.new }).to raise_error(ArgumentError)
     end
 
     it "creates a hash to store data from the fields internally" do
