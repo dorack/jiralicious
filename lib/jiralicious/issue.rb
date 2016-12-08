@@ -199,9 +199,11 @@ module Jiralicious
       # :data               (required)    data for the transition
       #
       def transition(transitions_url, data)
-        Jiralicious.session.request(:post, transitions_url,
+        Jiralicious.session.request(
+          :post, transitions_url,
           handler: handler,
-          body: data.to_json)
+          body: data.to_json
+        )
       end
     end
 

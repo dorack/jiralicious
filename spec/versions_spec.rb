@@ -11,30 +11,42 @@ describe Jiralicious, "Project Versions Class: " do
       config.api_version = "latest"
     end
 
-    FakeWeb.register_uri(:post,
+    FakeWeb.register_uri(
+      :post,
       "#{Jiralicious.rest_path}/version/",
       status: "200",
-      body: version_json)
-    FakeWeb.register_uri(:get,
+      body: version_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/version/10000",
       status: "200",
-      body: version_json)
-    FakeWeb.register_uri(:delete,
+      body: version_json
+    )
+    FakeWeb.register_uri(
+      :delete,
       "#{Jiralicious.rest_path}/version/10000",
       status: "200",
-      body: nil)
-    FakeWeb.register_uri(:put,
+      body: nil
+    )
+    FakeWeb.register_uri(
+      :put,
       "#{Jiralicious.rest_path}/version/10000",
       status: "200",
-      body: version_updated_json)
-    FakeWeb.register_uri(:get,
+      body: version_updated_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/version/10000/relatedIssueCounts",
       status: "200",
-      body: version_ric_json)
-    FakeWeb.register_uri(:get,
+      body: version_ric_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/version/10000/unresolvedIssueCount",
       status: "200",
-      body: version_uic_json)
+      body: version_uic_json
+    )
   end
 
   it "find a version" do

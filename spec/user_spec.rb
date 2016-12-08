@@ -11,26 +11,36 @@ describe Jiralicious::User, "finding" do
       config.api_version = "latest"
     end
 
-    FakeWeb.register_uri(:get,
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/user?username=test_user",
       status: "200",
-      body: user_json)
-    FakeWeb.register_uri(:get,
+      body: user_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/user/search?username=test_user",
       status: "200",
-      body: user_array_json)
-    FakeWeb.register_uri(:get,
+      body: user_array_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/user/assignable/multiProjectSearch?projectKeys=EX",
       status: "200",
-      body: user_array_json)
-    FakeWeb.register_uri(:get,
+      body: user_array_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/user/assignable/search?project=EX",
       status: "200",
-      body: user_array_json)
-    FakeWeb.register_uri(:get,
+      body: user_array_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/user/picker?query=user",
       status: "200",
-      body: user_picker_json)
+      body: user_picker_json
+    )
   end
 
   it "by username" do

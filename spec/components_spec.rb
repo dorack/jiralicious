@@ -11,26 +11,36 @@ describe Jiralicious, "Project Components Class: " do
       config.api_version = "latest"
     end
 
-    FakeWeb.register_uri(:post,
+    FakeWeb.register_uri(
+      :post,
       "#{Jiralicious.rest_path}/component/",
       status: "200",
-      body: component_json)
-    FakeWeb.register_uri(:get,
+      body: component_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/component/10000",
       status: "200",
-      body: component_json)
-    FakeWeb.register_uri(:delete,
+      body: component_json
+    )
+    FakeWeb.register_uri(
+      :delete,
       "#{Jiralicious.rest_path}/component/10000",
       status: "200",
-      body: nil)
-    FakeWeb.register_uri(:put,
+      body: nil
+    )
+    FakeWeb.register_uri(
+      :put,
       "#{Jiralicious.rest_path}/component/10000",
       status: "200",
-      body: component_updated_json)
-    FakeWeb.register_uri(:get,
+      body: component_updated_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/component/10000/relatedIssueCounts",
       status: "200",
-      body: component_ric_json)
+      body: component_ric_json
+    )
   end
 
   it "find a component" do

@@ -11,25 +11,35 @@ describe Jiralicious, "search" do
       config.api_version = "latest"
     end
 
-    FakeWeb.register_uri(:get,
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/",
       status: "200",
-      body: comment_json)
-    FakeWeb.register_uri(:post,
+      body: comment_json
+    )
+    FakeWeb.register_uri(
+      :post,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/",
       status: "201",
-      body: comment_json)
-    FakeWeb.register_uri(:get,
+      body: comment_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/10000",
       status: "200",
-      body: comment_single_json)
-    FakeWeb.register_uri(:put,
+      body: comment_single_json
+    )
+    FakeWeb.register_uri(
+      :put,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/10000",
       status: "200",
-      body: comment_single_json)
-    FakeWeb.register_uri(:delete,
+      body: comment_single_json
+    )
+    FakeWeb.register_uri(
+      :delete,
       "#{Jiralicious.rest_path}/issue/EX-1/comment/10000",
-      status: "204")
+      status: "204"
+    )
   end
 
   it "finds by issue key" do

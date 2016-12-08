@@ -11,30 +11,42 @@ describe Jiralicious, "Project Management Class: " do
       config.api_version = "latest"
     end
 
-    FakeWeb.register_uri(:get,
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/project/",
       status: "200",
-      body: projects_json)
-    FakeWeb.register_uri(:get,
+      body: projects_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/project/EX",
       status: "200",
-      body: project_json)
-    FakeWeb.register_uri(:get,
+      body: project_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/project/EX/components",
       status: "200",
-      body: project_componets_json)
-    FakeWeb.register_uri(:get,
+      body: project_componets_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/project/EX/versions",
       status: "200",
-      body: project_versions_json)
-    FakeWeb.register_uri(:get,
+      body: project_versions_json
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/project/ABC",
       status: "200",
-      body: project_json)
-    FakeWeb.register_uri(:post,
+      body: project_json
+    )
+    FakeWeb.register_uri(
+      :post,
       "#{Jiralicious.rest_path}/search",
       status: "200",
-      body: project_issue_list_json)
+      body: project_issue_list_json
+    )
   end
 
   it "finds all projects" do

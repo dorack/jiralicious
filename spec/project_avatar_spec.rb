@@ -11,23 +11,33 @@ describe Jiralicious, "Project Avatar" do
       config.api_version = "latest"
     end
 
-    FakeWeb.register_uri(:put,
+    FakeWeb.register_uri(
+      :put,
       "#{Jiralicious.rest_path}/project/EX/avatar/",
-      status: "204")
-    FakeWeb.register_uri(:post,
+      status: "204"
+    )
+    FakeWeb.register_uri(
+      :post,
       "#{Jiralicious.rest_path}/project/EX/avatar/",
-      status: "200")
-    FakeWeb.register_uri(:delete,
+      status: "200"
+    )
+    FakeWeb.register_uri(
+      :delete,
       "#{Jiralicious.rest_path}/project/EX/avatar/10100",
-      status: "200")
-    FakeWeb.register_uri(:get,
+      status: "200"
+    )
+    FakeWeb.register_uri(
+      :get,
       "#{Jiralicious.rest_path}/project/EX/avatars/",
       status: "200",
-      body: avatar_list_json)
-    FakeWeb.register_uri(:post,
+      body: avatar_list_json
+    )
+    FakeWeb.register_uri(
+      :post,
       "#{Jiralicious.rest_path}/project/EX/avatar/temporary",
       status: "200",
-      body: avatar_temp_json)
+      body: avatar_temp_json
+    )
   end
 
   it "obtain project avatar list" do

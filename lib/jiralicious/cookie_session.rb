@@ -57,10 +57,14 @@ module Jiralicious
         end
       end
 
-      self.request(:post, "/rest/auth/latest/session",
-        body: { username: Jiralicious.username,
-                password: Jiralicious.password }.to_json,
-        handler: handler)
+      self.request(
+        :post, "/rest/auth/latest/session",
+        body: {
+          username: Jiralicious.username,
+          password: Jiralicious.password
+        }.to_json,
+        handler: handler
+      )
     end
 
     # Logs out of the API

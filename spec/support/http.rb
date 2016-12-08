@@ -13,9 +13,11 @@ module LoginHelper
         "previousLoginTime": "2011-07-25T06:31:07.556-0500"
       }
     })
-    FakeWeb.register_uri(:post,
+    FakeWeb.register_uri(
+      :post,
       Jiralicious.uri + "/rest/auth/latest/session",
-      body: response)
+      body: response
+    )
   end
 end
 
