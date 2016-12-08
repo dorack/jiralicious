@@ -24,8 +24,7 @@ module Jiralicious
     def after_request(response)
       unless @authenticating
         if captcha_required(response)
-          raise Jiralicious::CaptchaRequired
-            .new("Captacha is required. Try logging into Jira via the web interface")
+          raise Jiralicious::CaptchaRequired, "Captacha is required. Try logging into Jira via the web interface"
         elsif cookie_invalid(response)
           # Can usually be fixed by logging in again
           clear_session
@@ -47,12 +46,12 @@ module Jiralicious
           clear_session
           case response.code
           when 401 then
-            raise Jiralicious::InvalidLogin.new("Invalid login")
+            raise Jiralicious::InvalidLogin, "Invalid login"
           when 403
-            raise Jiralicious::CaptchaRequired.new("Captacha is required. Try logging into Jira via the web interface")
+            raise Jiralicious::CaptchaRequired, "Captacha is required. Try logging into Jira via the web interface"
           else
             # Give Net::HTTP reason
-            raise Jiralicious::JiraError.new(response)
+            raise Jiralicious::JiraError, response
           end
         end
       end
@@ -75,10 +74,10 @@ module Jiralicious
         else
           case response.code
           when 401 then
-            raise Jiralicious::NotLoggedIn.new("Not logged in")
+            raise Jiralicious::NotLoggedIn, "Not logged in"
           else
             # Give Net::HTTP reason
-            raise Jiralicious::JiraError.new(response)
+            raise Jiralicious::JiraError, response
           end
         end
       end

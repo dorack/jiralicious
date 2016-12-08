@@ -30,7 +30,7 @@ module Jiralicious
       if response.code == 200 # rubocop:disable Style/GuardClause
         Jiralicious::SearchResult.new(response)
       else
-        raise Jiralicious::JqlError.new(response["errorMessages"].join('\n'))
+        raise Jiralicious::JqlError, response["errorMessages"].join('\n')
       end
     end
 

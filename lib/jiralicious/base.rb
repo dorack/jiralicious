@@ -129,11 +129,11 @@ module Jiralicious
           when 200..204
             response
           when 400
-            raise Jiralicious::TransitionError.new(response.inspect)
+            raise Jiralicious::TransitionError, response.inspect
           when 404
-            raise Jiralicious::IssueNotFound.new(response.inspect)
+            raise Jiralicious::IssueNotFound, response.inspect
           else
-            raise Jiralicious::JiraError.new(response.inspect)
+            raise Jiralicious::JiraError, response.inspect
           end
         end
       end
@@ -144,7 +144,7 @@ module Jiralicious
       #
       def issueKey_test(key, no_throw = false)
         if key.nil? || !(/^[A-Z]+-[0-9]+$/i =~ key)
-          raise Jiralicious::JiraError.new("The key #{key} is invalid") unless no_throw
+          raise Jiralicious::JiraError, "The key #{key} is invalid" unless no_throw
           return false
         end
         true
