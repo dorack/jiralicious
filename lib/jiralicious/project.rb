@@ -44,10 +44,10 @@ module Jiralicious
         response = Jiralicious.search("project=#{key}", fields: %w(id key))
         i_out = Issue.new
         response.issues_raw.each do |issue|
-          i_out.class.property :"#{issue["key"].gsub("-", "_")}"
+          i_out.class.property :"#{issue["key"].tr("-", "_")}"
           t = Issue.new
           t.load(issue, true)
-          i_out[issue["key"].gsub("-", "_")] = t
+          i_out[issue["key"].tr("-", "_")] = t
         end
         i_out
       end
