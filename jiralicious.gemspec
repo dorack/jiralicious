@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'oauth'
   if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.1.0')
     s.add_runtime_dependency 'nokogiri'
-  elsif Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('1.9.0')
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('1.9.0')
     s.add_runtime_dependency 'nokogiri', '< 1.7'
   else
     s.add_runtime_dependency 'nokogiri', '< 1.6'
