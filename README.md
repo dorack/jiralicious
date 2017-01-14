@@ -40,6 +40,12 @@ Finding a single issue:
 
 Default auth type is now Basic auth. Cookie auth will be deprecated in the next version.
 
+## Changes in 0.6.0
+* Now requires Ruby 2.X no longer supports ruby 1.x versions
+* Integrated Rubocop for syntax validation
+* Addid support for alphanumeric values in project/issue keys
+* Corrected typoes in several locations
+
 ## Changes in 0.5.0
 * Added restriction for Hashie to not use version 3.0.0 and above
 * Added Component class and included all API functionality
@@ -83,6 +89,9 @@ Default auth type is now Basic auth. Cookie auth will be deprecated in the next 
 * Mike Fiedler (miketheman)
 * Girish Sonawane (girishso)
 * Jan Lindblom (janlindblom)
+* Grant Ridder (shortdudey123)
+* Stephen Eckenrode (seckenrode)
+* Nikolay Vashchenko (NickolasVashchenko)
 
 ## Contributing to jiralicious
 
