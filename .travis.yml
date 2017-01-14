@@ -4,14 +4,7 @@ rvm:
   - 2.2.6
   - 2.1.9
   - 2.0.0
-  - 1.9.3
-  - 1.9.2
-  - 1.8.7
-
-gemfile:
-  - gemfiles/oldest.gemfile
-  - gemfiles/newest.gemfile
-
+  
 # Travis CI has an outdated version of bundler on older versions of ruby.
 # See bundler/bundler#3558 for more information
 before_install:
