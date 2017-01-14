@@ -152,7 +152,7 @@ module Jiralicious
       #
       def issueKey_test(key, no_throw = false)
         if key.nil? || !(/^[A-Z][A-Z0-9_]*-[0-9]+$/i =~ key)
-          raise Jiralicious::JiraError.new("The key #{key} is invalid") unless no_throw
+          raise Jiralicious::JiraError, "The key #{key} is invalid" unless no_throw
           return false
         end
         true
