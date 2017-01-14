@@ -5,7 +5,6 @@ module Jiralicious
   # managing Projects within Jira through the Rest API.
   #
   class Project < Jiralicious::Base
-
     # Contains the Fields Class
     attr_accessor :components
     # Contains the Fields Class
@@ -26,8 +25,8 @@ module Jiralicious
         @loaded = true
       else
         decoded_json.each do |list|
-          self.class.property :"#{list['key']}"
-          self.merge!({list['key'] => self.class.find(list['key'])})
+          self.class.property :"#{list["key"]}"
+          merge!(list["key"] => self.class.find(list["key"]))
         end
       end
     end
@@ -42,13 +41,13 @@ module Jiralicious
       # :key    (required)    project key
       #
       def issue_list(key)
-        response = Jiralicious.search("project=#{key}", {:fields => ["id", "key"]})
+        response = Jiralicious.search("project=#{key}", fields: %w(id key))
         i_out = Issue.new
         response.issues_raw.each do |issue|
-          i_out.class.property :"#{issue["key"].gsub("-", "_")}"
+          i_out.class.property :"#{issue["key"].tr("-", "_")}"
           t = Issue.new
           t.load(issue, true)
-          i_out[issue["key"].gsub("-", "_")] = t
+          i_out[issue["key"].tr("-", "_")] = t
         end
         i_out
       end
@@ -60,7 +59,7 @@ module Jiralicious
       # :key    (required)    project key to generate components
       #
       def components(key)
-        response = fetch({:key => "#{key}/components"})
+        response = fetch(key: "#{key}/components")
         Field.new(response.parsed_response)
       end
 
@@ -73,7 +72,7 @@ module Jiralicious
       # :expand   (optional)    expansion options.
       #
       def versions(key, expand = {})
-        response = fetch({:key => "#{key}/versions", :body => expand})
+        response = fetch(key: "#{key}/versions", body: expand)
         Field.new(response.parsed_response)
       end
     end
@@ -84,19 +83,15 @@ module Jiralicious
     #
     attr_accessor :issues
     def issues
-      if @issues == nil
-        @issues = self.class.issue_list(self.key)
-      end
-      return @issues
+      @issues = self.class.issue_list(key) if @issues.nil?
+      @issues
     end
 
     ##
     # Retrieves the components associated with the project
     #
     def components
-      if @components.nil?
-        @components = self.class.components(self.key)
-      end
+      @components = self.class.components(key) if @components.nil?
       @components
     end
 
@@ -108,7 +103,7 @@ module Jiralicious
     #
     def versions(expand = {})
       if @versions.nil? || !expand.empty?
-        @versions = self.class.versions(self.key, expand)
+        @versions = self.class.versions(key, expand)
       end
       @versions
     end

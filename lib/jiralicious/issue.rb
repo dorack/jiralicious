@@ -7,13 +7,12 @@ module Jiralicious
   # several different aspects of managing the issues.
   #
   class Issue < Jiralicious::Base
-
     # Provides access to the Jira Key field
-    property :jira_key, :from  => :key
+    property :jira_key, from: :key
     # Provides access to the expand fields
     property :expand
     # Provides access to the self string
-    property :jira_self, :from => :self
+    property :jira_self, from: :self
     # Provides access to the field list
     property :fields
     # Provides access to transitions
@@ -41,18 +40,18 @@ module Jiralicious
     #
     def initialize(decoded_json = nil, default = nil)
       @loaded = false
-      if (!decoded_json.nil?)
-        if !decoded_json.include? 'fields'
-          decoded_json = {'fields' => decoded_json}
+      unless decoded_json.nil?
+        unless decoded_json.include? "fields"
+          decoded_json = { "fields" => decoded_json }
         end
         super(decoded_json)
         parse!(decoded_json["fields"])
         if default.nil?
-          @fields = Fields.new(self['fields']) if self['fields']
-          if self.jira_key
-            @comments = Comment.find_by_key(self.jira_key)
-            @watchers = Watchers.find_by_key(self.jira_key)
-            @transitions = Transitions.new(self.jira_key)
+          @fields = Fields.new(self["fields"]) if self["fields"]
+          if jira_key
+            @comments = Comment.find_by_key(jira_key)
+            @watchers = Watchers.find_by_key(jira_key)
+            @transitions = Transitions.new(jira_key)
             @loaded = true
           end
         end
@@ -76,26 +75,26 @@ module Jiralicious
     # :default         (optional)    set to not load subclasses
     #
     def load(decoded_hash, default = nil)
-      decoded_hash.each do |k,v|
+      decoded_hash.each do |k, v|
         self[:"#{k}"] = v
       end
       if default.nil?
-        parse!(self['fields'])
-        @fields = Fields.new(self['fields']) if self['fields']
-        @comments = Comment.find_by_key(self.jira_key) if self.jira_key
-        @watchers = Watchers.find_by_key(self.jira_key) if self.jira_key
-        @loaded = true if self.jira_key
+        parse!(self["fields"])
+        @fields = Fields.new(self["fields"]) if self["fields"]
+        @comments = Comment.find_by_key(jira_key) if jira_key
+        @watchers = Watchers.find_by_key(jira_key) if jira_key
+        @loaded = true if jira_key
       else
         parse!(decoded_hash)
       end
     end
-	
+
     ##
     # Forces the Jira Issue to reload with current or updated
     # information. This method is used in lazy loading methods.
     #
     def reload
-      load(self.class.find(self.jira_key, {:reload => true}).parsed_response)
+      load(self.class.find(jira_key, reload: true).parsed_response)
     end
 
     class << self
@@ -108,8 +107,8 @@ module Jiralicious
       # :key     (required)    issue key
       #
       def assignee(name, key)
-        name = {"name" => name} if name.is_a? String
-        fetch({:method => :put, :key => "#{key}/assignee", :body => name})
+        name = { "name" => name } if name.is_a? String
+        fetch(method: :put, key: "#{key}/assignee", body: name)
       end
 
       ##
@@ -120,7 +119,7 @@ module Jiralicious
       # :issue    (required)    issue fields in hash format
       #
       def create(issue)
-        fetch({:method => :post, :body => issue})
+        fetch(method: :post, body: issue)
       end
 
       ##
@@ -137,7 +136,7 @@ module Jiralicious
       #
       #
       def remove(key, options = {})
-        fetch({:method => :delete, :body_to_params => true, :key => key, :body => options})
+        fetch(method: :delete, body_to_params: true, key: key, body: options)
       end
 
       ##
@@ -151,7 +150,7 @@ module Jiralicious
       # :key      (required)    issue key to update
       #
       def update(issue, key)
-        fetch({:method => :put, :key => key, :body => issue})
+        fetch(method: :put, key: key, body: issue)
       end
 
       ##
@@ -164,8 +163,8 @@ module Jiralicious
       # :issuetypeids   (opitonal)    list of issues types for create meta
       #
       def createmeta(projectkeys, issuetypeids = nil)
-        response = fetch({:body_to_params => true, :key => "createmeta", :body => {:expand => "projects.issuetypes.fields.", :projectKeys => projectkeys, :issuetypeIds => issuetypeids}})
-        return Field.new(response.parsed_response)
+        response = fetch(body_to_params: true, key: "createmeta", body: { expand: "projects.issuetypes.fields.", projectKeys: projectkeys, issuetypeIds: issuetypeids })
+        Field.new(response.parsed_response)
       end
 
       ##
@@ -176,7 +175,7 @@ module Jiralicious
       # :key    (required)    issue key
       #
       def editmeta(key)
-        response = fetch({:key => "#{key}/editmeta"})
+        response = fetch(key: "#{key}/editmeta")
         response.parsed_response["key"] = key
         Field.new(response.parsed_response)
       end
@@ -188,7 +187,7 @@ module Jiralicious
       # :transitions_url    (required)    full URL
       #
       def get_transitions(transitions_url)
-        Jiralicious.session.request(:get, transitions_url, :handler => handler)
+        Jiralicious.session.request(:get, transitions_url, handler: handler)
       end
 
       ##
@@ -200,9 +199,11 @@ module Jiralicious
       # :data               (required)    data for the transition
       #
       def transition(transitions_url, data)
-        Jiralicious.session.request(:post, transitions_url,
-          :handler => handler,
-          :body => data.to_json)
+        Jiralicious.session.request(
+          :post, transitions_url,
+          handler: handler,
+          body: data.to_json
+        )
       end
     end
 
@@ -213,7 +214,7 @@ module Jiralicious
     # :name    (required)    name of assignee
     #
     def set_assignee(name)
-      self.class.assignee(name, self.jira_key)
+      self.class.assignee(name, jira_key)
     end
 
     ##
@@ -223,7 +224,7 @@ module Jiralicious
     # :options    (optional)    passed on
     #
     def remove(options = {})
-      self.class.remove(self.jira_key, options)
+      self.class.remove(jira_key, options)
     end
 
     ##
@@ -232,7 +233,7 @@ module Jiralicious
     #
     def createmeta
       if @createmeta.nil?
-        @createmeta = self.class.createmeta(self.jira_key.split("-")[0])
+        @createmeta = self.class.createmeta(jira_key.split("-")[0])
       end
       @createmeta
     end
@@ -242,9 +243,7 @@ module Jiralicious
     # to validate or filter create requests to minimize errors.
     #
     def editmeta
-      if @editmeta.nil?
-        @editmeta = self.class.editmeta(self.jira_key)
-      end
+      @editmeta = self.class.editmeta(jira_key) if @editmeta.nil?
       @editmeta
     end
 
@@ -253,19 +252,19 @@ module Jiralicious
     #
     def save
       if loaded?
-        self.class.update(@fields.format_for_update, self.jira_key)
+        self.class.update(@fields.format_for_update, jira_key)
       else
         response = self.class.create(@fields.format_for_create)
-        self.jira_key = response.parsed_response['key']
+        self.jira_key = response.parsed_response["key"]
       end
-      return self.jira_key
+      jira_key
     end
 
     ##
     # Saves the current Issue and reloads to ensure it is upto date.
     #
     def save!
-      load(self.class.find(save, {:reload => true}).parsed_response)
+      load(self.class.find(save, reload: true).parsed_response)
     end
   end
 end

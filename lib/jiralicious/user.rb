@@ -6,7 +6,6 @@ module Jiralicious
   # API.
   #
   class User < Jiralicious::Base
-
     ##
     # Initialization Method
     #
@@ -15,40 +14,37 @@ module Jiralicious
     #
     def initialize(decoded_json = nil)
       @loaded = false
-	  if !decoded_json.nil?
-        if decoded_json.is_a? Hash
-          decoded_json = properties_from_hash(decoded_json)
-          super(decoded_json)
-          parse!(decoded_json)
-          self.each do |k, v|
-            if v.is_a? Hash
-              self[k] = self.class.new(v)
-            elsif v.is_a? Array
-              v.each_index do |i|
-                if v[i].is_a? Hash
-                  v[i] = self.class.new(v[i])
-                end
-              end
-              self[k] = v
+      return if decoded_json.nil?
+      if decoded_json.is_a? Hash
+        decoded_json = properties_from_hash(decoded_json)
+        super(decoded_json)
+        parse!(decoded_json)
+        each do |k, v|
+          if v.is_a? Hash
+            self[k] = self.class.new(v)
+          elsif v.is_a? Array
+            v.each_index do |i|
+              v[i] = self.class.new(v[i]) if v[i].is_a? Hash
             end
+            self[k] = v
           end
-          @loaded = true
-        else
-          i = 0;
-          decoded_json.each do |list|
-            if !list['id'].nil?
-              if numeric? list['id']
-                id =  :"id_#{list['id']}"
-              else
-                id = :"#{list['id']}"
-              end
-            else
-              id = :"_#{i}"
-              i += 1
-            end
-            self.class.property id
-            self[id] = self.class.new(list)
+        end
+        @loaded = true
+      else
+        i = 0
+        decoded_json.each do |list|
+          if !list["id"].nil?
+            id = if numeric? list["id"]
+                   :"id_#{list["id"]}"
+                 else
+                   :"#{list["id"]}"
+                 end
+          else
+            id = :"_#{i}"
+            i += 1
           end
+          self.class.property id
+          self[id] = self.class.new(list)
         end
       end
     end
@@ -64,8 +60,8 @@ module Jiralicious
       # :username   (required)    Must be correct username, no partials
       #
       def find(username)
-        response = fetch({:url => "#{Jiralicious.rest_path}/#{endpoint_name}", :method => :get, :body_to_params => true, :body => {:username => username}})
-        return self.new(response.parsed_response)
+        response = fetch(url: "#{Jiralicious.rest_path}/#{endpoint_name}", method: :get, body_to_params: true, body: { username: username })
+        new(response.parsed_response)
       end
 
       ##
@@ -80,10 +76,10 @@ module Jiralicious
       #
       # :maxResults (optional)    Integer
       #
-      def assignable_multiProjectSearch(projectKeys, options = {})
-        options.merge!({:projectKeys=>projectKeys.upcase})
-        response = fetch({:method => :get, :key => "assignable/multiProjectSearch", :body_to_params => true, :body => options})
-        return self.new(response.parsed_response)
+      def assignable_multiProjectSearch(project_keys, options = {})
+        options[:projectKeys] = project_keys.upcase
+        response = fetch(method: :get, key: "assignable/multiProjectSearch", body_to_params: true, body: options)
+        new(response.parsed_response)
       end
 
       ##
@@ -108,8 +104,8 @@ module Jiralicious
       def assignable_search(options = {})
         options[:project] = options[:project].upcase unless options[:project].nil?
         options[:issueKey] = options[:issueKey].upcase unless options[:issueKey].nil?
-        response = fetch({:method => :get, :key => "assignable/search", :body_to_params => true, :body => options})
-        return self.new(response.parsed_response)
+        response = fetch(method: :get, key: "assignable/search", body_to_params: true, body: options)
+        new(response.parsed_response)
       end
 
       ##
@@ -124,10 +120,10 @@ module Jiralicious
       #
       # :exclude       (optional)    Users to exclude
       #
-      def picker(query, options ={})
-        options.merge!({:query => query})
-        response = fetch({:method => :get, :key => "picker", :body_to_params => true, :body => options})
-        return self.new(response.parsed_response)
+      def picker(query, options = {})
+        options[:query] = query
+        response = fetch(method: :get, key: "picker", body_to_params: true, body: options)
+        new(response.parsed_response)
       end
 
       ##
@@ -144,10 +140,10 @@ module Jiralicious
       #
       # :includeInactive    (optional)    Boolean, default true
       #
-      def search(username, options ={})
-        options.merge!({:username => username})
-        response = fetch({:method => :get, :key => "search", :body_to_params => true, :body => options})
-        return self.new(response.parsed_response)
+      def search(username, options = {})
+        options[:username] = username
+        response = fetch(method: :get, key: "search", body_to_params: true, body: options)
+        new(response.parsed_response)
       end
     end
   end

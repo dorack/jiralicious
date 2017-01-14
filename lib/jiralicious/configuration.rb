@@ -1,12 +1,12 @@
 # encoding: utf-8
-require 'ostruct'
+require "ostruct"
 module Jiralicious
   ##
   # Base configuration module for Jiralicious
   #
   module Configuration
     # Array of available attributes
-    VALID_OPTIONS = [:username, :password, :uri, :api_version, :auth_type, :project, :oauth_secret, :oauth_secret_filename, :oauth_pass_phrase, :oauth_consumer_key, :config_path]
+    VALID_OPTIONS = [:username, :password, :uri, :api_version, :auth_type, :project, :oauth_secret, :oauth_secret_filename, :oauth_pass_phrase, :oauth_consumer_key, :config_path].freeze
     # Default user name set prior to login attempt
     DEFAULT_USERNAME = nil
     # Default password set prior to login attempt
@@ -16,7 +16,7 @@ module Jiralicious
     # Default URI set prior to login attempt
     DEFAULT_URI = nil
     # Default API Version can be set any valid version or "latest"
-    DEFAULT_API_VERSION = "latest"
+    DEFAULT_API_VERSION = "latest".freeze
 
     ##
     # Enables block configuration mode
@@ -26,7 +26,7 @@ module Jiralicious
     end
 
     # Provides access to the array of attributes
-    attr_accessor *VALID_OPTIONS
+    attr_accessor(*VALID_OPTIONS)
 
     ##
     # Reset when extended into class
@@ -56,12 +56,12 @@ module Jiralicious
       self.uri = DEFAULT_URI
       self.api_version = DEFAULT_API_VERSION
       self.auth_type = DEFAULT_AUTH_TYPE
-	  self.project = nil
-	  self.oauth_secret = nil
-	  self.oauth_secret_filename = nil
-	  self.oauth_pass_phrase = nil
-	  self.oauth_consumer_key = nil
-	  self.config_path = nil
+      self.project = nil
+      self.oauth_secret = nil
+      self.oauth_secret_filename = nil
+      self.oauth_pass_phrase = nil
+      self.oauth_consumer_key = nil
+      self.config_path = nil
     end
 
     ##
@@ -82,18 +82,18 @@ module Jiralicious
     #
     # :mode        (optional)    used to define environment type
     #
-    def load_yml(yml_file, mode=nil)
+    def load_yml(yml_file, mode = nil)
       if File.exist?(yml_file)
         yml_cfg = OpenStruct.new(YAML.load_file(yml_file))
-      if mode.nil? || mode =~ /production/i
-        yml_cfg.jira.each do |k, v|
-          instance_variable_set("@#{k}", v)
+        if mode.nil? || mode =~ /production/i
+          yml_cfg.jira.each do |k, v|
+            instance_variable_set("@#{k}", v)
+          end
+        else
+          yml_cfg.send(mode).each do |k, v|
+            instance_variable_set("@#{k}", v)
+          end
         end
-      else
-        yml_cfg.send(mode).each do |k,v|
-        instance_variable_set("@#{k}", v)
-      end
-    end
       else
         reset
       end

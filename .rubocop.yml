@@ -1,0 +1,64 @@
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: 2.3
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/ModuleFunction:
+  EnforcedStyle: extend_self
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# TODO: fix these
+
+# Breaking change
+Style/AccessorMethodName:
+  Enabled: false
+
+# Need to write proper docs
+Style/Documentation:
+  Enabled: false
+
+# Fix eventually for Ruby 3.x compatability
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Verify the functionaility of this
+Style/MethodMissing:
+  Enabled: false
+
+# Breaking change
+Style/MethodName:
+  Enabled: false

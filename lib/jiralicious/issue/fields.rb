@@ -21,22 +21,22 @@ module Jiralicious
       # :fc    (optional) fields to load
       #
       def initialize(fc = nil)
-        @fields_current = (fc == nil) ? Hash.new : fc
-        @fields_update = Hash.new
+        @fields_current = fc.nil? ? {} : fc
+        @fields_update = {}
       end
 
       ##
       # Returns the count of fields being updated.
       #
       def count
-        return @fields_update.count
+        @fields_update.count
       end
 
       ##
       # Returns the length of fields being updated.
       #
       def length
-        return @fields_update.length
+        @fields_update.length
       end
 
       ##
@@ -46,10 +46,10 @@ module Jiralicious
       # :comment   (required)    comment text
       #
       def add_comment(comment)
-        if !(@fields_update['comment'].is_a? Array)
-          @fields_update['comment'] = Array.new
+        unless @fields_update["comment"].is_a? Array
+          @fields_update["comment"] = []
         end
-        @fields_update['comment'].push({"add" => {"body" => comment}})
+        @fields_update["comment"].push("add" => { "body" => comment })
       end
 
       ##
@@ -61,7 +61,7 @@ module Jiralicious
       # :value   (required)    value text
       #
       def append_s(field, value)
-        if (@fields_update[field] == nil)
+        if @fields_update[field].nil?
           @fields_update[field] = @fields_current[field] unless @fields_current.nil?
           @fields_update[field] ||= ""
         end
@@ -77,8 +77,8 @@ module Jiralicious
       # :value   (required)    value array
       #
       def append_a(field, value)
-        @fields_update[field] = @fields_current[field] if (@fields_update[field] == nil)
-        @fields_update[field] = Array.new if !(@fields_update[field].is_a? Array)
+        @fields_update[field] = @fields_current[field] if @fields_update[field].nil?
+        @fields_update[field] = [] unless @fields_update[field].is_a? Array
         if value.is_a? String
           @fields_update[field].push(value) unless @fields_update[field].include? value
         else
@@ -95,8 +95,8 @@ module Jiralicious
       # :value   (required)    value hash
       #
       def append_h(field, hash)
-        @fields_update[field] = @fields_current[field] if (@fields_update[field] == nil)
-        @fields_update[field] = Hash.new if !(@fields_update[field].is_a? Hash)
+        @fields_update[field] = @fields_current[field] if @fields_update[field].nil?
+        @fields_update[field] = {} unless @fields_update[field].is_a? Hash
         @fields_update[field].merge!(hash)
       end
 
@@ -130,7 +130,7 @@ module Jiralicious
       # :value   (required)    value text
       #
       def set_name(field, value)
-        @fields_update[field] = {"name" => value}
+        @fields_update[field] = { "name" => value }
       end
 
       ##
@@ -143,8 +143,9 @@ module Jiralicious
       # :value   (required)    value text/int
       #
       def set_id(field, value)
-        @fields_update[field] = {"id" => value}
+        @fields_update[field] = { "id" => value }
       end
+
       ##
       # Fills the fields_current object with the provided Hash.
       #
@@ -159,14 +160,14 @@ module Jiralicious
       # Returns the current fields object
       #
       def current
-        return @fields_current
+        @fields_current
       end
 
       ##
       # Returns the updated fields object
       #
       def updated
-        return @fields_update
+        @fields_update
       end
 
       ##
@@ -174,15 +175,15 @@ module Jiralicious
       # for Jira to perform an update request.
       #
       def format_for_update
-        up = Hash.new
+        up = {}
         @fields_update.each do |k, v|
-          if k == "comment"
-            up[k] = v
-          else
-            up[k] = [{"set" => v}]
-          end
+          up[k] = if k == "comment"
+                    v
+                  else
+                    [{ "set" => v }]
+                  end
         end
-        return {"update" => up}
+        { "update" => up }
       end
 
       ##
@@ -190,7 +191,7 @@ module Jiralicious
       # for Jira to perform an create request.
       #
       def format_for_create
-        return {"fields" => @fields_update}
+        { "fields" => @fields_update }
       end
     end
   end

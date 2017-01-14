@@ -7,11 +7,11 @@ describe Jiralicious::Configuration do
   end
 
   it "sets the options to their default value" do
-    Jiralicious.username.should be_nil
-    Jiralicious.password.should be_nil
-    Jiralicious.uri.should be_nil
-    Jiralicious.api_version.should == "latest"
-    Jiralicious.auth_type.should == :basic
+    expect(Jiralicious.username).to be_nil
+    expect(Jiralicious.password).to be_nil
+    expect(Jiralicious.uri).to be_nil
+    expect(Jiralicious.api_version).to eq("latest")
+    expect(Jiralicious.auth_type).to eq(:basic)
   end
 
   it "allows setting of options in a block" do
@@ -23,19 +23,20 @@ describe Jiralicious::Configuration do
       config.auth_type = :cookie_session
     end
 
-    Jiralicious.username.should == "jstewart"
-    Jiralicious.password.should == "derp"
-    Jiralicious.uri.should == "http://example.com/foo/bar"
-    Jiralicious.api_version.should == "2.0aplha"
-    Jiralicious.auth_type.should == :cookie_session
+    expect(Jiralicious.username).to eq("jstewart")
+    expect(Jiralicious.password).to eq("derp")
+    expect(Jiralicious.uri).to eq("http://example.com/foo/bar")
+    expect(Jiralicious.api_version).to eq("2.0aplha")
+    expect(Jiralicious.auth_type).to eq(:cookie_session)
   end
 
   it "loads the yml in the specified format into the configuation variables" do
     Jiralicious.load_yml(jira_yml)
-    Jiralicious.username.should == "jira_admin"
-    Jiralicious.password.should == "jira_admin"
-    Jiralicious.uri.should == "http://localhost:8080"
-    Jiralicious.api_version.should == "latest"
-    Jiralicious.auth_type.should == :basic
+
+    expect(Jiralicious.username).to eq("jira_admin")
+    expect(Jiralicious.password).to eq("jira_admin")
+    expect(Jiralicious.uri).to eq("http://localhost:8080")
+    expect(Jiralicious.api_version).to eq("latest")
+    expect(Jiralicious.auth_type).to eq(:basic)
   end
 end

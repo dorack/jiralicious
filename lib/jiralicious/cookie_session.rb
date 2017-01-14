@@ -3,7 +3,7 @@ module Jiralicious
   ##
   # The CookieSesssion class extends the Session class with the
   # functionality of utilizing cookies for authorization management.
-  # 
+  #
   # Deprecated:: CookieSession is deprecated as of version 0.2.0
   #
   class CookieSession < Session
@@ -17,15 +17,14 @@ module Jiralicious
 
     # Provides login information on every request
     def before_request
-      self.login if require_login? && !@authenticating
+      login if require_login? && !@authenticating
     end
 
     # Handles the response from the request
     def after_request(response)
       unless @authenticating
-        if captcha_required(response)
-          raise Jiralicious::CaptchaRequired.
-            new("Captacha is required. Try logging into Jira via the web interface")
+        if captcha_required(response) # rubocop:disable Style/GuardClause
+          raise Jiralicious::CaptchaRequired, "Captacha is required. Try logging into Jira via the web interface"
         elsif cookie_invalid(response)
           # Can usually be fixed by logging in again
           clear_session
@@ -38,49 +37,52 @@ module Jiralicious
     # Authenticates the login
     def login
       @authenticating = true
-      handler = Proc.new do |response|
+      handler = proc do |response|
         if response.code == 200
           @session = response["session"]
           @login_info = response["loginInfo"]
-          self.class.cookies({self.session["name"] => self.session["value"]})
+          self.class.cookies(session["name"] => session["value"])
         else
           clear_session
           case response.code
           when 401 then
-            raise Jiralicious::InvalidLogin.new("Invalid login")
+            raise Jiralicious::InvalidLogin, "Invalid login"
           when 403
-            raise Jiralicious::CaptchaRequired.new("Captacha is required. Try logging into Jira via the web interface")
+            raise Jiralicious::CaptchaRequired, "Captacha is required. Try logging into Jira via the web interface"
           else
             # Give Net::HTTP reason
-            raise Jiralicious::JiraError.new(response)
+            raise Jiralicious::JiraError, response
           end
         end
       end
 
-      self.request(:post, '/rest/auth/latest/session',
-        :body => { :username => Jiralicious.username,
-          :password => Jiralicious.password}.to_json,
-        :handler => handler)
-
+      request(
+        :post, "/rest/auth/latest/session",
+        body: {
+          username: Jiralicious.username,
+          password: Jiralicious.password
+        }.to_json,
+        handler: handler
+      )
     end
 
     # Logs out of the API
     def logout
-      handler = Proc.new do |request|
+      handler = proc do
         if response.code == 204
           clear_session
         else
           case response.code
           when 401 then
-            raise Jiralicious::NotLoggedIn.new("Not logged in")
+            raise Jiralicious::NotLoggedIn, "Not logged in"
           else
             # Give Net::HTTP reason
-            raise Jiralicious::JiraError.new(response)
+            raise Jiralicious::JiraError, response
           end
         end
       end
 
-      request(:delete, '/rest/auth/latest/session', :handler => handler)
+      request(:delete, "/rest/auth/latest/session", handler: handler)
     end
 
     private
@@ -89,8 +91,8 @@ module Jiralicious
     def captcha_required(response)
       response.code == 401 &&
         # Fakeweb lowercases headers automatically. :(
-      (response.headers["X-Seraph-LoginReason"] == "AUTHENTICATION_DENIED" ||
-          response.headers["x-seraph-loginreason"] == "AUTHENTICATION_DENIED")
+        (response.headers["X-Seraph-LoginReason"] == "AUTHENTICATION_DENIED" ||
+            response.headers["x-seraph-loginreason"] == "AUTHENTICATION_DENIED")
     end
 
     # Throws if cookie is invalid

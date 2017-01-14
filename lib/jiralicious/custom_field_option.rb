@@ -6,7 +6,6 @@ module Jiralicious
   # be used to validate options prior to updating the issue.
   #
   class CustomFieldOption < Jiralicious::Base
-
     ##
     # Initialization Method
     #
@@ -15,12 +14,11 @@ module Jiralicious
     #
     def initialize(decoded_json)
       @loaded = false
-      if decoded_json.is_a? Hash
-        properties_from_hash(decoded_json)
-        super(decoded_json)
-        parse!(decoded_json)
-        @loaded = true
-      end
+      return unless decoded_json.is_a? Hash
+      properties_from_hash(decoded_json)
+      super(decoded_json)
+      parse!(decoded_json)
+      @loaded = true
     end
 
     class << self
@@ -36,8 +34,8 @@ module Jiralicious
       # Retrieves the options based on the ID
       #
       def find(id, options = {})
-        response = fetch({:key => id})
-        response.parsed_response['id'] = id
+        response = fetch(key: id)
+        response.parsed_response["id"] = id
         new(response.parsed_response)
       end
     end

@@ -6,11 +6,18 @@ module Jiralicious
   # to properly manage the Hashie::Trash object within the Jiralicious framework.
   #
   class Base < Hashie::Trash
-
     ##
     # Includes functionality from FieldParser
     #
     include Jiralicious::Parsers::FieldParser
+
+    ##
+    #
+    # Includes IndifferentAccess for Hashie::Dash and Trash
+    # This maintains backwards compatability when updating Hashie >= 2.2
+    # See https://github.com/intridea/hashie/blob/master/UPGRADING.md
+    #
+    include Hashie::Extensions::Dash::IndifferentAccess
 
     ##
     # Used to identify if the class has been loaded
@@ -26,9 +33,9 @@ module Jiralicious
     # :hash    (required)    hash to be added to properties
     #
     def properties_from_hash(hash)
-      hash.inject({}) do |newhash, (k, v)|
-        k = k.gsub("-", "_")
-        k = "_#{k.to_s}" if k =~ /^\d/
+      hash.each_with_object({}) do |(k, v), newhash|
+        k = k.tr("-", "_")
+        k = "_#{k}" if k =~ /^\d/
         self.class.property :"#{k}"
         newhash[k] = v
         newhash
@@ -47,7 +54,7 @@ module Jiralicious
       # :reload (required)    is object reloading forced
       #
       def find(key, options = {})
-        response = fetch({:key => key})
+        response = fetch(key: key)
         if options[:reload] == true
           response
         else
@@ -62,7 +69,7 @@ module Jiralicious
       # Ruby application.
       #
       def find_all
-        response = fetch()
+        response = fetch
         new(response)
       end
 
@@ -70,15 +77,15 @@ module Jiralicious
       # Generates the endpoint_name based on the current inheritance class.
       #
       def endpoint_name
-        self.name.split('::').last.downcase
+        name.split("::").last.downcase
       end
 
       ##
       # Generates the parent_name based on the current inheritance class.
       #
       def parent_name
-        arr = self.name.split('::')
-        arr[arr.length-2].downcase
+        arr = name.split("::")
+        arr[arr.length - 2].downcase
       end
 
       ##
@@ -107,17 +114,17 @@ module Jiralicious
       def fetch(options = {})
         options[:method] = :get unless [:get, :post, :put, :delete].include?(options[:method])
         options[:parent_uri] = "#{parent_name}/#{options[:parent_key]}/" unless options[:parent].nil?
-        if !options[:body_override]
-          options[:body_uri] = (options[:body].is_a? Hash) ? options[:body] : {:body => options[:body]}
-        else
-          options[:body_uri] = options[:body]
-        end
+        options[:body_uri] = if !options[:body_override]
+                               options[:body].is_a?(Hash) ? options[:body] : { body: options[:body] }
+                             else
+                               options[:body]
+                             end
         if options[:body_to_params]
           options[:params_uri] = "?#{options[:body].to_params}" unless options[:body].nil? || options[:body].empty?
           options[:body_uri] = nil
         end
         options[:url_uri] = options[:url].nil? ? "#{Jiralicious.rest_path}/#{options[:parent_uri]}#{endpoint_name}/#{options[:key]}#{options[:params_uri]}" : "#{options[:url]}#{options[:params_uri]}"
-        Jiralicious.session.request(options[:method], options[:url_uri], :handler => handler, :body => options[:body_uri].to_json)
+        Jiralicious.session.request(options[:method], options[:url_uri], handler: handler, body: options[:body_uri].to_json)
       end
 
       ##
@@ -125,16 +132,16 @@ module Jiralicious
       # the child class to provide additional error handling.
       #
       def handler
-        Proc.new do |response|
+        proc do |response|
           case response.code
           when 200..204
             response
           when 400
-            raise Jiralicious::TransitionError.new(response.inspect)
+            raise Jiralicious::TransitionError, response.inspect
           when 404
-            raise Jiralicious::IssueNotFound.new(response.inspect)
+            raise Jiralicious::IssueNotFound, response.inspect
           else
-            raise Jiralicious::JiraError.new(response.inspect)
+            raise Jiralicious::JiraError, response.inspect
           end
         end
       end
@@ -145,13 +152,13 @@ module Jiralicious
       #
       def issueKey_test(key, no_throw = false)
         if key.nil? || !(/^[A-Z][A-Z0-9_]*-[0-9]+$/i =~ key)
-          raise Jiralicious::JiraError.new("The key #{key} is invalid") unless no_throw
+          raise Jiralicious::JiraError, "The key #{key} is invalid" unless no_throw
           return false
         end
-        return true
+        true
       end
 
-      alias :all :find_all
+      alias all find_all
     end
 
     ##
@@ -182,15 +189,14 @@ module Jiralicious
     # to determine if the object is loaded and ready for usage.
     #
     def loaded?
-      !!self.loaded
+      !!loaded
     end
 
     ##
     # Default reload method is blank. For classes that implement lazy loading
     # this method will be overridden with the necessary functionality.
     #
-    def reload
-    end
+    def reload; end
 
     ##
     # Overrides the default method_missing check. This override is used in lazy
@@ -207,7 +213,7 @@ module Jiralicious
       if !loaded?
         self.loaded = true
         reload
-        self.send(meth, *args, &block)
+        send(meth, *args, &block)
       else
         super
       end
@@ -220,7 +226,9 @@ module Jiralicious
     # :object    (required)    object to be tested
     #
     def numeric?(object)
-      true if Float(object) rescue false
+      true if Float(object)
+    rescue
+      false
     end
   end
 end

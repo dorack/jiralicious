@@ -2,7 +2,6 @@
 require "spec_helper"
 
 describe Jiralicious, "search" do
-
   before :each do
     Jiralicious.configure do |config|
       config.username = "jstewart"
@@ -15,31 +14,35 @@ describe Jiralicious, "search" do
 
   context "when successful" do
     before :each do
-      FakeWeb.register_uri(:post,
+      FakeWeb.register_uri(
+        :post,
         "#{Jiralicious.rest_path}/search",
-        :status => "200",
-        :body => search_json)
-
+        status: "200",
+        body: search_json
+      )
     end
 
     it "instantiates a search result" do
       results = Jiralicious.search("key = HSP-1")
-      results.should be_instance_of(Jiralicious::SearchResult)
+      expect(results).to be_instance_of(Jiralicious::SearchResult)
     end
   end
 
   context "When there's a problem with the query" do
     before :each do
-      FakeWeb.register_uri(:post,
+      FakeWeb.register_uri(
+        :post,
         "#{Jiralicious.rest_path}/search",
-        :body => '{"errorMessages": ["error"]}',
-        :status => "400")
+        body: '{"errorMessages": ["error"]}',
+        status: "400"
+      )
     end
 
     it "raises an exception" do
-      lambda {
-        results = Jiralicious.search("key = HSP-1")
-      }.should raise_error(Jiralicious::JqlError)
+      l = lambda do
+        Jiralicious.search("key = HSP-1")
+      end
+      expect(l).to raise_error(Jiralicious::JqlError)
     end
   end
 end

@@ -16,7 +16,9 @@ module Jiralicious
       # :fields    (required)    fields to be parsed
       #
       def parse!(fields)
-        unless fields.is_a?(Hash)
+        begin
+          fields = fields.to_h unless fields.is_a?(Hash)
+        rescue
           raise ArgumentError
         end
         @jiralicious_field_parser_data = {}
@@ -52,9 +54,9 @@ module Jiralicious
       # :name    (required)    name to be normalized
       #
       def normalize(name)
-        name.gsub(/(\w+)([A-Z].*)/, '\1_\2').
-          gsub(/\W/, "_").
-          downcase
+        name.gsub(/(\w+)([A-Z].*)/, '\1_\2')
+            .gsub(/\W/, "_")
+            .downcase
       end
 
       ##

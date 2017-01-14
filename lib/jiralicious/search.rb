@@ -20,25 +20,25 @@ module Jiralicious
     options[:fields] ||= ["*navigable"]
 
     request_body = {
-      :jql => jql,
-      :startAt => options[:start_at],
-      :maxResults => options[:max_results],
-      :fields => options[:fields]
+      jql: jql,
+      startAt: options[:start_at],
+      maxResults: options[:max_results],
+      fields: options[:fields]
     }.to_json
 
-    handler = Proc.new do |response|
-      if response.code == 200
+    handler = proc do |response|
+      if response.code == 200 # rubocop:disable Style/GuardClause
         Jiralicious::SearchResult.new(response)
       else
-        raise Jiralicious::JqlError.new(response['errorMessages'].join('\n'))
+        raise Jiralicious::JqlError, response["errorMessages"].join('\n')
       end
     end
 
     Jiralicious.session.request(
       :post,
       "#{Jiralicious.rest_path}/search",
-      :body => request_body,
-      :handler => handler
+      body: request_body,
+      handler: handler
     )
   end
 end
