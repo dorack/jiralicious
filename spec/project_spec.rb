@@ -90,11 +90,11 @@ describe Jiralicious, "Project Management Class: " do
   it "finds project versions instance level" do
     project = Jiralicious::Project.find("EX")
     versions = project.versions
-    versions.count.should == 2
-    versions.id_10000.name.should == "New Version 1"
-    versions.id_10000.overdue.should == true
-    versions.id_10010.name.should == "Next Version"
-    versions.id_10010.overdue.should == false
+    expect(versions.count).to eq(2)
+    expect(versions.id_10000.name).to eq("New Version 1")
+    expect(versions.id_10000.overdue).to eq(true)
+    expect(versions.id_10010.name).to eq("Next Version")
+    expect(versions.id_10010.overdue).to eq(false)
   end
 
 end
