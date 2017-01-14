@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'nokogiri', '< 1.7'
   end
   s.add_development_dependency 'rspec', '~> 2.6'
+  s.add_development_dependency 'simplecov', '~> 0.8.0'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'fakeweb', '~> 1.3.0'
 
