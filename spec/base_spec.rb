@@ -11,8 +11,7 @@ describe Jiralicious::Base, "issue keys" do
   end
 
   it "raises an exception on invalid keys by default" do
-    expect { Jiralicious::Base.issueKey_test("1-invalid") }
-      to raise_error("The key 1-invalid is invalid")
+    expect { Jiralicious::Base.issueKey_test("1-invalid") }.to raise_error("The key 1-invalid is invalid")
   end
 
   it "must start with a letter" do
