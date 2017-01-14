@@ -96,5 +96,4 @@ describe Jiralicious, "Project Management Class: " do
     expect(versions.id_10010.name).to eq("Next Version")
     expect(versions.id_10010.overdue).to eq(false)
   end
-
 end
