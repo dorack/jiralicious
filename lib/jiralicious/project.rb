@@ -103,7 +103,7 @@ module Jiralicious
     #
     def versions(expand = {})
       if @versions.nil? || !expand.empty?
-        @versions = self.class.versions(self.key, expand)
+        @versions = self.class.versions(key, expand)
       end
       @versions
     end
