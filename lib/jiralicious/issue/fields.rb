@@ -191,7 +191,7 @@ module Jiralicious
       # for Jira to perform an create request.
       #
       def format_for_create
-        { "fields" => @fields_update }
+        { "fields" => @fields_current }
       end
     end
   end
