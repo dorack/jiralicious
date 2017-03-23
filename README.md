@@ -1,6 +1,7 @@
 # jiralicious
 
-[![Build Status](https://travis-ci.org/dorack/jiralicious.png)](https://travis-ci.org/dorack/jiralicious)
+[![Build Status](https://travis-ci.org/dorack/jiralicious.svg?branch=master)](https://travis-ci.org/dorack/jiralicious)
+[![Gem Version](http://img.shields.io/gem/v/jiralicious.svg)](https://rubygems.org/gems/jiralicious)
 
 ## Examples:
 
